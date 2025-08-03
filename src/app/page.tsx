@@ -4,12 +4,11 @@ import CustomerStories from "./components/home/customer-stories";
 import Faq from "./components/home/faq";
 import HeroSection from "./components/home/hero";
 import CurvedPanoramicSlider from "./components/home/curved-panoramic-slider";
-import Innovation from "./components/home/innovation";
-import OnlinePresence from "./components/home/online-presence";
+import Timeline from "./components/home/timeline";
 import Solutions from "./components/home/solution";
 
 export const metadata: Metadata = {
-    title: "Home | Awake Agency",
+    title: "Home | A Thousand Voices",
 };
 
 export default function Home() {
@@ -27,13 +26,9 @@ export default function Home() {
       <Brand />
       {/* ---------------------Brand logo section Ends-----------------  */}
 
-      {/* ---------------------Innovation section Starts-----------------  */}
-      <Innovation />
-      {/* ---------------------Innovation section Ends-----------------  */}
-
-      {/* ---------------------Online presence section Starts-----------------  */}
-      <OnlinePresence />
-      {/* ---------------------Online presence section Ends-----------------  */}
+      {/* ---------------------Timeline section Starts-----------------  */}
+      <Timeline />
+      {/* ---------------------Timeline section Ends-----------------  */}
 
       {/* ---------------------Customer Stories section Starts-----------------  */}
       <CustomerStories />

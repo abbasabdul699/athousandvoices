@@ -9,7 +9,6 @@ const IMAGES = [
   '/images/afghan3.jpg',
   '/images/afghan4.jpg',
   '/images/afghan5.jpg',
-  '/images/afghan6.jpg',
 ]
 
 const PanoramicScrollGallery = () => {
@@ -34,11 +33,11 @@ const PanoramicScrollGallery = () => {
   }
 
   return (
-    <section className="relative py-16 bg-white dark:bg-gray-900 overflow-hidden">
+    <section className="relative py-16 overflow-hidden before:absolute before:w-full before:h-full before:bg-gradient-to-r before:from-blue-50 before:via-white before:to-yellow-50 before:top-0 before:left-0 before:-z-10 dark:before:from-blue-900/20 dark:before:via-gray-900 dark:before:to-yellow-900/20">
       <div className="flex justify-between items-center px-4 sm:px-12">
         <button
           onClick={() => setActiveIndex((prev) => Math.max(0, prev - 1))}
-          className="p-2 bg-white dark:bg-gray-700 rounded-full shadow"
+          className="p-2 bg-white/80 dark:bg-gray-700/80 rounded-full shadow backdrop-blur-sm"
         >
           <ChevronLeft className="text-gray-800 dark:text-white" />
         </button>
@@ -72,7 +71,7 @@ const PanoramicScrollGallery = () => {
 
         <button
           onClick={() => setActiveIndex((prev) => Math.min(IMAGES.length - 1, prev + 1))}
-          className="p-2 bg-white dark:bg-gray-700 rounded-full shadow"
+          className="p-2 bg-white/80 dark:bg-gray-700/80 rounded-full shadow backdrop-blur-sm"
         >
           <ChevronRight className="text-gray-800 dark:text-white" />
         </button>

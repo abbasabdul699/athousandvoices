@@ -1,187 +1,241 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
+import SingleCreativeMind from '../../components/home/creative-mind/SingleCreativeMind'
 
 export default function AboutPage() {
+  const [creativeMindList, setCreativeMindList] = useState<any>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('/api/page-data')
+        if (!res.ok) throw new Error('Failed to fetch')
+        const data = await res.json()        
+        setCreativeMindList(data.creativeMindList)
+      } catch (error) {
+        console.error('Error fetching creative minds:', error)
+      }
+    }
+    fetchData()
+  }, [])
+
+  const bottomAnimation = (index: number) => ({
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, delay: index * 0.1 },
+  })
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-yellow-50 dark:from-gray-900 dark:via-black dark:to-gray-800">
-      <div className="container mx-auto px-4 py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
-        >
-          {/* Header Section */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              About A Thousand Voices
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Empowering Afghan storytellers and amplifying their voices through the power of literature and digital platforms.
-            </p>
-          </div>
-
-          {/* Mission Section */}
-          <div className="mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-8"
-            >
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-                Our Mission
-              </h2>
-              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                A Thousand Voices is dedicated to creating a platform where Afghan writers can share their stories, 
-                experiences, and perspectives with the world. We believe that every voice matters and that storytelling 
-                has the power to bridge cultures, foster understanding, and inspire change.
-              </p>
-              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                Through our short story competition and digital publishing platform, we aim to amplify the diverse 
-                voices of Afghanistan, celebrating the rich cultural heritage and contemporary experiences of its people.
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Values Section */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-              Our Values
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center"
-              >
-                <div className="w-16 h-16 bg-purple_blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-purple_blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                  Community
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Building a supportive community of writers and readers who celebrate Afghan culture and literature.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center"
-              >
-                <div className="w-16 h-16 bg-purple_blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-purple_blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                  Excellence
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Promoting literary excellence and providing opportunities for writers to develop their craft.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center"
-              >
-                <div className="w-16 h-16 bg-purple_blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-purple_blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                  Impact
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Creating meaningful impact through storytelling that educates, inspires, and connects people globally.
-                </p>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Team Section */}
-          <div className="mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8"
-            >
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-                Our Team
-              </h2>
-              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                A Thousand Voices is led by a dedicated team of professionals passionate about literature, 
-                technology, and cultural exchange. Our diverse team brings together expertise in publishing, 
-                digital platforms, and Afghan culture to create meaningful opportunities for writers.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto mb-4"></div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                    Zakira Bakhshi
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">President</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto mb-4"></div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                    Ahmadzia Momand
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">Outreach Coordinator</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto mb-4"></div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                    Abdul Abbas
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">Software Engineer</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Contact CTA */}
+    <div className="min-h-screen bg-white dark:bg-gray-900">
+      {/* Header Section */}
+      <div className="border-b border-gray-200 dark:border-gray-700">
+        <div className="container mx-auto px-4 py-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="text-center"
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-4xl mx-auto"
           >
-            <div className="bg-gradient-to-r from-purple_blue to-purple_blue/80 rounded-2xl p-8 text-white">
-              <h2 className="text-2xl font-bold mb-4">
-                Join Our Community
-              </h2>
-              <p className="text-lg mb-6 opacity-90">
-                Ready to share your story? Submit your work to our competition or get in touch to learn more.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="/submit-story"
-                  className="bg-white text-purple_blue px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors"
-                >
-                  Submit Your Story
-                </a>
-                <a
-                  href="/contact"
-                  className="border-2 border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-purple_blue transition-colors"
-                >
-                  Contact Us
-                </a>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+              About <span className="bg-yellow-300 dark:bg-yellow-400 text-gray-900 px-2">A Thousand Voices</span>
+            </h1>
+            <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+              We are dedicated to amplifying Afghan storytellers and creating a platform for cultural exchange through literature. 
+              Our mission is to bridge cultures and connect voices from around the world.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-16">
+        {/* Mission Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20"
+        >
+          {/* Left Side - Image */}
+          <div className="relative">
+            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src="/images/home/creative/Zakira.png"
+                alt="A Thousand Voices Team"
+                fill
+                className="object-cover"
+              />
+            </div>
+            {/* Decorative dots */}
+            <div className="absolute -bottom-4 -left-4 flex space-x-2">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="w-3 h-3 bg-yellow-300 rounded-full"></div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Side - Content */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Our <span className="bg-yellow-300 dark:bg-yellow-400 text-gray-900 px-2">Mission</span>
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg">
+              A Thousand Voices was born from the vision of creating a global platform where Afghan storytellers can share their narratives, 
+              connect with readers worldwide, and preserve the rich cultural heritage of Afghanistan through literature.
+            </p>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="text-gray-700 dark:text-gray-300">Amplifying Afghan voices globally</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="text-gray-700 dark:text-gray-300">Fostering cultural exchange through literature</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="text-gray-700 dark:text-gray-300">Building bridges between communities</span>
               </div>
             </div>
-          </motion.div>
+            <button className="px-8 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200">
+              Learn More About Us
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Values Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20"
+        >
+          {/* Left Side - Content */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Our <span className="bg-yellow-300 dark:bg-yellow-400 text-gray-900 px-2">Values</span>
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg">
+              We believe in the power of storytelling to connect people across borders, cultures, and experiences. 
+              Our platform is built on the principles of inclusivity, authenticity, and the celebration of diverse voices.
+            </p>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="text-gray-700 dark:text-gray-300">Authentic storytelling and cultural preservation</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="text-gray-700 dark:text-gray-300">Inclusive platform for diverse voices</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="text-gray-700 dark:text-gray-300">Quality literature and meaningful connections</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side - Image */}
+          <div className="relative">
+            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src="/images/home/creative/Ahmad.png"
+                alt="Our Values"
+                fill
+                className="object-cover"
+              />
+            </div>
+            {/* Decorative dots */}
+            <div className="absolute -bottom-4 -right-4 flex space-x-2">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="w-3 h-3 bg-yellow-300 rounded-full"></div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Creative Minds Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 mb-16"
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              Meet the creative minds behind{' '}
+              <span className="bg-yellow-300 dark:bg-yellow-400 text-gray-900 px-2">
+                our success
+              </span>
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Our diverse team brings together expertise in literature, technology, and Afghan culture to create meaningful opportunities for writers.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {creativeMindList?.map((item: any, index: any) => (
+              <motion.div {...bottomAnimation(index)} key={index}>
+                <SingleCreativeMind key={index} creativemind={item} />
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="text-center bg-gray-50 dark:bg-gray-800 rounded-2xl p-12"
+        >
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Ready to share your story?
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+            Join our community of storytellers and connect with readers from around the world. 
+            Your voice matters, and your story deserves to be heard.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/submit-story"
+              className="px-8 py-3 bg-purple_blue text-white font-medium rounded-lg hover:bg-purple_blue/90 transition-colors duration-200"
+            >
+              Submit Your Story
+            </a>
+            <a
+              href="/contact"
+              className="px-8 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
+            >
+              Get in Touch
+            </a>
+          </div>
         </motion.div>
       </div>
     </div>

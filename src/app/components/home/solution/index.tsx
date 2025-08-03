@@ -25,30 +25,25 @@ function Solutions() {
               className='flex flex-col gap-6 items-center md:max-w-3xl mx-auto'>
               <div className='flex flex-col gap-3 items-center text-center'>
                 <h2 className='text-3xl md:text-5xl dark:text-dark_black'>
-                  Innovative Solutions for{' '}
+                  Become an A Thousand Voices {' '}
                   <span className='instrument-font italic font-normal dark:text-black/70'>
-                    Bold Brands
+                    Ambassador
                   </span>
                 </h2>
                 <p className='dark:text-dark_black'>
-                  Looking to elevate your brand? We craft immersive experiences
-                  that captivate, engage, and make your business unforgettable
-                  in every interaction.
+                  Looking to make a global impact? Join our ambassador program and help amplify Afghan voices while building meaningful connections across cultures.
                 </p>
               </div>
               <Link
-                href='/contact'
+                href='/ambassador'
                 className='group w-fit text-white font-medium bg-dark_black rounded-full flex items-center gap-4 py-2 pl-5 pr-2 hover:bg-transparent border border-dark_black'>
-                <span className='group-hover:translate-x-9 group-hover:text-dark_black transform transition-transform duration-200 ease-in-out'>
-                  Let’s Collaborate
-                </span>
                 <svg
                   width='32'
                   height='32'
                   viewBox='0 0 32 32'
                   fill='none'
                   xmlns='http://www.w3.org/2000/svg'
-                  className='group-hover:-translate-x-36 transition-all duration-200 ease-in-out group-hover:rotate-45'>
+                  className='order-2 group-hover:order-1 group-hover:-translate-x-2 transition-all duration-200 ease-in-out group-hover:rotate-45'>
                   <rect
                     width='32'
                     height='32'
@@ -65,6 +60,9 @@ function Solutions() {
                     className='stroke-[#1B1D1E] transition-colors duration-200 ease-in-out group-hover:stroke-white'
                   />
                 </svg>
+                <span className='order-1 group-hover:order-2 group-hover:translate-x-0 group-hover:text-dark_black transform transition-all duration-200 ease-in-out'>
+                  Become an Ambassador
+                </span>
               </Link>
             </motion.div>
           </div>

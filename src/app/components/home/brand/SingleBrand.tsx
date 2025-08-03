@@ -6,22 +6,22 @@ const SingleBrand = ({ brand }: { brand: any }) => {
 
   return (
     <Slider.Slide>
-      <div className='flex items-center justify-center'>
+      <div className='flex items-center justify-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200'>
         <Image
           src={image}
           alt={title}
-          height={50}
-          width={130}
-          className='dark:hidden swiper-logo-image object-contain'
-          style={{ width: 'auto', height: 'auto', maxHeight: '50px' }}
+          height={60}
+          width={150}
+          className='dark:hidden swiper-logo-image object-contain hover:scale-105 transition-all duration-200'
+          style={{ width: 'auto', height: 'auto', maxHeight: '60px' }}
         />
         <Image
           src={darkImg}
           alt={title}
-          height={50}
-          width={130}
-          className='dark:block hidden swiper-logo-image object-contain'
-          style={{ width: 'auto', height: 'auto', maxHeight: '50px' }}
+          height={60}
+          width={150}
+          className='dark:block hidden swiper-logo-image object-contain hover:scale-105 transition-all duration-200'
+          style={{ width: 'auto', height: 'auto', maxHeight: '60px' }}
         />
       </div>
     </Slider.Slide>

@@ -5,6 +5,30 @@ import React, { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import StarRating from '../../shared/star-rating'
 
+// Typewriter component
+const TypewriterText = ({ text, className }: { text: string; className?: string }) => {
+  const [displayText, setDisplayText] = useState('')
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(prev => prev + text[currentIndex])
+        setCurrentIndex(prev => prev + 1)
+      }, 200) // Slower speed: 200ms
+
+      return () => clearTimeout(timeout)
+    }
+  }, [currentIndex, text])
+
+  return (
+    <span className={className}>
+      {displayText}
+      <span className="animate-pulse">|</span>
+    </span>
+  )
+}
+
 function HeroSection() {
   const ref = useRef(null)
    const [avatarList, setAvatarList] = useState<any>(null);
@@ -41,11 +65,14 @@ function HeroSection() {
                 {...bottomAnimation}
                 className='relative flex flex-col text-center items-center gap-4'>
                 <h1 className='font-medium w-full'>
-                  A Thousand
-                  <span className='instrument-font italic font-normal dark:text-white/70'>
-                    {' '}
-                    Voices
-                  </span>
+                  <TypewriterText 
+                    text="A Thousand " 
+                    className="font-medium"
+                  />
+                  <TypewriterText 
+                    text="Voices" 
+                    className="instrument-font italic font-normal dark:text-white/70"
+                  />
                 </h1>
                 <p className='max-w-38 text-dark_black/60 dark:text-white/60'>
                   Afghanistan's Short Story Competition
@@ -74,7 +101,7 @@ function HeroSection() {
                         width='40'
                         height='40'
                         rx='20'
-                        className='fill-white transition-colors duration-200 ease-in-out group-hover:fill-purple_blue'
+                        className='fill-white transition-colors duration-200 ease-in-out group-hover:fill-blue'
                       />
                       <path
                         d='M15.832 15.3334H24.1654V23.6667'

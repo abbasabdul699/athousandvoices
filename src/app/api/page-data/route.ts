@@ -123,22 +123,22 @@ const creativeMindList: creativeMind[] = [
     linkedinLink: 'https://www.linkedin.com/in/abdul-abbas-b78921122/',
   },
   {
-    image: '/images/home/creative/creative_img_4.png',
-    name: 'Tamana',
+    image: '/images/home/creative/tamana.png',
+    name: 'Tamana Farewar',
     position: 'Board Member',
-    linkedinLink: 'https://in.linkedin.com/',
+    linkedinLink: 'https://www.linkedin.com/in/tamana-farewar-21352a177/',
   },
   {
-    image: '/images/home/creative/creative_img_4.png',
+    image: '/images/home/creative/ethan.png',
     name: 'Ethan Schroyer',
     position: 'Board Member',
-    linkedinLink: 'https://in.linkedin.com/',
+    linkedinLink: 'https://www.linkedin.com/in/ethan-schroyer-a63107238/',
   },
   {
-    image: '/images/home/creative/creative_img_4.png',
+    image: '/images/home/creative/Sadia.png',
     name: 'Sadia Ansari',
     position: 'Social Media Outreach',
-    linkedinLink: 'https://in.linkedin.com/',
+    linkedinLink: 'https://www.linkedin.com/in/sadia-ansari-6a1653247/',
   },
 ]
 
@@ -204,34 +204,34 @@ const startupPlanList: startupPlan[] = [
 
 const faqList: faq[] = [
   {
-    faq_que: 'What services does Awake Agency offer?',
+    faq_que: 'Who can submit stories to your platform?',
     faq_ans:
-      'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.',
+      'We welcome submissions from Afghan youth around the world, including those living in Afghanistan and in the diaspora. Writers do not need professional experience — just a story to tell.',
   },
   {
-    faq_que: 'How long does a typical project take?',
+    faq_que: 'Is there a deadline to submit?',
     faq_ans:
-      'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.',
+      'Submissions are currently accepted on a rolling basis. Specific deadlines may apply to themed issues or contests, which will be announced on our website and social media.',
   },
   {
-    faq_que: 'How is pricing structured at Awake Agency?',
+    faq_que: 'How do you support contributors beyond publication?',
     faq_ans:
-      'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.',
+      'We offer free writing workshops, mentorship from experienced Afghan creatives, and opportunities to participate in panels, residencies, and events hosted in partnership with universities and NGOs',
   },
   {
-    faq_que: 'Do you offer ongoing support after project completion?',
+    faq_que: 'How can I get involved if I’m not Afghan?',
     faq_ans:
-      'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.',
+      'We welcome allies who want to support our mission through donations, volunteer work, mentorship, translation help, or by amplifying our writers’ work. Please reach out via our contact page.',
   },
   {
-    faq_que: 'How often will I receive updates on my project?',
+    faq_que: 'Is A Thousand Voices a registered nonprofit?',
     faq_ans:
-      'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.',
+      'Yes, we operate as a registered nonprofit initiative under the umbrella of fellowship-backed programming, and are working toward independent nonprofit status to expand our reach.',
   },
   {
-    faq_que: 'How often will I receive updates on my project?',
+    faq_que: 'How can I support your work?',
     faq_ans:
-      'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.',
+      'You can support us by donating, sponsoring workshops, volunteering as a mentor or editor, or simply by reading and sharing the stories on our platform.',
   },
 ]
 
