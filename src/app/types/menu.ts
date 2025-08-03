@@ -33,7 +33,6 @@ export type creativeMind = {
   image: string;
   name: string;
   position: string;
-  twitterLink: string;
   linkedinLink: string;
 }
 

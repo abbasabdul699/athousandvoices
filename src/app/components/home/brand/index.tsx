@@ -32,13 +32,12 @@ function Brand() {
           </div>
 
           {brandList && brandList.length > 0 && (
-            <div className='py-4'>
+            <div className='py-4 py-2'>
               <Slider
                 width='200px'
                 duration={25}
                 pauseOnHover={true}
-                blurBorders={false}
-                className='py-2'>
+                blurBorders={false}>
                 {brandList?.map((items: any, index: any) => (
                   <SingleBrand key={index} brand={items} />
                 ))}
