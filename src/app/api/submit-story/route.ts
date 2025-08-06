@@ -51,12 +51,12 @@ export async function POST(request: NextRequest) {
       .from('story-pdfs')
       .getPublicUrl(fileName)
 
-    // Store submission data in database
+    // Store submission data in database - only include required fields
     const { data: submissionData, error: dbError } = await supabaseAdmin
-      .from('story_submissions')
+      .from('submissions')
       .insert([
         {
-          submission_id: submissionId,
+          id: submissionId,
           first_name: firstName,
           last_name: lastName,
           email: email,
@@ -67,16 +67,16 @@ export async function POST(request: NextRequest) {
           consent: consent,
           pdf_file_path: publicUrl,
           submission_date: new Date().toISOString(),
-          status: 'pending',
-          admin_notes: `Story: ${storyTitle} | Language: ${storyLanguage} | Author: ${firstName} ${lastName} | Email: ${email} | Location: ${city}, ${country}`
+          status: 'pending'
         }
       ])
       .select()
 
     if (dbError) {
-      console.error('Database error:', dbError)
+      console.error('Database error details:', dbError)
       return NextResponse.json({ 
-        error: 'Failed to save submission' 
+        error: 'Failed to save submission',
+        details: dbError
       }, { status: 500 })
     }
 
