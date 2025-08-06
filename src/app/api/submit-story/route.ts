@@ -27,8 +27,8 @@ export async function POST(request: NextRequest) {
       }, { status: 400 })
     }
 
-    // Generate unique submission ID
-    const submissionId = `STORY_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    // Generate a proper UUID
+    const submissionId = crypto.randomUUID()
 
     // Upload PDF file to Supabase Storage
     const fileName = `${submissionId}_${pdfFile.name}`
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
       .from('story-pdfs')
       .getPublicUrl(fileName)
 
-    // Store submission data in database - only include required fields
+    // Store submission data in database
     const { data: submissionData, error: dbError } = await supabaseAdmin
       .from('submissions')
       .insert([
