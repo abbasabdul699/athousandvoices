@@ -33,7 +33,7 @@ function ContactForm() {
     e.preventDefault()
     setLoader(true)
 
-    fetch('https://formsubmit.co/ajax/bhainirav772@gmail.com', {
+    fetch('https://formsubmit.co/ajax/admin@athousandvoices.com', {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
@@ -160,37 +160,27 @@ function ContactForm() {
                       value={formData.interest}
                       onChange={handleChange}>
                       <option value='design & branding'>
-                        Design & Branding
+                        Choose an option
                       </option>
-                      <option value='Ecommerce'>Ecommerce</option>
-                      <option value='Specialist'>Specialist</option>
-                    </select>
-                  </div>
-                  <div className='w-full'>
-                    <label htmlFor='budget'>Project budget</label>
-                    <select
-                      className='w-full mt-2 text-base px-4 rounded-full py-2.5 border transition-all duration-500 dark:text-white border-solid dark:border-white/20 focus:outline-0 dark:bg-black/40'
-                      name='budget'
-                      id='budget'
-                      value={formData.budget}
-                      onChange={handleChange}>
-                      <option value=''>Select your budget</option>
-                      <option value='$10000'>$10,000</option>
-                      <option value='$50500'>$50,500</option>
+                      <option value='Ambassador Program'>Ambassador Program</option>
+                      <option value='Sponsorship'>Sponsorship</option>
+                      <option value='Partnership'>Partnership</option>
+                      <option value='Join the Team'>Join the Team</option>
+                      <option value='Other Question'>Other Question</option>
+                      <option value='Submission Problem'>Submission Problem</option>
                     </select>
                   </div>
                 </div>
                 <div className='w-full'>
                   <label htmlFor='message'>Message</label>
                   <textarea
-                    className='w-full mt-2 rounded-3xl border px-5 py-3 outline-hidden transition dark:border-white/20
-                                        focus:border-dark_black/50 dark:focus:border-white/50 dark:bg-black/40'
+                    className='w-full mt-2 text-base px-4 rounded-full py-2.5 border transition-all duration-500 dark:text-white border-solid dark:border-white/20 focus:outline-0 dark:bg-black/40'
                     name='message'
                     id='message'
+                    rows={4}
+                    placeholder='Tell us about your project...'
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder='Let tell us know your project about'
-                    rows={4}
                   />
                 </div>
                 <div>

@@ -66,11 +66,7 @@ function HeroSection() {
                 className='relative flex flex-col text-center items-center gap-4'>
                 <h1 className='font-medium w-full'>
                   <TypewriterText 
-                    text="A Thousand " 
-                    className="font-medium"
-                  />
-                  <TypewriterText 
-                    text="Voices" 
+                    text="A Thousand Voices" 
                     className="instrument-font italic font-normal dark:text-white/70"
                   />
                 </h1>

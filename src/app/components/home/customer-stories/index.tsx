@@ -17,7 +17,7 @@ function CustomerStories() {
             </div>
             <div className='flex flex-col gap-6'>
               <div className='flex flex-col xl:flex xl:flex-row gap-6'>
-                <div className="p-8 gap-64 rounded-2xl flex flex-col relative bg-[url('/images/home/creative/Zakira.png')] object-cover bg-center bg-bottom h-full w-full bg-cover bg-no-repeat backdrop-blur-sm" style={{backgroundPosition: 'center 30%', filter: 'grayscale(60%)'}}>
+                <div className="p-8 gap-64 rounded-2xl flex flex-col relative bg-[url('/images/home/creative/zakirabackground.png')] object-cover bg-center bg-bottom h-full w-full bg-cover bg-no-repeat backdrop-blur-sm" style={{backgroundPosition: 'center 30%', filter: 'grayscale(60%)'}}>
                   <span className='text-white/60 uppercase text-sm font-bold'>
                     Empowering Voices
                   </span>
@@ -44,7 +44,14 @@ function CustomerStories() {
                       37%
                     </h2>
                     <h4 className='dark:text-dark_black'>
-                      Afghanistan Literacy Rate .”
+                      <a 
+                        href="https://data.worldbank.org/indicator/SE.ADT.LITR.ZS?locations=AF" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="hover:underline cursor-pointer transition-all duration-200 hover:text-blue-600 dark:hover:text-blue-400"
+                      >
+                        Afghanistan Literacy Rate According to the World Bank
+                      </a>
                     </h4>
                   </div>
                 </div>

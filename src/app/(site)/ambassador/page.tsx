@@ -2,6 +2,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function AmbassadorPage() {
   const bottomAnimation = (index: number) => ({
@@ -22,7 +23,7 @@ export default function AmbassadorPage() {
             className="text-center max-w-4xl mx-auto"
           >
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Become an <span className="bg-yellow-300 dark:bg-yellow-400 text-gray-900 px-2">Ambassador</span>
+              Become an <span className="instrument-font italic font-normal dark:text-white/70">Ambassador</span>
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
               Join our global network of cultural ambassadors and help amplify Afghan voices while building meaningful connections across cultures.
@@ -43,7 +44,7 @@ export default function AmbassadorPage() {
           {/* Left Side - Content */}
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-              What is an <span className="bg-yellow-300 dark:bg-yellow-400 text-gray-900 px-2">Ambassador</span>?
+              What is an Ambassador?
             </h2>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg">
               Our ambassadors are passionate individuals who serve as cultural bridges, connecting communities and amplifying the voices of Afghan storytellers worldwide. 
@@ -77,15 +78,15 @@ export default function AmbassadorPage() {
             </div>
           </div>
 
-          {/* Right Side - Image Placeholder */}
+          {/* Right Side - Image */}
           <div className="relative">
-            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-purple_blue/20 to-yellow-300/20 flex items-center justify-center">
-              <div className="text-center">
-                <svg className="w-24 h-24 text-purple_blue mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                <p className="text-gray-600 dark:text-gray-400">Ambassador Network</p>
-              </div>
+            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src="/images/home/ambassador/handscommunity.png"
+                alt="Ambassador Network"
+                fill
+                className="object-cover"
+              />
             </div>
             {/* Decorative dots */}
             <div className="absolute -bottom-4 -right-4 flex space-x-2">
@@ -105,10 +106,7 @@ export default function AmbassadorPage() {
         >
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Benefits of becoming an{' '}
-              <span className="bg-yellow-300 dark:bg-yellow-400 text-gray-900 px-2">
-                Ambassador
-              </span>
+              Benefits of becoming an Ambassador
             </h2>
             <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               Join our ambassador program and unlock opportunities for personal growth, community impact, and cultural exchange.
