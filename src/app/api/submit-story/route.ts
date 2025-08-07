@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function GET() {
   return NextResponse.json({ message: 'API is working' })
@@ -78,6 +81,50 @@ export async function POST(request: NextRequest) {
         error: 'Failed to save submission',
         details: dbError
       }, { status: 500 })
+    }
+
+    // Send email to admin
+    try {
+      await resend.emails.send({
+        from: 'A Thousand Voices <noreply@athousandvoices.org>',
+        to: ['admin@athousandvoices.com'], // Replace with your email
+        subject: `New Story Submission: ${storyTitle}`,
+        html: `
+          <h2>New Story Submission Received</h2>
+          <p><strong>Submission ID:</strong> ${submissionId}</p>
+          <p><strong>Author:</strong> ${firstName} ${lastName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Location:</strong> ${city}, ${country}</p>
+          <p><strong>Story Title:</strong> ${storyTitle}</p>
+          <p><strong>Language:</strong> ${storyLanguage}</p>
+          <p><strong>File:</strong> <a href="${publicUrl}">Download PDF</a></p>
+          <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
+        `
+      })
+    } catch (emailError) {
+      console.error('Admin email error:', emailError)
+    }
+
+    // Send confirmation email to user
+    try {
+      await resend.emails.send({
+        from: 'A Thousand Voices <noreply@athousandvoices.org>',
+        to: [email],
+        subject: 'Your Story Submission - A Thousand Voices',
+        html: `
+          <h2>Thank you for your submission!</h2>
+          <p>Dear ${firstName},</p>
+          <p>We have successfully received your story submission "<strong>${storyTitle}</strong>".</p>
+          <p><strong>Submission ID:</strong> ${submissionId}</p>
+          <p><strong>Submission Date:</strong> ${new Date().toLocaleString()}</p>
+          <p>Our team will review your story and get back to you within 2-3 weeks. Please keep this submission ID for reference.</p>
+          <p>Thank you for sharing your voice with A Thousand Voices!</p>
+          <br>
+          <p>Best regards,<br>The A Thousand Voices Team</p>
+        `
+      })
+    } catch (emailError) {
+      console.error('User email error:', emailError)
     }
 
     console.log('Story submitted successfully:', submissionId)
