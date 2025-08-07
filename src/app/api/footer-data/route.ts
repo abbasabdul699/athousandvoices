@@ -32,10 +32,10 @@ const footerData = {
         name: "Quick Links",
         links: [
             { name: "Contact us", url: "/contact" },
-            { name: "About us", url: "/#aboutus" },
-            { name: "Work", url: "/#work" },
-            { name: "Services", url: "/#services" },
-            { name: "Submit Your Story", url: "/#submitstory" }
+            { name: "About us", url: "/about" },
+            { name: "Become an Ambassador", url: "/ambassador" },
+            { name: "Timeline", url: "/#timeline" },
+            { name: "Submit Your Story", url: "/submit-story" }
         ]
     },
     otherPages: {

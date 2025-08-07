@@ -1,57 +1,179 @@
 import { Metadata } from "next";
 import Link from "next/link";
+
 export const metadata: Metadata = {
-    title: "Privacy Policy | Awake Agency",
+    title: "Privacy Policy | A Thousand Voices",
 };
 
 export default function Page() {
     return (
         <section>
-            <div
-                className="relative w-full pt-44 2xl:pb-20 pb-10 before:absolute before:w-full before:h-full before:bg-linear-to-r before:from-blue_gradient before:via-white before:to-yellow_gradient before:rounded-full before:top-24 before:blur-3xl before:-z-10 dark:before:from-dark_blue_gradient dark:before:via-black dark:before:to-dark_yellow_gradient dark:before:rounded-full dark:before:blur-3xl dark:before:-z-10"
-            >
+            <div className="relative w-full pt-44 2xl:pb-20 pb-10 before:absolute before:w-full before:h-full before:bg-linear-to-r before:from-blue_gradient before:via-white before:to-yellow_gradient before:rounded-full before:top-24 before:blur-3xl before:-z-10 dark:before:from-dark_blue_gradient dark:before:via-black dark:before:to-dark_yellow_gradient dark:before:rounded-full dark:before:blur-3xl dark:before:-z-10">
                 <div className="container relative z-10">
                     <div className='flex flex-col gap-5'>
                         <h1 className='md:text-6xl text-4xl font-medium text-center'>
                             Privacy Policy
                         </h1>
                         <div className="bg-white dark:bg-dark_black p-8 rounded-2xl">
-                            <p className="text-opacity-60">
-                                This Privacy Statement explains how Personal Information about our (potential) customers and other individuals using our services is collected, used and disclosed by Getnextjstemplates and its respective affiliates ("us", "we", "our" or "Getnextjstemplates"). This Privacy Statement describes our privacy practices in relation to the use of our websites (including any customer portal or interactive customer website) (
-                                <Link href="https://getnextjstemplates.com/" className="text-dark_black">https://getnextjstemplates.com/</Link>), our software (Getnextjstemplates), services, solutions, tools, and related applications, services, and programs, including research and marketing activities, offered by us (the "Services"), as well as your choices regarding use, access, storage and correction of Personal Information. It also describes how we collect, use, disclose and otherwise process Personal Information collected in relation to our Services and otherwise in the course of our business activities.</p>
+                            <p className="text-opacity-60 mb-6">
+                                <strong>Last updated:</strong> August 6, 2025
+                            </p>
 
-                            <p className="text-opacity-60">By signing up to our Services and by agreeing to our General Terms and Conditions required to use certain of our Services, you agree to the collection, usage, storage and disclosure of information described in this Privacy Statement.</p>
-
-                            <p className="text-opacity-60">Our Services may contain links to other websites or services; and information practices and/or the content of such other websites or services shall be governed by the privacy statements of such other websites or services.</p>
-
-                            <p className="text-opacity-60">We may change this Privacy Statement from time to time. If we make changes, we will notify you by revising the date at the top of the statement and providing you with additional notifications of such (such as adding a statement to our homepage, in our Getnextjstemplates Preview app or sending you a notification). We encourage you to review the Privacy Statement whenever you use our Services to stay informed about our information practices and the ways you can help protect your privacy.</p>
+                            <p className="text-opacity-60 mb-6">
+                                A Thousand Voices ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, submit stories, or contact us through our platform.
+                            </p>
 
                             <div className="my-6">
-                                <h4 className="font-semibold">Personal information collection </h4>
-                                <p className="mt-6">
-                                    While using our Services, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you. For example, we collect information when you create an account, request customer support or otherwise communicate with us. The types of information we may collect include basic user information (such as your name, email address, social media avatar, telephone number and photograph), company information and any other information you choose to provide.
+                                <h4 className="font-semibold text-xl mb-4">Information We Collect</h4>
+                                
+                                <h5 className="font-semibold mb-2">Personal Information</h5>
+                                <p className="mb-4 text-opacity-60">
+                                    When you submit a story or contact us, we may collect the following personal information:
                                 </p>
+                                <ul className="list-disc list-inside mb-4 text-opacity-60 ml-4">
+                                    <li>First and last name</li>
+                                    <li>Email address</li>
+                                    <li>Country and city</li>
+                                    <li>Story title and content</li>
+                                    <li>Language preference</li>
+                                    <li>Any additional information you choose to provide</li>
+                                </ul>
 
-                                <p className="mt-6 text-opacity-60">
-                                    We will not collect financial information from you (such as your payment card number, expiration date or security code). All payments to us are handled via a third party, Getnextjstemplates
-                                    <Link href="https://getnextjstemplates.com/" className="text-dark_black">(https://getnextjstemplates.com/)</Link>. We refer to their Privacy Statement <Link href="https://getnextjstemplates.com/" className="text-dark_black">(https://getnextjstemplates.com/)</Link>.
+                                <h5 className="font-semibold mb-2">Story Submissions</h5>
+                                <p className="mb-4 text-opacity-60">
+                                    When you submit a story through our platform:
                                 </p>
+                                <ul className="list-disc list-inside mb-4 text-opacity-60 ml-4">
+                                    <li>Your story content and PDF files are stored securely</li>
+                                    <li>We generate a unique submission ID for tracking</li>
+                                    <li>Your story may be reviewed for publication consideration</li>
+                                    <li>We may contact you regarding your submission</li>
+                                </ul>
 
+                                <h5 className="font-semibold mb-2">Contact Information</h5>
+                                <p className="mb-4 text-opacity-60">
+                                    When you use our contact form, we collect:
+                                </p>
+                                <ul className="list-disc list-inside mb-4 text-opacity-60 ml-4">
+                                    <li>Name and email address</li>
+                                    <li>Subject of inquiry</li>
+                                    <li>Message content</li>
+                                </ul>
+
+                                <h5 className="font-semibold mb-2">Automatically Collected Information</h5>
+                                <p className="mb-4 text-opacity-60">
+                                    We automatically collect certain information when you visit our website:
+                                </p>
+                                <ul className="list-disc list-inside mb-4 text-opacity-60 ml-4">
+                                    <li>IP address and browser type</li>
+                                    <li>Pages visited and time spent</li>
+                                    <li>Device information</li>
+                                    <li>Cookies and similar technologies</li>
+                                </ul>
                             </div>
+
                             <div className="my-6">
-                                <h4 className="font-semibold">Personal information you provide to us</h4>
-                                <p className="mt-6 text-opacity-60">
-                                    While using our Services, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you. For example, we collect information when you create an account, request customer support or otherwise communicate with us. The types of information we may collect include basic user information (such as your name, email address, social media avatar, telephone number and photograph), company information and any other information you choose to provide.
+                                <h4 className="font-semibold text-xl mb-4">How We Use Your Information</h4>
+                                <p className="mb-4 text-opacity-60">
+                                    We use the information we collect to:
                                 </p>
-                                <p className="mt-6 text-opacity-60">
-                                    We will not collect financial information from you (such as your payment card number, expiration date or security code). All payments to us are handled via a getnextjstemplates{" "}
-                                    <Link href="https://www.paddle.com/" className="text-dark_black">(https://getnextjstemplates.com)</Link>. We refer to their Privacy Statement <Link href="https://www.paddle.com/" className="text-dark_black">https://getnextjstemplates.com/</Link>.
+                                <ul className="list-disc list-inside mb-4 text-opacity-60 ml-4">
+                                    <li>Process and review story submissions</li>
+                                    <li>Communicate with you about your submissions</li>
+                                    <li>Respond to your inquiries and provide support</li>
+                                    <li>Send confirmation emails and updates</li>
+                                    <li>Improve our website and services</li>
+                                    <li>Comply with legal obligations</li>
+                                </ul>
+                            </div>
+
+                            <div className="my-6">
+                                <h4 className="font-semibold text-xl mb-4">Information Sharing and Disclosure</h4>
+                                <p className="mb-4 text-opacity-60">
+                                    We do not sell, trade, or otherwise transfer your personal information to third parties except in the following circumstances:
+                                </p>
+                                <ul className="list-disc list-inside mb-4 text-opacity-60 ml-4">
+                                    <li><strong>Service Providers:</strong> We use trusted third-party services for email delivery (Resend), file storage (Supabase), and website hosting (Vercel)</li>
+                                    <li><strong>Legal Requirements:</strong> We may disclose information if required by law or to protect our rights</li>
+                                    <li><strong>Consent:</strong> We may share information with your explicit consent</li>
+                                </ul>
+                            </div>
+
+                            <div className="my-6">
+                                <h4 className="font-semibold text-xl mb-4">Data Security</h4>
+                                <p className="mb-4 text-opacity-60">
+                                    We implement appropriate security measures to protect your personal information:
+                                </p>
+                                <ul className="list-disc list-inside mb-4 text-opacity-60 ml-4">
+                                    <li>Encrypted data transmission (HTTPS)</li>
+                                    <li>Secure file storage with access controls</li>
+                                    <li>Regular security updates and monitoring</li>
+                                    <li>Limited access to personal information</li>
+                                </ul>
+                            </div>
+
+                            <div className="my-6">
+                                <h4 className="font-semibold text-xl mb-4">Your Rights and Choices</h4>
+                                <p className="mb-4 text-opacity-60">
+                                    You have the right to:
+                                </p>
+                                <ul className="list-disc list-inside mb-4 text-opacity-60 ml-4">
+                                    <li>Access your personal information</li>
+                                    <li>Correct inaccurate information</li>
+                                    <li>Request deletion of your information</li>
+                                    <li>Withdraw consent for data processing</li>
+                                    <li>Opt out of marketing communications</li>
+                                </ul>
+                            </div>
+
+                            <div className="my-6">
+                                <h4 className="font-semibold text-xl mb-4">Data Retention</h4>
+                                <p className="mb-4 text-opacity-60">
+                                    We retain your information for as long as necessary to:
+                                </p>
+                                <ul className="list-disc list-inside mb-4 text-opacity-60 ml-4">
+                                    <li>Provide our services</li>
+                                    <li>Comply with legal obligations</li>
+                                    <li>Resolve disputes</li>
+                                    <li>Enforce our agreements</li>
+                                </ul>
+                            </div>
+
+                            <div className="my-6">
+                                <h4 className="font-semibold text-xl mb-4">Children's Privacy</h4>
+                                <p className="mb-4 text-opacity-60">
+                                    Our services are not intended for children under 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us.
+                                </p>
+                            </div>
+
+                            <div className="my-6">
+                                <h4 className="font-semibold text-xl mb-4">International Data Transfers</h4>
+                                <p className="mb-4 text-opacity-60">
+                                    Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place to protect your information in accordance with this Privacy Policy.
+                                </p>
+                            </div>
+
+                            <div className="my-6">
+                                <h4 className="font-semibold text-xl mb-4">Changes to This Privacy Policy</h4>
+                                <p className="mb-4 text-opacity-60">
+                                    We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date. We encourage you to review this Privacy Policy periodically.
+                                </p>
+                            </div>
+
+                            <div className="my-6">
+                                <h4 className="font-semibold text-xl mb-4">Contact Us</h4>
+                                <p className="mb-4 text-opacity-60">
+                                    If you have any questions about this Privacy Policy or our data practices, please contact us at:
+                                </p>
+                                <p className="mb-4 text-opacity-60">
+                                    <strong>Email:</strong> admin@athousandvoices.com<br/>
+                                    <strong>Website:</strong> <Link href="/" className="text-dark_black">athousandvoices.com</Link>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section >
+        </section>
     );
 };
