@@ -86,8 +86,8 @@ export async function POST(request: NextRequest) {
     // Send email to admin
     try {
       await resend.emails.send({
-        from: 'A Thousand Voices <noreply@athousandvoices.org>',
-        to: ['admin@athousandvoices.com'], // Replace with your email
+        from: 'onboarding@resend.dev', // Use Resend's test domain
+        to: ['admin@athousandvoices.com'],
         subject: `New Story Submission: ${storyTitle}`,
         html: `
           <h2>New Story Submission Received</h2>
@@ -101,6 +101,7 @@ export async function POST(request: NextRequest) {
           <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
         `
       })
+      console.log('Admin email sent successfully')
     } catch (emailError) {
       console.error('Admin email error:', emailError)
     }
@@ -108,7 +109,7 @@ export async function POST(request: NextRequest) {
     // Send confirmation email to user
     try {
       await resend.emails.send({
-        from: 'A Thousand Voices <noreply@athousandvoices.org>',
+        from: 'onboarding@resend.dev', // Use Resend's test domain
         to: [email],
         subject: 'Your Story Submission - A Thousand Voices',
         html: `
@@ -123,6 +124,7 @@ export async function POST(request: NextRequest) {
           <p>Best regards,<br>The A Thousand Voices Team</p>
         `
       })
+      console.log('User email sent successfully')
     } catch (emailError) {
       console.error('User email error:', emailError)
     }
