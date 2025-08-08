@@ -26,7 +26,7 @@ function Timeline() {
     },
     {
       id: 2,
-      step: 'July - August 2025',
+      step: 'August 2025',
       title: 'Workshop',
       description: 'Virtual storytelling and creative writing sessions take place across the globe, particularly in countries with biggest populations of Afghan immigrants such as Pakistan, the U.S., Canada, the U.K., and Germany—paired with one-on-one mentorship.',
       icon: <Users className="w-6 h-6" />,
@@ -35,7 +35,7 @@ function Timeline() {
     },
     {
       id: 3,
-      step: 'July - October 2025',
+      step: 'Begins September 2025',
       title: 'Story Submissions',
       description: 'Afghan youth will submit short stories—fiction or non-fiction—centered on themes of identity, resilience, and home.',
       icon: <Globe className="w-6 h-6" />,
@@ -46,7 +46,7 @@ function Timeline() {
       id: 4,
       step: 'August 2026',
       title: 'Publishing and Book Launch (Washington D.C.)',
-      description: 'We celebrate the power of Afghan youth voices with a public launch event, readings, and recognition—on the fifth anniversary of Kabul’s fall.',
+      description: 'We celebrate the power of Afghan youth voices with a public launch event, readings, and recognition—on the fifth anniversary of Kabul\'s fall.',
       icon: <BookOpen className="w-6 h-6" />,
       bg_color: 'bg-purple-500/20',
       txt_color: 'text-purple-600',
@@ -84,17 +84,26 @@ function Timeline() {
             {timelineData.map((item, index) => (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+                initial={{ opacity: 0, x: -50, y: 20 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
                 className='relative flex items-start mb-12 last:mb-0'>
                 
                 {/* Timeline Dot */}
                 <div className='absolute left-6 w-4 h-4 bg-purple_blue rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10'></div>
                 
                 {/* Content Card */}
-                <div className='ml-16 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 flex-1'>
+                <motion.div 
+                  className='ml-16 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 flex-1 cursor-pointer'
+                  whileHover={{ 
+                    y: -8, 
+                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                    transition: { duration: 0.3 }
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
                   <div className='flex items-center justify-between mb-4'>
                     <span className='text-sm font-bold text-purple_blue'>
                       {item.step}
@@ -110,7 +119,7 @@ function Timeline() {
                   <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>
                     {item.description}
                   </p>
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>

@@ -28,7 +28,7 @@ function Faq() {
           <div className='flex flex-col gap-10 md:gap-20'>
             <div className='max-w-md text-center mx-auto'>
               <h2>
-                Got questions? We’ve got{' '}
+                Got questions? We've got{' '}
                 <span className='instrument-font italic font-normal dark:text-white/70'>
                   answers
                 </span>
@@ -50,7 +50,7 @@ function Faq() {
                       </h4>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <p className='text-base font-normal text-dark_black/60 dark:text-white/60'>
+                      <p className='text-lg font-normal text-dark_black/60 dark:text-white/60 leading-relaxed'>
                         {item.faq_ans}
                       </p>
                     </AccordionContent>

@@ -159,7 +159,7 @@ export default function StorySubmissionForm() {
   ]
 
   const languages = [
-    'English', 'Dari', 'Pashto', 'Urdu', 'Arabic', 'French', 'German', 'Other'
+    'English', 'Dari', 'Pashto', 'Other'
   ]
 
   return (

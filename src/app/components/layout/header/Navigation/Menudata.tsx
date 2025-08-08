@@ -5,7 +5,7 @@ export const headerData: HeaderItem[] = [
     { label: 'About', href: '/about' },
     { label: 'Timeline', href: '/#timeline' },
     { label: 'Press', href: '/press' },
+    { label: 'Partnership', href: '/partnership' },
     { label: 'Ambassador', href: '/ambassador' },
     { label: 'Contact', href: '/contact' },
-    { label: 'Submit Story', href: '/submit-story', isButton: true },
 ];

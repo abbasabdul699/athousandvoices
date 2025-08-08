@@ -105,37 +105,37 @@ const onlinePresenceList: onlinePresence[] = [
 
 const creativeMindList: creativeMind[] = [
   {
-    image: '/images/home/creative/Zakira.png',
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Zakira.png`,
     name: 'Zakira Baskhshi',
     position: 'President',
     linkedinLink: 'https://www.linkedin.com/in/zakira-bakhshi-5570811b2/',
   },
   {
-    image: '/images/home/creative/Ahmad.png',
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Ahmad.png`,
     name: 'Ahmadzia Momand',
     position: 'Outreach Coordinator',
     linkedinLink: 'https://www.linkedin.com/in/ahmadzia-momand-a6a343167/',
   },
   {
-    image: '/images/home/creative/Abbas1.png',
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Abbas1.png`,
     name: 'Abdul Abbas',
     position: 'Software Engineer',
     linkedinLink: 'https://www.linkedin.com/in/abdul-abbas-b78921122/',
   },
   {
-    image: '/images/home/creative/tamana.png',
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/tamana.png`,
     name: 'Tamana Farewar',
     position: 'Board Member',
     linkedinLink: 'https://www.linkedin.com/in/tamana-farewar-21352a177/',
   },
   {
-    image: '/images/home/creative/ethan.png',
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Ethan.png`,
     name: 'Ethan Schroyer',
     position: 'Board Member',
     linkedinLink: 'https://www.linkedin.com/in/ethan-schroyer-a63107238/',
   },
   {
-    image: '/images/home/creative/Sadia.png',
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Sadia.png`,
     name: 'Sadia Ansari',
     position: 'Social Media Outreach',
     linkedinLink: 'https://www.linkedin.com/in/sadia-ansari-6a1653247/',

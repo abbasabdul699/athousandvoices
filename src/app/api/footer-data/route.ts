@@ -4,7 +4,7 @@ const footerData = {
     brand: {
         name: "A Thousand Voices",
         tagline: "Empowering Afghans and the diaspora. Let's create something amazing together. #ProjectforPeace",
-        website: "https://athousandvoices.com",
+        website: "www.athousandvoices.com",
         socialLinks: [
           /*   {
                 icon: "/images/home/footerSocialIcon/twitter.svg",
