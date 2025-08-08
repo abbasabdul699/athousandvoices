@@ -33,7 +33,7 @@ const PanoramicScrollGallery = () => {
   }
 
   return (
-    <section className="relative py-16 overflow-hidden before:absolute before:w-full before:h-full before:bg-gradient-to-r before:from-blue-50 before:via-white before:to-yellow-50 before:top-0 before:left-0 before:-z-10 dark:before:from-blue-900/20 dark:before:via-gray-900 dark:before:to-yellow-900/20">
+    <section className="relative py-16 overflow-hidden before:absolute before:w-full before:h-full before:bg-gradient-to-r before:from-blue_gradient before:via-white before:to-yellow_gradient before:rounded-full before:top-24 before:blur-3xl before:-z-10 dark:before:from-dark_blue_gradient dark:before:via-black dark:before:to-dark_yellow_gradient dark:before:rounded-full dark:before:blur-3xl dark:before:-z-10">
       <div className="flex justify-between items-center px-4 sm:px-12">
         <button
           onClick={() => setActiveIndex((prev) => Math.max(0, prev - 1))}
@@ -60,7 +60,7 @@ const PanoramicScrollGallery = () => {
                   <img
                     src={src}
                     alt={`Afghanistan ${i}`}
-                    className="rounded-lg shadow-xl w-[220px] h-[300px] object-cover"
+                    className="rounded-lg shadow-xl w-[280px] h-[380px] object-cover"
                     onClick={() => setActiveIndex(i)}
                   />
                 </motion.div>

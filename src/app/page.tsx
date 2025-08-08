@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import HeroSection from './components/home/hero'
 import CurvedPanoramicSlider from './components/home/curved-panoramic-slider'
-import Brand from './components/home/brand'
 import QuickSummary from './components/home/quick-summary'
+import Brand from './components/home/brand'
 import Timeline from './components/home/timeline'
 import CustomerStories from './components/home/customer-stories'
 import Faq from './components/home/faq'
@@ -23,13 +23,13 @@ export default function Home() {
       <CurvedPanoramicSlider />
       {/* ---------------------Curved Panoramic Slider section Ends-----------------  */}
 
-      {/* ---------------------Brand logo section Starts-----------------  */}
-      <Brand />
-      {/* ---------------------Brand logo section Ends-----------------  */}
-
       {/* ---------------------Quick Summary section Starts-----------------  */}
       <QuickSummary />
       {/* ---------------------Quick Summary section Ends-----------------  */}
+
+      {/* ---------------------Brand logo section Starts-----------------  */}
+      <Brand />
+      {/* ---------------------Brand logo section Ends-----------------  */}
 
       {/* ---------------------Timeline section Starts-----------------  */}
       <Timeline />

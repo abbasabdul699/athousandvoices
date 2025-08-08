@@ -32,11 +32,6 @@ const avatarList: avatar[] = [
 
 const brandList: brand[] = [
   {
-    image: '/images/home/brand/brand-peace.png',
-    darkImg: '/images/home/brand/ProjectforPeace.png',
-    title: 'Project for Peace',
-  },
-  {
     image: '/images/home/brand/ProjectforPeace.png',
     darkImg: '/images/home/brand/ProjectforPeace.png',
     title: 'Project for Peace',
@@ -113,31 +108,31 @@ const creativeMindList: creativeMind[] = [
   {
     image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Ahmad.png`,
     name: 'Ahmadzia Momand',
-    position: 'Outreach Coordinator',
+    position: 'Finance Director',
     linkedinLink: 'https://www.linkedin.com/in/ahmadzia-momand-a6a343167/',
   },
   {
     image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Abbas1.png`,
     name: 'Abdul Abbas',
-    position: 'Software Engineer',
+    position: 'Full Stack and Designer',
     linkedinLink: 'https://www.linkedin.com/in/abdul-abbas-b78921122/',
   },
   {
     image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/tamana.png`,
     name: 'Tamana Farewar',
-    position: 'Board Member',
+    position: 'Partnerships & Outreach Director',
     linkedinLink: 'https://www.linkedin.com/in/tamana-farewar-21352a177/',
   },
   {
     image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Ethan.png`,
     name: 'Ethan Schroyer',
-    position: 'Board Member',
+    position: 'Advocacy Director',
     linkedinLink: 'https://www.linkedin.com/in/ethan-schroyer-a63107238/',
   },
   {
     image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Sadia.png`,
     name: 'Sadia Ansari',
-    position: 'Social Media Outreach',
+    position: 'Social Media Coordinator',
     linkedinLink: 'https://www.linkedin.com/in/sadia-ansari-6a1653247/',
   },
 ]

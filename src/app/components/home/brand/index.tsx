@@ -1,53 +1,11 @@
 'use client'
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
-
-// Slide component for horizontal scrolling
-const Slide = (props: any) => {
-  const direction = props.direction === 'left' ? -1 : 1;
-  const translateX = useTransform(props.progress, [0, 1], [150 * direction, -150 * direction]);
-
-  return (
-    <motion.div 
-      style={{ x: translateX, left: props.left }} 
-      className="relative flex whitespace-nowrap"
-    >
-      <Phrase src={props.src} />
-      <Phrase src={props.src} />
-      <Phrase src={props.src} />
-    </motion.div>
-  );
-};
-
-// Phrase component for text and image combination
-const Phrase = ({ src }: { src: string }) => {
-  return (
-    <div className='px-5 flex gap-5 items-center'>
-      <p className='text-[4vw] font-bold text-gray-900 dark:text-white'>
-        Sponsored
-      </p>
-      <span className="relative h-[4vw] aspect-[4/2] rounded-full overflow-hidden">
-        <Image
-          style={{ objectFit: "cover" }}
-          src={src}
-          alt="sponsor"
-          fill
-        />
-      </span>
-    </div>
-  );
-};
+import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 
 function Brand() {
-  const container = useRef(null);
   const [brandList, setbrandList] = useState<any>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ['start end', 'end start']
-  });
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,33 +22,51 @@ function Brand() {
     fetchData()
   }, [])
 
-  // Use brand images or fallback to Afghan images
-  const images = brandList?.map((brand: any) => brand.image) || [
-    '/images/afghan1.jpg',
-    '/images/afghan2.jpg',
-    '/images/afghan3.jpg',
-  ];
+  const handleBrandClick = () => {
+    router.push('/press')
+  }
 
   return (
-    <section>
-      {/* Horizontal Scrolling Banner */}
-      <div className='w-full bg-gradient-to-r from-pink-50 via-white to-green-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-0 overflow-hidden'>
-        <div className='container mx-auto'>
-          {/* Horizontal Scrolling Content */}
-          <div className='h-[5vh]'></div> {/* Initial scroll space */}
-          <div ref={container} className='relative'>
-            {images.map((src: string, index: number) => (
-              <Slide 
+    <section className='py-16 bg-white'>
+      <div className='container mx-auto px-4'>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className='text-center'
+        >
+          <h3 className='text-lg text-gray-600 mb-8'>
+            In partnership with
+          </h3>
+          
+          <div className='flex flex-wrap justify-center items-center gap-8 md:gap-12'>
+            {brandList?.map((brand: any, index: number) => (
+              <motion.div
                 key={index}
-                src={src} 
-                direction={index % 2 === 0 ? 'left' : 'right'} 
-                left={`${-40 + (index * 15)}%`} 
-                progress={scrollYProgress}
-              />
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className='flex-shrink-0'
+                whileHover={{ 
+                  scale: 1.1,
+                  y: -5,
+                  transition: { duration: 0.2 }
+                }}
+                onClick={handleBrandClick}
+              >
+                <div className='w-32 h-30 md:w-40 md:h-30 relative cursor-pointer'>
+                  <img
+                    src={brand.image}
+                    alt={brand.name}
+                    className='w-full h-full object-contain transition-all duration-300'
+                  />
+                </div>
+              </motion.div>
             ))}
           </div>
-          <div className='h-[5vh]'></div> {/* Final scroll space */}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

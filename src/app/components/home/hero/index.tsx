@@ -31,7 +31,8 @@ const TypewriterText = ({ text, className }: { text: string; className?: string 
 
 function HeroSection() {
   const ref = useRef(null)
-   const [avatarList, setAvatarList] = useState<any>(null);
+  const [avatarList, setAvatarList] = useState<any>(null);
+  const [brandList, setBrandList] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +41,7 @@ function HeroSection() {
         if (!res.ok) throw new Error('Failed to fetch')
         const data = await res.json()        
         setAvatarList(data)
+        setBrandList(data?.brandList || [])
       } catch (error) {
         console.error('Error fetching services:', error)
       }
@@ -116,6 +118,23 @@ function HeroSection() {
                     </svg>
                   </Link>
 
+                  {/* Brand Image Circle */}
+                  {brandList && brandList.length > 0 && (
+                    <div className='flex items-center gap-3'>
+                      <div 
+                        className='w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200 hover:scale-110 hover:border-gray-400 transition-all duration-200 cursor-pointer'
+                        onClick={() => window.open('https://www.middlebury.edu/projects-for-peace', '_blank')}
+                      >
+                        <Image
+                          src={brandList[0].image}
+                          alt={brandList[0].title}
+                          width={64}
+                          height={64}
+                          className='w-full h-full object-contain'
+                        />
+                      </div>
+                    </div>
+                  )}
                   {/* {/* --------------- avatar division -------------- */}
                   {/* <div className='flex items-center gap-7'>
                     <ul className='avatar flex flex-row items-center'>
