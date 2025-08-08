@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import HeroSection from './components/home/hero'
 import CurvedPanoramicSlider from './components/home/curved-panoramic-slider'
-import ParallaxZoomScroll from './components/home/parallax-zoom-scroll'
 import Brand from './components/home/brand'
 import QuickSummary from './components/home/quick-summary'
 import Timeline from './components/home/timeline'
@@ -20,9 +19,9 @@ export default function Home() {
       <HeroSection />
       {/* ---------------------Hero section Ends-----------------  */}
 
-      {/* ---------------------Parallax Zoom Scroll section Starts-----------------  */}
-      <ParallaxZoomScroll />
-      {/* ---------------------Parallax Zoom Scroll section Ends-----------------  */}
+      {/* ---------------------Curved Panoramic Slider section Starts-----------------  */}
+      <CurvedPanoramicSlider />
+      {/* ---------------------Curved Panoramic Slider section Ends-----------------  */}
 
       {/* ---------------------Brand logo section Starts-----------------  */}
       <Brand />
