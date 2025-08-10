@@ -127,7 +127,7 @@ export default function AmbassadorPage() {
           <div className="relative">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="/images/home/ambassador/handscommunity.png"
+                src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/ambassador/handscommunity.png"
                 alt="Ambassador Network"
                 fill
                 className="object-cover"

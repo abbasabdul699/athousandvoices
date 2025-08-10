@@ -2,11 +2,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 const IMAGES = [
-  '/images/afghan1.jpg',
-  '/images/afghan2.jpg',
-  '/images/afghan3.jpg',
-  '/images/afghan4.jpg',
-  '/images/afghan5.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan1.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan2.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan3.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan4.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan5.jpg',
 ]
 
 const ParallaxCarousel = () => {

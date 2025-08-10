@@ -77,7 +77,7 @@ export default function PartnershipPage() {
   const currentPartners = [
     {
       name: "Project for Peace",
-      logo: "/images/home/brand/ProjectforPeace.png",
+      logo: "https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/brand/ProjectforPeace.png",
       description: "Supporting peace-building initiatives through storytelling and cultural exchange."
     }
   ]

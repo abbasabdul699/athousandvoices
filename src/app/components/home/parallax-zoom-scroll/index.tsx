@@ -4,16 +4,16 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 
 const IMAGES = [
-  '/images/afghan1.jpg',
-  '/images/afghan2.jpg',
-  '/images/afghan3.jpg',
-  '/images/afghan4.jpg',
-  '/images/afghan5.jpg',
-  '/images/afghan1.jpg', // Reusing images for more variety
-  '/images/afghan2.jpg',
-  '/images/afghan3.jpg',
-  '/images/afghan4.jpg',
-  '/images/afghan5.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan1.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan2.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan3.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan4.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan5.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan1.jpg', // Reusing images for more variety
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan2.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan3.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan4.jpg',
+  'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghan5.jpg',
 ]
 
 export default function ParallaxZoomScroll() {

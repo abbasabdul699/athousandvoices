@@ -17,13 +17,18 @@ function CustomerStories() {
             </div>
             <div className='flex flex-col gap-6'>
               <div className='flex flex-col xl:flex xl:flex-row gap-6'>
-                <div className="p-8 gap-64 rounded-2xl flex flex-col relative bg-[url('/images/home/creative/zakirabackground1.jpeg')] object-cover bg-center bg-bottom h-full w-full bg-cover bg-no-repeat backdrop-blur-sm" style={{backgroundPosition: 'center 50%', filter: 'grayscale(60%)'}}>
+                <div className="p-8 gap-64 rounded-2xl flex flex-col relative bg-cover bg-center bg-bottom h-full w-full bg-no-repeat backdrop-blur-sm" 
+                     style={{
+                       backgroundImage: 'url(https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/zakirabackground1.jpeg)',
+                       backgroundPosition: 'center 50%', 
+                       filter: 'grayscale(60%)'
+                     }}>
                   <span className='text-black/60 uppercase text-sm font-bold'>
                     Empowering Voices
                   </span>
                   <div className='flex flex-col gap-6 '>
                     <h4 className='text-white'>
-                      “We create safe, nurturing spaces where young Afghans can share their stories, find confidence in their voice, and begin to shape their futures with pride and purpose.”
+                      "We create safe, nurturing spaces where young Afghans can share their stories, find confidence in their voice, and begin to shape their futures with pride and purpose."
                     </h4>
                     <div className='flex flex-col gap-1'>
                       <p className='text-white font-medium'>Zakira Bakhshi</p>
@@ -67,12 +72,11 @@ function CustomerStories() {
                     </h4>
                     <div>
                       <Image
-                        src='/images/home/customerStories/afghanart.jpg'
-                        alt='image'
+                        src='https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/afghanart.jpg'
+                        alt='Afghan art and culture'
                         width={344}
                         height={220}
                         className='w-full h-52 rounded-2xl'
-                        unoptimized={true}
                       />
                     </div>
                   </div>
@@ -83,7 +87,7 @@ function CustomerStories() {
                       Inspiring a New Generation
                     </span>
                     <h2 className='text-2xl lg:text-5xl'>
-                      “Every story shared is a spark of hope. We uplift voices that have long been silenced to inspire others to lead, dream, and believe that—no matter how dark it gets—spring will return.”
+                      "Every story shared is a spark of hope. We uplift voices that have long been silenced to inspire others to lead, dream, and believe that—no matter how dark it gets—spring will return."
                     </h2>
                   </div>
                   <div className='flex flex-col gap-1'>

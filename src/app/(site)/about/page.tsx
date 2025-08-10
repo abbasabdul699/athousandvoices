@@ -51,18 +51,18 @@ export default function AboutPage() {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-16">
-        {/* Mission Section */}
+        {/* Mission Section - The Problem */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20"
         >
-          {/* Left Side - Image */}
-          <div className="relative">
+          {/* Left Side - Image (order-1 on mobile, order-1 on desktop) */}
+          <div className="relative order-1 lg:order-1">
             <div className="relative h-130 rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="/images/home/about/mountain.png"
+                src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/mountain.png"
                 alt="A Thousand Voices Team"
                 fill
                 className="object-cover"
@@ -76,8 +76,8 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Right Side - Content */}
-          <div className="space-y-6">
+          {/* Right Side - Content (order-2 on mobile, order-2 on desktop) */}
+          <div className="space-y-6 order-2 lg:order-2">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
               The Problem
             </h2>
@@ -113,15 +113,15 @@ export default function AboutPage() {
           </div>
         </motion.div>
 
-        {/* Values Section */}
+        {/* Values Section - The Vision */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20"
         >
-          {/* Left Side - Content */}
-          <div className="space-y-8">
+          {/* Left Side - Content (order-2 on mobile, order-1 on desktop) */}
+          <div className="space-y-8 order-2 lg:order-1">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
               The Vision
             </h2>
@@ -159,11 +159,11 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Right Side - Image */}
-          <div className="relative">
+          {/* Right Side - Image (order-1 on mobile, order-2 on desktop) */}
+          <div className="relative order-1 lg:order-2">
             <div className="relative h-130 rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="/images/home/about/mission.png"
+                src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/mission.png"
                 alt="Our Values"
                 fill
                 className="object-cover"
@@ -178,18 +178,18 @@ export default function AboutPage() {
           </div>
         </motion.div>
 
-        {/* New Section - Add your content here */}
+        {/* New Section - The Outcome */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20"
         >
-          {/* Left Side - Image */}
-          <div className="relative">
+          {/* Left Side - Image (order-1 on mobile, order-1 on desktop) */}
+          <div className="relative order-1 lg:order-1">
             <div className="relative h-130 rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="/images/home/about/vase.png"
+                src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/vase.png"
                 alt="Your Section Image"
                 fill
                 className="object-cover"
@@ -203,8 +203,8 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Right Side - Content */}
-          <div className="space-y-8">
+          {/* Right Side - Content (order-2 on mobile, order-2 on desktop) */}
+          <div className="space-y-8 order-2 lg:order-2">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
               The Outcome
             </h2>
