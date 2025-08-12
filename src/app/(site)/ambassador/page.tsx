@@ -3,6 +3,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
+import AfghanDiasporaMap from '../../components/home/afghan-diaspora-map'
 
 export default function AmbassadorPage() {
   const bottomAnimation = (index: number) => ({
@@ -76,6 +77,9 @@ export default function AmbassadorPage() {
           </motion.div>
         </div>
       </div>
+
+      {/* Afghan Diaspora Map Section */}
+      <AfghanDiasporaMap />
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-16">
