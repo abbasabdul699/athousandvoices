@@ -27,7 +27,7 @@ interface DiasporaData {
   code: string;
   population: Record<Year, number>;
   migrationWaves: {
-    primary: "2000s" | "2010s" | "2020s";
+    primary: "1990s" | "2000s" | "2010s" | "2020s";
     reasons: string[];
   };
   culturalImpact: {
