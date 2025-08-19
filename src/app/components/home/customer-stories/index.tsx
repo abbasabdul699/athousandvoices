@@ -51,7 +51,7 @@ function QuoteShowcase() {
             {/* decorative shadow plate behind card (like the colored drop in the example) */}
             <div className="absolute -bottom-4 -left-4 right-6 h-4 rounded-lg bg-[#1961d6]/70 blur-[1px]" aria-hidden />
 
-            <blockquote className="relative rounded-2xl bg-[#1961d6]/95 backdrop-blur p-8 md:p-10 shadow-xl ring-1 ring-black/5">
+            <blockquote className="relative rounded-2xl bg-white/95 backdrop-blur p-8 md:p-10 shadow-xl ring-1 ring-black/5">
               {/* Big opening quote mark */}
               <span
                 aria-hidden
