@@ -2,6 +2,7 @@
 import './globals.css'
 import { SessionProvider } from 'next-auth/react'
 import { ThemeProvider } from 'next-themes'
+import { LanguageProvider } from '@/contexts/LanguageContext'
 import Header from './components/layout/header'
 import Footer from './components/layout/footer/Footer'
 import ScrollToTop from './components/scroll-to-top'
@@ -14,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
-        <meta name="description" content="A Thousand Voices - Amplifying Afghan storytellers and creating a platform for cultural exchange through literature. Join our global community of writers and cultural ambassadors." />
+        <meta name="description" content="A Thousand Voices - Amplifying Afghan storytellers and creating a platform for cultural exchange through literature. Join our global community of writers and cultural mentors." />
         <meta name="keywords" content="Afghan stories, storytelling, cultural exchange, literature, Afghan writers, diaspora, Project for Peace" />
         <meta name="author" content="A Thousand Voices" />
         <meta name="robots" content="index, follow" />
@@ -46,10 +47,12 @@ export default function RootLayout({
             attribute='class'
             enableSystem={false}
             defaultTheme='light'>
-            <Header />
-            {children}
-            <Footer />
-            <ScrollToTop />
+            <LanguageProvider>
+              <Header />
+              {children}
+              <Footer />
+              <ScrollToTop />
+            </LanguageProvider>
           </ThemeProvider>
         </SessionProvider>
       </body>

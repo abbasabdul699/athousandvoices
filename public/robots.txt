@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://athousandvoices.com/sitemap.xml
+
+# Disallow admin or private areas (if any)
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Allow important directories
+Allow: /about/
+Allow: /contact/
+Allow: /submit-story/
+Allow: /ambassador/
+Allow: /partnership/
+Allow: /press/
+Allow: /documentation/

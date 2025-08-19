@@ -6,7 +6,7 @@ const SingleCreativeMind = ({
 }: {
     creativemind: any
 }) => {
-    const { image, name, position, linkedinLink } = creativemind
+    const { image, name, position, linkedinLink, email } = creativemind
 
     return (
         <div
@@ -15,9 +15,14 @@ const SingleCreativeMind = ({
                 <Image
                     src={image}
                     alt={name}
-                    width={625}
-                    height={410}
-                    className='rounded-2xl'
+                    width={150}
+                    height={150}
+                    className='rounded-full w-20 h-20 object-cover'
+                    style={{
+                        objectPosition: name === 'Zakira Baskhshi' ? '60% center' : 
+                                   name === 'Tamana Farewar' ? 'center 40%' :
+                                   name === 'Sadia Ansari' ? '40% center' : 'center'
+                    }}
                     unoptimized={true}
                 />
             </div>
@@ -27,6 +32,14 @@ const SingleCreativeMind = ({
                     <p className='text-dark_black/60 dark:text-white/60'>
                         {position}
                     </p>
+                    {email && (
+                        <a
+                            href={`mailto:${email}`}
+                            className='text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200'
+                        >
+                            {email}
+                        </a>
+                    )}
                 </div>
                 {linkedinLink && (
                     <div className='flex gap-4'>

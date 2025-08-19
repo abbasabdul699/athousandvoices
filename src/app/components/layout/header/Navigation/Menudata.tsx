@@ -6,6 +6,6 @@ export const headerData: HeaderItem[] = [
     { label: 'Timeline', href: '/#timeline' },
     { label: 'Press', href: '/press' },
     { label: 'Partnership', href: '/partnership' },
-    { label: 'Ambassador', href: '/ambassador' },
+    { label: 'Mentorship', href: '/ambassador' },
     { label: 'Contact', href: '/contact' },
 ];

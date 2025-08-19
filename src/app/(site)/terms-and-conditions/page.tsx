@@ -39,7 +39,7 @@ export default function Page() {
                                     <li>Story submission and publication platform</li>
                                     <li>Cultural exchange and community building</li>
                                     <li>Educational resources and content</li>
-                                    <li>Ambassador program participation</li>
+                                    <li>Mentorship program participation</li>
                                     <li>Contact and communication services</li>
                                 </ul>
                             </div>

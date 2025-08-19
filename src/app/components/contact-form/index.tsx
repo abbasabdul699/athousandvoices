@@ -162,7 +162,7 @@ function ContactForm() {
                       <option value='design & branding'>
                         Choose an option
                       </option>
-                      <option value='Ambassador Program'>Ambassador Program</option>
+                      <option value='Mentorship Program'>Mentorship Program</option>
                       <option value='Sponsorship'>Sponsorship</option>
                       <option value='Partnership'>Partnership</option>
                       <option value='Join the Team'>Join the Team</option>

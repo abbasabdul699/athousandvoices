@@ -10,6 +10,7 @@ import { headerData } from './Navigation/Menudata'
 import Logo from './Logo'
 import MobileHeader from './Navigation/MobileHeader'
 import ThemeToggler from './ThemeToggle'
+import LanguageToggle from './LanguageToggle'
 
 const Header = () => {
   const { data: session } = useSession()
@@ -41,7 +42,7 @@ const Header = () => {
 
   return (
     <>
-      <header className={`fixed top-0 z-50 w-full`}>
+      <header className={`fixed top-0 z-[9999] w-full`}>
         <div className='container p-3'>
           <nav
             className={`flex items-center py-3 px-4 justify-between ${
@@ -106,6 +107,9 @@ const Header = () => {
 
               {/* ---------------------Light/Dark Mode button-------------------- */}
               <ThemeToggler />
+
+              {/* ---------------------Language Toggle - Only on Submit Story page-------------------- */}
+              {pathname === '/submit-story' && <LanguageToggle />}
 
               <div className='hidden max-lg:flex'>
                 <button onClick={() => setSidebarOpen(!sidebarOpen)}>

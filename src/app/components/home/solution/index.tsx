@@ -27,11 +27,11 @@ function Solutions() {
                 <h2 className='text-3xl md:text-5xl dark:text-dark_black'>
                   Become an A Thousand Voices {' '}
                   <span className='instrument-font italic font-normal dark:text-black/70'>
-                    Ambassador
+                    Mentor
                   </span>
                 </h2>
                 <p className='dark:text-dark_black'>
-                  Looking to make a global impact? Join our ambassador program and help amplify Afghan voices while building meaningful connections across cultures.
+                  Looking to make a global impact? Join our mentorship program and help amplify Afghan voices while building meaningful connections across cultures.
                 </p>
               </div>
               <Link
@@ -61,7 +61,7 @@ function Solutions() {
                   />
                 </svg>
                 <span className='order-1 group-hover:order-2 group-hover:translate-x-0 group-hover:text-dark_black transform transition-all duration-200 ease-in-out'>
-                  Become an Ambassador
+                  Become a Mentor
                 </span>
               </Link>
             </motion.div>

@@ -3,7 +3,6 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import AfghanDiasporaMap from '../../components/home/afghan-diaspora-map'
 
 export default function AmbassadorPage() {
   const bottomAnimation = (index: number) => ({
@@ -24,10 +23,10 @@ export default function AmbassadorPage() {
             className="text-center max-w-4xl mx-auto"
           >
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Become an <span className="instrument-font italic font-normal dark:text-white/70">Ambassador</span>
+              Become a <span className="instrument-font italic font-normal dark:text-white/70">Mentor</span>
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
-              Join our global network of cultural ambassadors and help amplify Afghan voices while building meaningful connections across cultures.
+              Join our global network of cultural mentors and help amplify Afghan voices while building meaningful connections across cultures.
             </p>
             
             {/* Apply Now Button with Animation */}
@@ -78,12 +77,9 @@ export default function AmbassadorPage() {
         </div>
       </div>
 
-      {/* Afghan Diaspora Map Section */}
-      <AfghanDiasporaMap />
-
       {/* Main Content */}
       <div className="container mx-auto px-4 py-16">
-        {/* What is an Ambassador Section */}
+        {/* What is a Mentor Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -93,10 +89,10 @@ export default function AmbassadorPage() {
           {/* Left Side - Content */}
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-              What is an Ambassador?
+              What is a Mentor?
             </h2>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg">
-              Our ambassadors are passionate individuals who serve as cultural bridges, connecting communities and amplifying the voices of Afghan storytellers worldwide. 
+              Our mentors are passionate individuals who serve as cultural bridges, connecting communities and amplifying the voices of Afghan storytellers worldwide. 
               They help promote understanding, foster dialogue, and create meaningful impact through storytelling and community engagement.
             </p>
             <div className="space-y-4">
@@ -132,7 +128,7 @@ export default function AmbassadorPage() {
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <Image
                 src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/ambassador/handscommunity.png"
-                alt="Ambassador Network"
+                alt="Mentor Network"
                 fill
                 className="object-cover"
               />
@@ -155,10 +151,10 @@ export default function AmbassadorPage() {
         >
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Benefits of becoming an Ambassador
+              Benefits of becoming a Mentor
             </h2>
             <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Join our ambassador program and unlock opportunities for personal growth, community impact, and cultural exchange.
+              Join our mentor program and unlock opportunities for personal growth, community impact, and cultural exchange.
             </p>
           </div>
           
@@ -166,7 +162,7 @@ export default function AmbassadorPage() {
             {[
               {
                 title: "Global Network",
-                description: "Connect with ambassadors and storytellers from around the world",
+                description: "Connect with mentors and storytellers from around the world",
                 icon: "🌍"
               },
               {
@@ -216,10 +212,10 @@ export default function AmbassadorPage() {
           className="text-center bg-gray-50 dark:bg-gray-800 rounded-2xl p-12"
         >
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Ready to become an ambassador?
+            Ready to become a mentor?
           </h3>
           <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-            Join our community of cultural ambassadors and help create meaningful connections across borders. 
+            Join our community of cultural mentors and help create meaningful connections across borders. 
             Your voice and passion can make a real difference.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

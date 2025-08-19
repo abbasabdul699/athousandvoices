@@ -1,11 +1,19 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
+import Lottie from 'lottie-react'
 import SingleCreativeMind from '../../components/home/creative-mind/SingleCreativeMind'
+
 
 export default function AboutPage() {
   const [creativeMindList, setCreativeMindList] = useState<any>(null)
+  const { scrollY } = useScroll()
+  
+  // Transform scroll progress to scale, opacity, and border radius values
+  const imageScale = useTransform(scrollY, [0, 300], [1, 0.8])
+  const imageOpacity = useTransform(scrollY, [0, 300], [1, 0.6])
+  const imageBorderRadius = useTransform(scrollY, [0, 300], [0, 24])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,22 +37,112 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Header Section */}
-      <div className="border-b border-gray-200 dark:border-gray-700">
-        <div className="container mx-auto px-4 py-16">
+      {/* Hero Section */}
+      <div className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden" style={{ paddingTop: '120px', zIndex: 0 }}>
+        {/* Background Image */}
+        <motion.div 
+          className="absolute inset-0 z-0 overflow-hidden" 
+          style={{ 
+            top: '120px',
+            scale: imageScale,
+            opacity: imageOpacity,
+            borderRadius: imageBorderRadius
+          }}
+        >
+          <Image
+            src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/grandpareading.jpg"
+            alt="A Thousand Voices Hero Background"
+            fill
+            className="object-cover"
+            style={{ borderRadius: `${imageBorderRadius}px` }}
+            priority
+          />
+          {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-black/60" style={{ borderRadius: `${imageBorderRadius}px` }}></div>
+        </motion.div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-4xl mx-auto"
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              About <span className="instrument-font italic font-normal dark:text-white/70">A Thousand Voices</span>
-            </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-              We are dedicated to amplifying Afghan storytellers and creating a platform for cultural exchange through literature. 
-              Our mission is to bridge cultures and connect voices from around the world.
-            </p>
+
+
+            {/* Main Heading */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-5xl md:text-7xl font-bold text-white mb-6"
+            >
+              Learn More About
+              <br />
+              <span className="instrument-font italic font-normal text-yellow-300">What We Do</span>
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed"
+            >
+              We take pride in helping Afghan storytellers from all walks of life 
+              achieve the recognition and platform they deserve.
+            </motion.p>
+
+
+
+            {/* Scroll Indicator */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.2 }}
+              className="mt-16 flex justify-center"
+            >
+              <div className="w-16 h-16 flex items-center justify-center">
+                <div className="arrow" style={{
+                  position: 'relative',
+                  cursor: 'pointer'
+                }}>
+                  <span style={{
+                    display: 'block',
+                    width: '1.5vw',
+                    height: '1.5vw',
+                    borderBottom: '5px solid #fbbf24',
+                    borderRight: '5px solid #fbbf24',
+                    transform: 'rotate(45deg)',
+                    margin: '-10px',
+                    animation: 'animate 2s infinite'
+                  }}></span>
+                  <span style={{
+                    display: 'block',
+                    width: '1.5vw',
+                    height: '1.5vw',
+                    borderBottom: '5px solid #fef3c7',
+                    borderRight: '5px solid #fef3c7',
+                    transform: 'rotate(45deg)',
+                    margin: '-10px',
+                    animation: 'animate 2s infinite',
+                    animationDelay: '-0.2s'
+                  }}></span>
+                  <span style={{
+                    display: 'block',
+                    width: '1.5vw',
+                    height: '1.5vw',
+                    borderBottom: '5px solid #fef3c7',
+                    borderRight: '5px solid #fef3c7',
+                    transform: 'rotate(45deg)',
+                    margin: '-10px',
+                    animation: 'animate 2s infinite',
+                    animationDelay: '-0.4s'
+                  }}></span>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
@@ -56,23 +154,19 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20"
+          className="relative grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20"
         >
+
+
           {/* Left Side - Image (order-1 on mobile, order-1 on desktop) */}
           <div className="relative order-1 lg:order-1">
-            <div className="relative h-130 rounded-lg overflow-hidden shadow-lg">
+            <div className="relative h-80 md:h-96 rounded-lg overflow-hidden">
               <Image
                 src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/mountain.png"
                 alt="A Thousand Voices Team"
                 fill
-                className="object-cover"
+                className="object-contain rounded-lg"
               />
-            </div>
-            {/* Decorative dots */}
-            <div className="absolute -bottom-4 -left-4 flex space-x-2">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="w-3 h-3 bg-yellow-300 rounded-full"></div>
-              ))}
             </div>
           </div>
 
@@ -161,19 +255,13 @@ export default function AboutPage() {
 
           {/* Right Side - Image (order-1 on mobile, order-2 on desktop) */}
           <div className="relative order-1 lg:order-2">
-            <div className="relative h-130 rounded-lg overflow-hidden shadow-lg">
+            <div className="relative h-80 md:h-96 rounded-lg overflow-hidden">
               <Image
                 src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/mission.png"
                 alt="Our Values"
                 fill
-                className="object-cover"
+                className="object-contain rounded-lg"
               />
-            </div>
-            {/* Decorative dots */}
-            <div className="absolute -bottom-4 -right-4 flex space-x-2">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="w-3 h-3 bg-yellow-300 rounded-full"></div>
-              ))}
             </div>
           </div>
         </motion.div>
@@ -187,19 +275,13 @@ export default function AboutPage() {
         >
           {/* Left Side - Image (order-1 on mobile, order-1 on desktop) */}
           <div className="relative order-1 lg:order-1">
-            <div className="relative h-130 rounded-lg overflow-hidden shadow-lg">
+            <div className="relative h-80 md:h-96 rounded-lg overflow-hidden">
               <Image
                 src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/vase.png"
                 alt="Your Section Image"
                 fill
-                className="object-cover"
+                className="object-contain rounded-lg"
               />
-            </div>
-            {/* Decorative dots */}
-            <div className="absolute -bottom-4 -left-4 flex space-x-2">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="w-3 h-3 bg-yellow-300 rounded-full"></div>
-              ))}
             </div>
           </div>
 
@@ -259,7 +341,7 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
               <div className="h-24 bg-gradient-to-br from-blue-50 to-yellow-50 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center mx-auto">
@@ -288,7 +370,7 @@ export default function AboutPage() {
             </div>
 
             {/* Card 2 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
               <div className="h-24 bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center mx-auto">
@@ -317,7 +399,7 @@ export default function AboutPage() {
             </div>
 
             {/* Card 3 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
               <div className="h-24 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center mx-auto">
@@ -352,23 +434,71 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 mb-16"
+          className="mb-20"
         >
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
               Meet the creative minds behind our success
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto text-lg">
               Our diverse team brings together expertise in literature, technology, and Afghan culture to create meaningful opportunities for writers.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {creativeMindList?.map((item: any, index: any) => (
-              <motion.div {...bottomAnimation(index)} key={index}>
-                <SingleCreativeMind key={index} creativemind={item} />
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {creativeMindList && creativeMindList.length > 0 ? (
+              creativeMindList.map((item: any, index: number) => (
+                <motion.div 
+                  initial={bottomAnimation(index).initial}
+                  animate={bottomAnimation(index).animate}
+                  transition={bottomAnimation(index).transition}
+                  key={`creative-mind-${index}`}
+                  className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg hover:scale-102 transition-all duration-300"
+                >
+                  <div className="aspect-square overflow-hidden">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={300}
+                      height={300}
+                      className="w-full h-full object-cover"
+                      style={{
+                        objectPosition: item.name === 'Zakira Baskhshi' ? '60% center' : 
+                                       item.name === 'Tamana Farewar' ? 'center 40%' :
+                                       item.name === 'Sadia Ansari' ? '40% center' : 'center'
+                      }}
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+                      {item.name}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400 text-xs mb-2">
+                      {item.position}
+                    </p>
+                    <p className="text-gray-500 dark:text-gray-500 text-xs mb-3">
+                      {item.email}
+                    </p>
+                    <div className="flex justify-center">
+                      <a
+                        href={item.linkedinLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-8">
+                <p className="text-gray-500 dark:text-gray-400">Loading creative minds...</p>
+              </div>
+            )}
           </div>
         </motion.div>
 

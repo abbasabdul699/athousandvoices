@@ -100,40 +100,46 @@ const onlinePresenceList: onlinePresence[] = [
 
 const creativeMindList: creativeMind[] = [
   {
-    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Zakira.png`,
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Zakira.jpeg`,
     name: 'Zakira Baskhshi',
     position: 'President',
     linkedinLink: 'https://www.linkedin.com/in/zakira-bakhshi-5570811b2/',
+    email: 'zakira@athousandvoices.com',
   },
   {
-    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Ahmad.png`,
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Ahmad.jpeg`,
     name: 'Ahmadzia Momand',
     position: 'Finance Director',
     linkedinLink: 'https://www.linkedin.com/in/ahmadzia-momand-a6a343167/',
+    email: 'ahmadzia@athousandvoices.com',
   },
   {
-    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Abbas1.png`,
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Abdul.jpeg`,
     name: 'Abdul Abbas',
     position: 'Full Stack and Designer',
     linkedinLink: 'https://www.linkedin.com/in/abdul-abbas-b78921122/',
+    email: 'abbas@athousandvoices.com',
   },
   {
-    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/tamana.png`,
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/tamana.jpeg`,
     name: 'Tamana Farewar',
     position: 'Partnerships & Outreach Director',
     linkedinLink: 'https://www.linkedin.com/in/tamana-farewar-21352a177/',
+    email: 'tamana@athousandvoices.com',
   },
   {
-    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Ethan.png`,
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/ethan.jpeg`,
     name: 'Ethan Schroyer',
     position: 'Advocacy Director',
     linkedinLink: 'https://www.linkedin.com/in/ethan-schroyer-a63107238/',
+    email: 'ethan@athousandvoices.com',
   },
   {
-    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Sadia.png`,
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Sadia.jpeg`,
     name: 'Sadia Ansari',
     position: 'Social Media Coordinator',
     linkedinLink: 'https://www.linkedin.com/in/sadia-ansari-6a1653247/',
+    email: 'sadia@athousandvoices.com',
   },
 ]
 

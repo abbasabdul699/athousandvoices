@@ -34,6 +34,7 @@ export type creativeMind = {
   name: string;
   position: string;
   linkedinLink: string;
+  email: string;
 }
 
 export type WebResultTag = {

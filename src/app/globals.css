@@ -91,6 +91,34 @@ layer(base);
   @apply w-full max-w-[82.8rem] my-0 mx-auto py-0 sm:px-7 px-5;
 }
 
+@keyframes animate {
+  0% {
+    opacity: 0;
+    transform: rotate(45deg) translate(-20px, -20px);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(45deg) translate(20px, 20px);
+  }
+}
+
+@keyframes animateDown {
+  0% {
+    opacity: 0;
+    transform: rotate(45deg) translate(0, -20px);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(45deg) translate(0, 20px);
+  }
+}
+
 @layer utilities {
   html {
     scroll-behavior: smooth;
@@ -140,6 +168,34 @@ layer(base);
       white 80%,
       transparent
     );
+  }
+
+  /* Custom floating animations */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes float-delayed {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 4s ease-in-out infinite;
+    animation-delay: 1s;
   }
 }
 

@@ -33,7 +33,7 @@ const footerData = {
         links: [
             { name: "Contact us", url: "/contact" },
             { name: "About us", url: "/about" },
-            { name: "Become an Ambassador", url: "/ambassador" },
+            { name: "Become a Mentor", url: "/ambassador" },
             { name: "Timeline", url: "/#timeline" },
             { name: "Submit Your Story", url: "/submit-story" }
         ]

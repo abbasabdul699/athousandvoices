@@ -49,8 +49,13 @@ function CreativeMind() {
             <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8'>
               {creativeMindList?.map((item: any, index: any) => {
                 return (
-                  <motion.div {...bottomAnimation(index)} key={index}>
-                    <SingleCreativeMind key={index} creativemind={item}/>
+                  <motion.div 
+                    initial={bottomAnimation(index).initial}
+                    animate={bottomAnimation(index).animate}
+                    transition={bottomAnimation(index).transition}
+                    key={index}
+                  >
+                    <SingleCreativeMind creativemind={item}/>
                   </motion.div>
                 )
               })}
