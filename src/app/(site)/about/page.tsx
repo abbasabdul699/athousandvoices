@@ -50,7 +50,7 @@ export default function AboutPage() {
           }}
         >
           <Image
-            src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/grandpareading.jpg"
+            src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/3553904024_57617cfcaf_h.jpg"
             alt="A Thousand Voices Hero Background"
             fill
             className="object-cover"

@@ -3,7 +3,7 @@ export const translations = {
     // Submit Story Page
     submitStory: {
       title: "Submit Your Story",
-      subtitle: "Share your voice with the world. Upload your short story and join Afghanistan's literary community.",
+      subtitle: "Share your voice with the world. Upload your short story and join Afghanistan's literary community. Accepting submissions starting September 1st, 2025.",
       guidelines: "Submission Guidelines",
       lengthRequirements: "Length & Language Requirements",
       fileRequirements: "File Format Requirements",
@@ -57,7 +57,7 @@ export const translations = {
     // Submit Story Page
     submitStory: {
       title: "داستان خود را ارسال کنید",
-      subtitle: "صدای خود را با جهان به اشتراک بگذارید. داستان کوتاه خود را آپلود کنید و به جامعه ادبی افغانستان بپیوندید.",
+      subtitle: "صدای خود را با جهان به اشتراک بگذارید. داستان کوتاه خود را آپلود کنید و به جامعه ادبی افغانستان بپیوندید. پذیرش ارسال ها از اول سپتامبر ۲۰۲۵ شروع می شود.",
       guidelines: "راهنمای ارسال",
       lengthRequirements: "محدودیت طول و زبان",
       fileRequirements: "نیازمندی های فرمت فایل",
