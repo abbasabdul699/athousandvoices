@@ -107,7 +107,7 @@ const creativeMindList: creativeMind[] = [
     email: 'zakira@athousandvoices.com',
   },
   {
-    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Ahmad.jpeg`,
+    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Ahmad.jpg`,
     name: 'Ahmadzia Momand',
     position: 'Finance Director',
     linkedinLink: 'https://www.linkedin.com/in/ahmadzia-momand-a6a343167/',
