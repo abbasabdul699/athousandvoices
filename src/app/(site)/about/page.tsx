@@ -154,24 +154,10 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20"
+          className="relative mb-20"
         >
-
-
-          {/* Left Side - Image (order-1 on mobile, order-1 on desktop) */}
-          <div className="relative order-1 lg:order-1">
-            <div className="relative h-80 md:h-96 rounded-lg overflow-hidden">
-              <Image
-                src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/mountain.png"
-                alt="A Thousand Voices Team"
-                fill
-                className="object-contain rounded-lg"
-              />
-            </div>
-          </div>
-
-          {/* Right Side - Content (order-2 on mobile, order-2 on desktop) */}
-          <div className="space-y-6 order-2 lg:order-2">
+          {/* Content */}
+          <div className="space-y-6 max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
               The Problem
             </h2>
@@ -212,10 +198,10 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20"
+          className="mb-20"
         >
-          {/* Left Side - Content (order-2 on mobile, order-1 on desktop) */}
-          <div className="space-y-8 order-2 lg:order-1">
+          {/* Content */}
+          <div className="space-y-8 max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
               The Vision
             </h2>
@@ -252,18 +238,6 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-
-          {/* Right Side - Image (order-1 on mobile, order-2 on desktop) */}
-          <div className="relative order-1 lg:order-2">
-            <div className="relative h-80 md:h-96 rounded-lg overflow-hidden">
-              <Image
-                src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/mission.png"
-                alt="Our Values"
-                fill
-                className="object-contain rounded-lg"
-              />
-            </div>
-          </div>
         </motion.div>
 
         {/* New Section - The Outcome */}
@@ -271,22 +245,10 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20"
+          className="mb-20"
         >
-          {/* Left Side - Image (order-1 on mobile, order-1 on desktop) */}
-          <div className="relative order-1 lg:order-1">
-            <div className="relative h-80 md:h-96 rounded-lg overflow-hidden">
-              <Image
-                src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/vase.png"
-                alt="Your Section Image"
-                fill
-                className="object-contain rounded-lg"
-              />
-            </div>
-          </div>
-
-          {/* Right Side - Content (order-2 on mobile, order-2 on desktop) */}
-          <div className="space-y-8 order-2 lg:order-2">
+          {/* Content */}
+          <div className="space-y-8 max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
               The Outcome
             </h2>

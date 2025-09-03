@@ -24,10 +24,10 @@ export const translations = {
       authenticStorytelling: "We encourage authentic storytelling - no fixed themes or prompts required",
       uniqueExperiences: "Share narratives and poetry that reflect your unique experiences",
       culturalHeritage: "Focus on personal stories, cultural heritage, and authentic voice",
-      ageRequirement: "Open to Afghan youth and adults (age 18+)",
+      ageRequirement: "Open to Afghan youth and adults (age 16-34)",
       fictionNonFiction: "Both fiction and non-fiction submissions welcome",
       originalWork: "Original work only - no previously published content",
-      reviewProcess: "Review process takes 2-3 weeks",
+      reviewProcess: "Review process 1-2 months or in some cases more",
       emailConfirmation: "You'll receive an email confirmation upon submission",
       acceptanceNotification: "We'll notify you of acceptance or feedback via email",
       noHateSpeech: "No hate speech, violence, or discriminatory content",
@@ -50,6 +50,7 @@ export const translations = {
       press: "Press",
       partnership: "Partnership",
       mentorship: "Mentorship",
+      submitStory: "Submit Your Story",
       contact: "Contact"
     }
   },
@@ -69,7 +70,7 @@ export const translations = {
       multipleSubmissions: "ارسال های متعدد",
       aiDisclaimer: "سلب مسئولیت استفاده از هوش مصنوعی",
       needHelp: "نیاز به کمک دارید؟",
-      storyLength: "داستان ها باید بین ۱،۰۰۰ تا ۵،۰۰۰ کلمه باشند",
+      storyLength: "حداکثر ۳،۰۰۰ کلمه",
       languageAcceptance: "ما ارسال ها را به زبان فارسی (دری) و انگلیسی می پذیریم",
       rollingBasis: "ارسال ها به صورت مستمر پذیرفته می شوند",
       fileFormat: "فایل ها باید در فرمت .pdf یا .docx ارسال شوند",
@@ -78,10 +79,10 @@ export const translations = {
       authenticStorytelling: "ما داستان سرایی اصیل را تشویق می کنیم - هیچ موضوع یا سوال ثابتی لازم نیست",
       uniqueExperiences: "روایت ها و شعرهایی را به اشتراک بگذارید که تجربیات منحصر به فرد شما را منعکس کند",
       culturalHeritage: "بر داستان های شخصی، میراث فرهنگی و صدای اصیل تمرکز کنید",
-      ageRequirement: "برای جوانان و بزرگسالان افغان (۱۸ سال به بالا) باز است",
+      ageRequirement: "برای جوانان و بزرگسالان افغان (سن ۱۶-۳۴) باز است",
       fictionNonFiction: "ارسال های داستانی و غیرداستانی خوش آمدید",
       originalWork: "فقط کار اصلی - هیچ محتوای قبلاً منتشر شده ای",
-      reviewProcess: "فرآیند بررسی ۲-۳ هفته طول می کشد",
+      reviewProcess: "فرآیند بررسی ۱-۲ ماه یا در برخی موارد بیشتر طول می کشد",
       emailConfirmation: "پس از ارسال، تأیید ایمیل دریافت خواهید کرد",
       acceptanceNotification: "ما پذیرش یا بازخورد را از طریق ایمیل به شما اطلاع خواهیم داد",
       noHateSpeech: "بدون سخنرانی نفرت، خشونت یا محتوای تبعیض آمیز",
@@ -104,6 +105,7 @@ export const translations = {
       press: "مطبوعات",
       partnership: "مشارکت",
       mentorship: "راهنمایی",
+      submitStory: "داستان خود را ارسال کنید",
       contact: "تماس"
     }
   }

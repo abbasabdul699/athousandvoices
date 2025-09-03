@@ -8,4 +8,5 @@ export const headerData: HeaderItem[] = [
     { label: 'Partnership', href: '/partnership' },
     { label: 'Mentorship', href: '/ambassador' },
     { label: 'Contact', href: '/contact' },
+    { label: 'Submit Your Story', href: '/submit-story' },
 ];
