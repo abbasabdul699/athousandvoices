@@ -33,8 +33,16 @@ export async function POST(request: NextRequest) {
     // Generate a proper UUID
     const submissionId = crypto.randomUUID()
 
+    // Sanitize filename to remove special characters that Supabase doesn't allow
+    const sanitizeFileName = (fileName: string) => {
+      return fileName
+        .replace(/[^\w\s.-]/g, '') // Remove special characters except word chars, spaces, dots, hyphens
+        .replace(/\s+/g, '_') // Replace spaces with underscores
+        .substring(0, 100) // Limit length to prevent issues
+    }
+
     // Upload PDF file to Supabase Storage
-    const fileName = `${submissionId}_${pdfFile.name}`
+    const fileName = `${submissionId}_${sanitizeFileName(pdfFile.name)}`
     const { data: fileData, error: fileError } = await supabaseAdmin.storage
       .from('story-pdfs')
       .upload(fileName, pdfFile, {
