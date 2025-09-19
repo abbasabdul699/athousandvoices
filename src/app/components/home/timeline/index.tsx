@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Calendar, Users, BookOpen, Award, Globe, Heart } from 'lucide-react'
+import { Clock, Mail, BookOpen, Globe} from 'lucide-react'
 
 interface TimelineItem {
   id: number
@@ -17,24 +17,6 @@ function Timeline() {
   const timelineData: TimelineItem[] = [
     {
       id: 1,
-      step: 'June - July 2025',
-      title: 'Outreach & Curriculum',
-      description: 'We forge partnerships with universities, NGOs, and creative networks to launch our call for stories and begin designing our workshop curriculum.',
-      icon: <Heart className="w-6 h-6" />,
-      bg_color: 'bg-red-500/20',
-      txt_color: 'text-red-600',
-    },
-    {
-      id: 2,
-      step: 'August 2025',
-      title: 'Workshop',
-      description: 'Virtual storytelling and creative writing sessions take place across the globe, particularly in countries with biggest populations of Afghan immigrants such as Pakistan, the U.S., Canada, the U.K., and Germany—paired with one-on-one mentorship.',
-      icon: <Users className="w-6 h-6" />,
-      bg_color: 'bg-blue-500/20',
-      txt_color: 'text-blue-600',
-    },
-    {
-      id: 3,
       step: 'Begins September 2025',
       title: 'Story Submissions',
       description: 'Afghan youth will submit short stories—fiction or non-fiction—centered on themes of identity, resilience, and home.',
@@ -43,13 +25,31 @@ function Timeline() {
       txt_color: 'text-green-600',
     },
     {
+      id: 2,
+      step: 'November 1st 2025',
+      title: 'Submission Closed',
+      description: 'This is the last day to submit your story. We will not accept any more submissions after this date. We will start reviewing the submissions and selecting the applicable pieces for the next round of interviews.',
+      icon: <Clock className="w-6 h-6" />,
+      bg_color: 'bg-purple-500/20',
+      txt_color: 'text-purple-600',
+    },
+    {
+      id: 3,
+      step: 'January 2026',
+      title: 'Reach Out to Writers',
+      description: 'From those who are selected will be receive an email from us. We will begin to reach out to the writers and interviewing them for their pieces they have submitted. We will be verifying the authenticity of the stories and the writers.',
+      icon: <Mail className="w-6 h-6" />,
+      bg_color: 'bg-pink-500/20',
+      txt_color: 'text-pink-600',
+    },
+    {
       id: 4,
       step: 'August 2026',
       title: 'Publishing and Book Launch (Washington D.C.)',
       description: 'We celebrate the power of Afghan youth voices with a public launch event, readings, and recognition—on the fifth anniversary of Kabul\'s fall.',
       icon: <BookOpen className="w-6 h-6" />,
-      bg_color: 'bg-purple-500/20',
-      txt_color: 'text-purple-600',
+      bg_color: 'bg-blue-500/20',
+      txt_color: 'text-blue-600',
     },
   ]
 
