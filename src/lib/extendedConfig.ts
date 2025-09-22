@@ -4,7 +4,7 @@ const extendedConfig = {
   },
   colors: {
     dark_black: "#1B1D1E",
-    purple_blue: "#4928FD",
+    purple_blue: "#000000",
     purple: "#BA81EE",
     blue: "#70B5FF",
     orange: "#FFAF68",

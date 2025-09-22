@@ -8,7 +8,7 @@ export const ColorConfiguration = () => {
                 <div className="py-4 px-5 rounded-md bg-black mt-8">
                     <p className="text-sm text-gray-400 flex flex-col gap-2">
                         <span>dark_black: "#1B1D1E",</span>
-                        <span>purple_blue: "#4928FD",</span>
+                        <span>purple_blue: "#000000",</span>
                         <span>purple: "#BA81EE",</span>
                         <span>blue: "#70B5FF",</span>
                         <span>orange: "#FFAF68",</span>
@@ -28,7 +28,7 @@ export const ColorConfiguration = () => {
                 <div className="py-4 px-5 rounded-md bg-black mt-8">
                     <p className="text-sm text-gray-400 flex flex-col gap-2">
                         <span>dark_black: "#1B1D1E",</span>
-                        <span>purple_blue: "#4928FD",</span>
+                        <span>purple_blue: "#000000",</span>
                     </p>
                 </div>
             </div>

@@ -55,12 +55,12 @@ export const sendStorySubmissionEmail = async (data: StorySubmissionEmailData) =
               text-align: center;
               margin-bottom: 30px;
               padding-bottom: 20px;
-              border-bottom: 2px solid #4928fd;
+              border-bottom: 2px solid #000000;
             }
             .logo {
               font-size: 24px;
               font-weight: bold;
-              color: #4928fd;
+              color: #000000;
               margin-bottom: 10px;
             }
             .subtitle {
@@ -100,7 +100,7 @@ export const sendStorySubmissionEmail = async (data: StorySubmissionEmailData) =
               border-radius: 8px;
               text-align: center;
               margin: 20px 0;
-              border-left: 4px solid #4928fd;
+              border-left: 4px solid #000000;
             }
             .submission-id-label {
               font-size: 14px;
@@ -111,7 +111,7 @@ export const sendStorySubmissionEmail = async (data: StorySubmissionEmailData) =
               font-family: 'Courier New', monospace;
               font-size: 16px;
               font-weight: bold;
-              color: #4928fd;
+              color: #000000;
             }
             .next-steps {
               background-color: #fff3cd;
@@ -145,7 +145,7 @@ export const sendStorySubmissionEmail = async (data: StorySubmissionEmailData) =
               margin-top: 15px;
             }
             .contact-info a {
-              color: #4928fd;
+              color: #000000;
               text-decoration: none;
             }
             .contact-info a:hover {
