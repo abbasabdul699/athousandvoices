@@ -60,12 +60,12 @@ export default function ResourcesPage() {
     // Inspiration & Culture
     {
         id: 1,
-        title: "Writing by Haruki Murakami",
-        description: "This is a book by Haruki Murakami that is a collection of his writing tips and techniques. This will be a great resource for you to learn from.",
+        title: "Master Class in Fiction Writing",
+        description: "This is a book by Adam Sexton that is a collection of his observed writing tips and techniques. This will be a great resource for you to learn from.",
         type: "book",
         category: "culture",
         url: "https://drive.google.com/file/d/1jb2NVPYB88tvtOynW8Ro3gdeVGhgeC04/view?usp=sharing",
-        author: "Haruki Murakami",
+        author: "Adam Sexton",
         difficulty: "beginner",
         tags: ["example", "writing tips", "inspiration", "technique"],
         icon: <BookOpen className="w-5 h-5" />
@@ -98,6 +98,19 @@ export default function ResourcesPage() {
         tags: ["workshop", "video", "writing process", "Yale professor", "Q&A"],
         icon: <Play className="w-5 h-5" />
     },
+
+    {
+      id: 4,
+      title: "Workshop Video with Afghanistan Student Association at University of Toronto",
+      description: "This is a workshop video lecturer, Ferdouse Asefi (PhD Candidate in Sociology, UofT), this interactive workshop will guide you through techniques to craft compelling stories for the A Thousand Voices global competition.",
+      type: "video",
+      category: "community",
+      url: "https://drive.google.com/file/d/1vPX3W6q99zk5IwxpA3vuLSUmfe0dBubM/view?usp=sharing",
+      duration: "60 minutes",
+      difficulty: "beginner",
+      tags: ["workshop", "video", "writing process", "Yale professor", "Q&A"],
+      icon: <Play className="w-5 h-5" />
+  },
   ]
 
   const categories = [
