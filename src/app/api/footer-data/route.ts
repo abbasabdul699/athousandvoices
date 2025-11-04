@@ -35,7 +35,7 @@ const footerData = {
             { name: "About us", url: "/about" },
             { name: "Become a Mentor", url: "/ambassador" },
             { name: "Timeline", url: "/#timeline" },
-            { name: "Submit Your Story", url: "/submit-story" }
+            // { name: "Submit Your Story", url: "/submit-story" } // Hidden from footer
         ]
     },
     otherPages: {

@@ -82,7 +82,8 @@ function HeroSection() {
                 className='flex flex-col items-center justify-center gap-4'>
                 <div className='flex flex-col items-center justify-center gap-8 w-full sm:flex-row'>
                   {/* ----------- Get started Link -------------- */}
-                  <Link
+                  {/* Hidden: Submit Your Story button */}
+                  {/* <Link
                     href='/submit-story'
                     className='group bg-gradient-to-r from-gray-200 via-red-200 to-green-200 text-gray-900 font-medium flex flex-row justify-between items-center py-2 px-5 rounded-full max-w-64 w-full md:py-3 border border-gray-900 transition-all duration-200 ease-in-out hover:from-gray-300 hover:via-red-300 hover:to-green-300'>
                     <span className='flex text-start transform transition-transform duration-200 ease-in-out group-hover:translate-x-20'>
@@ -116,7 +117,7 @@ function HeroSection() {
                         strokeLinejoin='round'
                       />
                     </svg>
-                  </Link>
+                  </Link> */}
 
                   {/* Brand Image Circle */}
                   {brandList && brandList.length > 0 && (
