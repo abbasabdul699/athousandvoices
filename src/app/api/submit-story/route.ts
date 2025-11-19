@@ -20,6 +20,11 @@ const getFromEmail = () => {
   return 'notifications@athousandvoices.com'
 }
 
+// Get admin email address for notifications
+const getAdminEmail = () => {
+  return process.env.ADMIN_EMAIL || 'admin@athousandvoices.com'
+}
+
 export async function GET() {
   return NextResponse.json({ message: 'API is working' })
 }
@@ -109,14 +114,18 @@ export async function POST(request: NextRequest) {
 
     // Send email to admin
     let adminEmailError: any = null
+    let adminEmailSent = false
     try {
       if (!process.env.RESEND_API_KEY) {
         throw new Error('RESEND_API_KEY is not configured')
       }
 
+      const adminEmail = getAdminEmail()
+      console.log('Attempting to send admin notification email to:', adminEmail)
+
       const adminEmailResult = await resend.emails.send({
         from: getFromEmail(),
-        to: ['admin@athousandvoices.com'],
+        to: [adminEmail],
         subject: `New Story Submission: ${storyTitle}`,
         html: `
           <h2>New Story Submission Received</h2>
@@ -132,15 +141,34 @@ export async function POST(request: NextRequest) {
           <p style="font-size: 12px; color: #666;">This is an automated notification from A Thousand Voices. The PDF file is stored securely in our system.</p>
         `
       })
-      console.log('Admin email sent successfully:', adminEmailResult.data?.id || 'No ID returned')
+      
+      // Check for Resend API errors
+      if (adminEmailResult.error) {
+        throw new Error(adminEmailResult.error.message || 'Failed to send admin email')
+      }
+      
+      adminEmailSent = true
+      console.log('Admin email sent successfully:', {
+        emailId: adminEmailResult.data?.id || 'No ID returned',
+        recipient: adminEmail,
+        from: getFromEmail()
+      })
     } catch (emailError: any) {
       adminEmailError = emailError
+      adminEmailSent = false
       console.error('Admin email error:', {
         message: emailError?.message || 'Unknown error',
         name: emailError?.name,
         statusCode: emailError?.statusCode,
-        response: emailError?.response
+        response: emailError?.response,
+        error: emailError?.error,
+        recipient: getAdminEmail()
       })
+      
+      // Log specific Resend error details if available
+      if (emailError?.response) {
+        console.error('Admin email - Resend API response:', JSON.stringify(emailError.response, null, 2))
+      }
     }
 
     // Send confirmation email to user
@@ -165,9 +193,14 @@ export async function POST(request: NextRequest) {
           <br>
           <p>Best regards,<br>The A Thousand Voices Team</p>
           <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
-          <p style="font-size: 12px; color: #666;">If you have any questions, please reply to this email or contact us at <a href="mailto:admin@athousandvoices.com">admin@athousandvoices.com</a></p>
+          <p style="font-size: 12px; color: #666;">If you have any questions, please reply to this email or contact us at <a href="mailto:${getAdminEmail()}">${getAdminEmail()}</a></p>
         `
       })
+      
+      if (userEmailResult.error) {
+        throw new Error(userEmailResult.error.message || 'Failed to send user email')
+      }
+      
       console.log('User email sent successfully:', userEmailResult.data?.id || 'No ID returned')
     } catch (emailError: any) {
       userEmailError = emailError
@@ -190,9 +223,15 @@ export async function POST(request: NextRequest) {
     // Log email status summary
     if (userEmailError) {
       console.warn(`⚠️  User confirmation email failed for submission ${submissionId}:`, userEmailError?.message)
+    } else {
+      console.log(`✅ User confirmation email sent successfully for submission ${submissionId}`)
     }
-    if (adminEmailError) {
-      console.warn(`⚠️  Admin notification email failed for submission ${submissionId}:`, adminEmailError?.message)
+    
+    if (adminEmailError || !adminEmailSent) {
+      console.warn(`⚠️  Admin notification email failed for submission ${submissionId}:`, adminEmailError?.message || 'Unknown error')
+      console.warn(`   Admin email address used: ${getAdminEmail()}`)
+    } else {
+      console.log(`✅ Admin notification email sent successfully for submission ${submissionId} to ${getAdminEmail()}`)
     }
 
     return NextResponse.json({ 
