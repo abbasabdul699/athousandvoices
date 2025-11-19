@@ -10,8 +10,14 @@ if (!process.env.RESEND_API_KEY) {
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 // Get from email address, defaulting to Resend's test domain
+// Using a friendly sender name instead of "noreply" for better deliverability
 const getFromEmail = () => {
-  return process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'
+  // Prefer notifications@ or submissions@ over noreply@ for better trust
+  if (process.env.RESEND_FROM_EMAIL) {
+    return process.env.RESEND_FROM_EMAIL
+  }
+  // Default to a friendly sender if no env var is set
+  return 'notifications@athousandvoices.com'
 }
 
 export async function GET() {
@@ -116,12 +122,14 @@ export async function POST(request: NextRequest) {
           <h2>New Story Submission Received</h2>
           <p><strong>Submission ID:</strong> ${submissionId}</p>
           <p><strong>Author:</strong> ${firstName} ${lastName}</p>
-          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
           <p><strong>Location:</strong> ${city}, ${country}</p>
           <p><strong>Story Title:</strong> ${storyTitle}</p>
           <p><strong>Language:</strong> ${storyLanguage}</p>
-          <p><strong>File:</strong> <a href="${publicUrl}">Download PDF</a></p>
+          <p><strong>File:</strong> <a href="${publicUrl}" rel="noopener noreferrer">Download PDF</a></p>
           <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
+          <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
+          <p style="font-size: 12px; color: #666;">This is an automated notification from A Thousand Voices. The PDF file is stored securely in our system.</p>
         `
       })
       console.log('Admin email sent successfully:', adminEmailResult.data?.id || 'No ID returned')
@@ -156,6 +164,8 @@ export async function POST(request: NextRequest) {
           <p>Thank you for sharing your voice with A Thousand Voices!</p>
           <br>
           <p>Best regards,<br>The A Thousand Voices Team</p>
+          <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
+          <p style="font-size: 12px; color: #666;">If you have any questions, please reply to this email or contact us at <a href="mailto:admin@athousandvoices.com">admin@athousandvoices.com</a></p>
         `
       })
       console.log('User email sent successfully:', userEmailResult.data?.id || 'No ID returned')
