@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
           <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
         `
       })
-      console.log('Admin email sent successfully:', adminEmailResult.id || 'No ID returned')
+      console.log('Admin email sent successfully:', adminEmailResult.data?.id || 'No ID returned')
     } catch (emailError: any) {
       adminEmailError = emailError
       console.error('Admin email error:', {
@@ -158,7 +158,7 @@ export async function POST(request: NextRequest) {
           <p>Best regards,<br>The A Thousand Voices Team</p>
         `
       })
-      console.log('User email sent successfully:', userEmailResult.id || 'No ID returned')
+      console.log('User email sent successfully:', userEmailResult.data?.id || 'No ID returned')
     } catch (emailError: any) {
       userEmailError = emailError
       console.error('User email error:', {
