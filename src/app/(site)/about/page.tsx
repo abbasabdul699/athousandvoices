@@ -480,13 +480,12 @@ export default function AboutPage() {
             And to all the young Afghans across the world: we can't wait to read your stories. 
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {/* Hidden: Submit Your Story button */}
-            {/* <a
+            <a
               href="/submit-story"
               className="px-8 py-3 bg-purple_blue text-white font-medium rounded-lg hover:bg-purple_blue/90 transition-colors duration-200"
             >
               Submit Your Story
-            </a> */}
+            </a>
             <a
               href="/contact"
               className="px-8 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
