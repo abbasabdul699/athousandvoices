@@ -26,8 +26,8 @@ function Timeline() {
     },
     {
       id: 2,
-      step: 'November 1st 2025',
-      title: 'Submission Closed',
+      step: 'December 18th 2025',
+      title: 'Regular Submission Closed',
       description: 'This is the last day to submit your story. We will not accept any more submissions after this date. We will start reviewing the submissions and selecting the applicable pieces for the next round of interviews.',
       icon: <Clock className="w-6 h-6" />,
       bg_color: 'bg-purple-500/20',
