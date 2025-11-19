@@ -3,7 +3,7 @@ export const translations = {
     // Submit Story Page
     submitStory: {
       title: "Submit Your Story",
-      subtitle: "Share your voice with the world. Upload your short story and join Afghanistan's literary community. Accepting submissions starting September 1st, 2025.",
+      subtitle: "Share your voice with the world. Upload your short story and join Afghanistan's literary community. Accepting submissions starting November 18th, 2025.",
       guidelines: "Submission Guidelines",
       lengthRequirements: "Length & Language Requirements",
       fileRequirements: "File Format Requirements",
