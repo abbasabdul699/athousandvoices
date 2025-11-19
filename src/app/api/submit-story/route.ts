@@ -2,7 +2,17 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { Resend } from 'resend'
 
+// Initialize Resend with API key validation
+if (!process.env.RESEND_API_KEY) {
+  console.warn('WARNING: RESEND_API_KEY is not set in environment variables')
+}
+
 const resend = new Resend(process.env.RESEND_API_KEY)
+
+// Get from email address, defaulting to Resend's test domain
+const getFromEmail = () => {
+  return process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'
+}
 
 export async function GET() {
   return NextResponse.json({ message: 'API is working' })
@@ -92,9 +102,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email to admin
+    let adminEmailError: any = null
     try {
-      await resend.emails.send({
-        from: 'onboarding@resend.dev', // Use Resend's test domain
+      if (!process.env.RESEND_API_KEY) {
+        throw new Error('RESEND_API_KEY is not configured')
+      }
+
+      const adminEmailResult = await resend.emails.send({
+        from: getFromEmail(),
         to: ['admin@athousandvoices.com'],
         subject: `New Story Submission: ${storyTitle}`,
         html: `
@@ -109,15 +124,26 @@ export async function POST(request: NextRequest) {
           <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
         `
       })
-      console.log('Admin email sent successfully')
-    } catch (emailError) {
-      console.error('Admin email error:', emailError)
+      console.log('Admin email sent successfully:', adminEmailResult.id || 'No ID returned')
+    } catch (emailError: any) {
+      adminEmailError = emailError
+      console.error('Admin email error:', {
+        message: emailError?.message || 'Unknown error',
+        name: emailError?.name,
+        statusCode: emailError?.statusCode,
+        response: emailError?.response
+      })
     }
 
     // Send confirmation email to user
+    let userEmailError: any = null
     try {
-      await resend.emails.send({
-        from: 'onboarding@resend.dev', // Use Resend's test domain
+      if (!process.env.RESEND_API_KEY) {
+        throw new Error('RESEND_API_KEY is not configured')
+      }
+
+      const userEmailResult = await resend.emails.send({
+        from: getFromEmail(),
         to: [email],
         subject: 'Your Story Submission - A Thousand Voices',
         html: `
@@ -132,18 +158,47 @@ export async function POST(request: NextRequest) {
           <p>Best regards,<br>The A Thousand Voices Team</p>
         `
       })
-      console.log('User email sent successfully')
-    } catch (emailError) {
-      console.error('User email error:', emailError)
+      console.log('User email sent successfully:', userEmailResult.id || 'No ID returned')
+    } catch (emailError: any) {
+      userEmailError = emailError
+      console.error('User email error:', {
+        message: emailError?.message || 'Unknown error',
+        name: emailError?.name,
+        statusCode: emailError?.statusCode,
+        response: emailError?.response,
+        recipient: email
+      })
+      
+      // Log specific Resend error details if available
+      if (emailError?.response) {
+        console.error('Resend API response:', JSON.stringify(emailError.response, null, 2))
+      }
     }
 
     console.log('Story submitted successfully:', submissionId)
+
+    // Log email status summary
+    if (userEmailError) {
+      console.warn(`⚠️  User confirmation email failed for submission ${submissionId}:`, userEmailError?.message)
+    }
+    if (adminEmailError) {
+      console.warn(`⚠️  Admin notification email failed for submission ${submissionId}:`, adminEmailError?.message)
+    }
 
     return NextResponse.json({ 
       success: true, 
       message: 'Story submitted successfully',
       submissionId: submissionId,
-      data: submissionData[0]
+      data: submissionData[0],
+      // Include email status in development for debugging
+      ...(process.env.NODE_ENV === 'development' && {
+        emailStatus: {
+          userEmailSent: !userEmailError,
+          adminEmailSent: !adminEmailError,
+          userEmailError: userEmailError?.message || null,
+          adminEmailError: adminEmailError?.message || null
+        }
+      })
     })
 
   } catch (error) {
