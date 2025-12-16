@@ -108,8 +108,7 @@ const Header = () => {
               {/* ---------------------Light/Dark Mode button-------------------- */}
               <ThemeToggler />
 
-              {/* ---------------------Language Toggle - Only on Submit Story page-------------------- */}
-              {pathname === '/submit-story' && <LanguageToggle />}
+              {/* Language Toggle - Removed submit-story page check */}
 
               <div className='hidden max-lg:flex'>
                 <button onClick={() => setSidebarOpen(!sidebarOpen)}>

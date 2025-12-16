@@ -20,7 +20,7 @@ const SingleCreativeMind = ({
                     className='rounded-full w-20 h-20 object-cover'
                     style={{
                         objectPosition: name === 'Zakira Baskhshi' ? '60% center' : 
-                                   name === 'Tamana Farewar' ? 'center 40%' :
+                                   name === 'Sajad Amini' ? 'center 40%' :
                                    name === 'Sadia Ansari' ? '40% center' :
                                    name === 'Ethan Schroyer' ? 'center 30%' : 'center'
                     }}

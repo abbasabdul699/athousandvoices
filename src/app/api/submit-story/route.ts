@@ -22,7 +22,7 @@ const getFromEmail = () => {
 
 // Get admin email address for notifications
 const getAdminEmail = () => {
-  return process.env.ADMIN_EMAIL || 'admin@athousandvoices.com'
+  return process.env.ADMIN_EMAIL || 'athousandvoices3@gmail.com'
 }
 
 export async function GET() {

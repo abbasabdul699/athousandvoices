@@ -426,7 +426,7 @@ export default function AboutPage() {
                       className="w-full h-full object-cover"
                       style={{
                         objectPosition: item.name === 'Zakira Baskhshi' ? '60% center' : 
-                                       item.name === 'Tamana Farewar' ? 'center 40%' :
+                                       item.name === 'Sajad Amini' ? 'center 40%' :
                                        item.name === 'Sadia Ansari' ? '40% center' :
                                        item.name === 'Ethan Schroyer' ? 'center 20%' : 'center'
                       }}
@@ -480,12 +480,6 @@ export default function AboutPage() {
             And to all the young Afghans across the world: we can't wait to read your stories. 
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/submit-story"
-              className="px-8 py-3 bg-purple_blue text-white font-medium rounded-lg hover:bg-purple_blue/90 transition-colors duration-200"
-            >
-              Submit Your Story
-            </a>
             <a
               href="/contact"
               className="px-8 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"

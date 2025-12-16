@@ -122,10 +122,10 @@ const creativeMindList: creativeMind[] = [
   },
   {
     image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/tamana.jpeg`,
-    name: 'Tamana Farewar',
+    name: 'Sajad Amini',
     position: 'Partnerships & Outreach Director',
     linkedinLink: 'https://www.linkedin.com/in/tamana-farewar-21352a177/',
-    email: 'tamana@athousandvoices.com',
+    email: 'sajad@athousandvoices.com',
   },
   {
     image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/ethan.jpeg`,

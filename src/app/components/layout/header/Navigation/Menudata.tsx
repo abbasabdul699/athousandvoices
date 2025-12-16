@@ -7,6 +7,5 @@ export const headerData: HeaderItem[] = [
     { label: 'Blog', href: 'https://athousandvoices.substack.com/', isButton: false },
     { label: 'Partnership', href: '/partnership' },
     { label: 'Resources', href: '/resources' },
-    { label: 'Submit Your Story', href: '/submit-story' },
     { label: 'Contact', href: '/contact' },
 ];

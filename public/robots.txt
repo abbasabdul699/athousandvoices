@@ -12,7 +12,6 @@ Disallow: /admin/
 # Allow important directories
 Allow: /about/
 Allow: /contact/
-Allow: /submit-story/
 Allow: /ambassador/
 Allow: /partnership/
 Allow: /press/

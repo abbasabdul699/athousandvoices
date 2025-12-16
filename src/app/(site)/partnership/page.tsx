@@ -49,28 +49,6 @@ export default function PartnershipPage() {
         "Cross-platform content distribution",
         "Public relations and media coverage"
       ]
-    },
-    {
-      title: "Technology Companies",
-      description: "Collaborate with tech companies to enhance our digital platform and reach more Afghan storytellers.",
-      icon: "💻",
-      benefits: [
-        "Platform development and technical expertise",
-        "Digital tools and resources",
-        "Global reach and accessibility",
-        "Innovation and scalability support"
-      ]
-    },
-    {
-      title: "Cultural Organizations",
-      description: "Partner with cultural institutions to preserve and promote Afghan cultural heritage through storytelling.",
-      icon: "🎨",
-      benefits: [
-        "Cultural expertise and authenticity",
-        "Exhibition and event opportunities",
-        "Historical and cultural preservation",
-        "International cultural exchange"
-      ]
     }
   ]
 
@@ -176,7 +154,7 @@ export default function PartnershipPage() {
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-12">
             Partnership Opportunities
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {partnershipTypes.map((type, index) => (
               <motion.div
                 key={type.title}
@@ -192,10 +170,10 @@ export default function PartnershipPage() {
                 <p className="text-gray-600 dark:text-gray-400 mb-4">
                   {type.description}
                 </p>
-                <ul className="space-y-2">
+                <ul className="space-y-2 pl-4">
                   {type.benefits.map((benefit, idx) => (
                     <li key={idx} className="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                      <div className="w-2 h-2 bg-purple_blue rounded-full mr-3"></div>
+                      <div className="w-2 h-2 bg-purple_blue rounded-full mr-3 flex-shrink-0"></div>
                       {benefit}
                     </li>
                   ))}
