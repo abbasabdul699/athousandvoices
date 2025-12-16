@@ -121,10 +121,10 @@ const creativeMindList: creativeMind[] = [
     email: 'abbas@athousandvoices.com',
   },
   {
-    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/tamana.jpeg`,
+    image: `https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/team-images/Sajid.jpeg`,
     name: 'Sajad Amini',
     position: 'Partnerships & Outreach Director',
-    linkedinLink: 'https://www.linkedin.com/in/tamana-farewar-21352a177/',
+    linkedinLink: 'https://www.linkedin.com/in/sajad-amini-63a9321b7/',
     email: 'sajad@athousandvoices.com',
   },
   {
