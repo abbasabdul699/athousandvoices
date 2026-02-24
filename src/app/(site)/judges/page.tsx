@@ -38,13 +38,20 @@ export default function JudgesPage() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-x-10 gap-y-14 justify-items-center">
           {judges.map((judge, index) => (
             <motion.div
               key={judge.slug}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              className={`w-full max-w-[420px] ${
+                index === 3
+                  ? 'lg:col-start-2 lg:col-span-2'
+                  : index === 4
+                    ? 'lg:col-start-4 lg:col-span-2'
+                    : 'lg:col-span-2'
+              }`}
             >
               <Link href={`/judges/${judge.slug}`} className="group block">
                 <div className="aspect-[3/4] overflow-hidden rounded-md mb-5">
@@ -56,7 +63,7 @@ export default function JudgesPage() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-                <h3 className="text-3xl md:text-5xl font-semibold text-gray-900 dark:text-white mb-1">
+                <h3 className="text-3xl md:text-4xl xl:text-5xl font-semibold text-gray-900 dark:text-white mb-1 break-words">
                   {judge.name.split(' ').length > 2 ? (
                     <>
                       {judge.name.split(' ').slice(0, -1).join(' ')}
