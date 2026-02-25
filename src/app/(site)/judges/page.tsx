@@ -34,7 +34,7 @@ export default function JudgesPage() {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <h2 className="text-4xl md:text-6xl instrument-font italic font-normal text-gray-800 dark:text-white/80">
-            Distinguished voices shaping the future of Afghan storytelling
+            Meet the individuals who carefully reviewed and selected the stories you shared with us.
           </h2>
         </motion.div>
 

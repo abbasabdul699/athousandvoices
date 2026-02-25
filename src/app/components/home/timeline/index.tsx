@@ -37,7 +37,7 @@ function Timeline() {
       id: 3,
       step: 'Last week of January 2026',
       title: 'Pre-selection of Writers',
-      description: 'We will be selecting the writers who will be interviewed for the next round of interviews. During this process, we will be verifying the authenticity of the stories and the writers. This includes narrowing on duplicate applicants, stories that do not meet the criteria, non-compliant AI submissions, and other criteria that have been outlined in the submission guidelines.',
+      description: 'We will be selecting the writers who will be selected for the next round of selection. This includes narrowing on duplicate applicants, stories that do not meet the criteria, non-compliant AI submissions, and other criteria that have been outlined in the submission guidelines.',
       icon: <Mail className="w-6 h-6" />,
       bg_color: 'bg-pink-500/20',
       txt_color: 'text-pink-600',
@@ -45,7 +45,7 @@ function Timeline() {
     {
       id: 4,
       step: 'Feb to March 2026',
-      title: 'Second Round of Selection and Interviewing Process',
+      title: 'Second Round of Selection',
       description: 'Remaining writers will be interviewed for their pieces. This includes verifying the authenticity of the stories and the writers or artists. This includes understanding the writer\'s background, their story, and their writing style.',
       icon: <Mail className="w-6 h-6" />,
       bg_color: 'bg-pink-500/20',
