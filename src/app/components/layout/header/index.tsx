@@ -17,14 +17,23 @@ const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [user, setUser] = useState<{ user: any } | null>(null)
   const [sticky, setSticky] = useState(false)
+  const [showHeader, setShowHeader] = useState(true)
   const pathname = usePathname()
 
   const handleScroll = () => {
     setSticky(window.scrollY >= 80)
+
+    const isWinnersPage = pathname?.startsWith('/winners')
+    if (isWinnersPage) {
+      setShowHeader(window.scrollY >= window.innerHeight - 40)
+      return
+    }
+    setShowHeader(true)
   }
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
+    handleScroll()
     const storedUser = localStorage.getItem('user')
     if (storedUser) {
       setUser(JSON.parse(storedUser))
@@ -42,7 +51,10 @@ const Header = () => {
 
   return (
     <>
-      <header className={`fixed top-0 z-[9999] w-full`}>
+      <header
+        className={`fixed top-0 z-[9999] w-full transition-transform duration-300 ${
+          showHeader ? 'translate-y-0' : '-translate-y-full pointer-events-none'
+        }`}>
         <div className='container p-3'>
           <nav
             className={`flex items-center py-3 px-4 justify-between ${

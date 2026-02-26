@@ -21,7 +21,7 @@ const SingleCreativeMind = ({
                     style={{
                         objectPosition: name === 'Zakira Baskhshi' ? '60% center' : 
                                    name === 'Sajad Amini' ? 'center 40%' :
-                                   name === 'Sadia Ansari' ? '40% center' :
+                                   name === 'Aziza Mohammadi' ? '40% center' :
                                    name === 'Ethan Schroyer' ? 'center 30%' : 'center'
                     }}
                     unoptimized={true}

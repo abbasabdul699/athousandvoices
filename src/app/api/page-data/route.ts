@@ -135,11 +135,11 @@ const creativeMindList: creativeMind[] = [
     email: 'ethan@athousandvoices.com',
   },
   {
-    image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Sadia.jpeg`,
-    name: 'Sadia Ansari',
+    image: `https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/team-images/Azizi.jpeg`,
+    name: 'Aziza Mohammadi',
     position: 'Social Media Coordinator',
-    linkedinLink: 'https://www.linkedin.com/in/sadia-ansari-6a1653247/',
-    email: 'sadia@athousandvoices.com',
+    linkedinLink: 'https://www.linkedin.com/in/aziza-mohammadi-8a35583b3/',
+    email: 'aziza@athousandvoices.com',
   },
 ]
 
