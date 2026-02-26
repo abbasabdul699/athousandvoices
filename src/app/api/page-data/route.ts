@@ -123,7 +123,7 @@ const creativeMindList: creativeMind[] = [
   {
     image: `https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/team-images/Sajid.jpeg`,
     name: 'Sajad Amini',
-    position: 'Partnerships & Outreach Director',
+    position: 'Outreach Director',
     linkedinLink: 'https://www.linkedin.com/in/sajad-amini-63a9321b7/',
     email: 'sajad@athousandvoices.com',
   },
