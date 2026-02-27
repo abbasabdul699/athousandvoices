@@ -101,7 +101,7 @@ const onlinePresenceList: onlinePresence[] = [
 const creativeMindList: creativeMind[] = [
   {
     image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Zakira.jpeg`,
-    name: 'Zakira Baskhshi',
+    name: 'Zakira Bakhshi',
     position: 'President',
     linkedinLink: 'https://www.linkedin.com/in/zakira-bakhshi-5570811b2/',
     email: 'zakira@athousandvoices.com',

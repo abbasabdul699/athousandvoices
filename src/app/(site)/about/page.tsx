@@ -425,7 +425,7 @@ export default function AboutPage() {
                       height={300}
                       className="w-full h-full object-cover"
                       style={{
-                        objectPosition: item.name === 'Zakira Baskhshi' ? '60% center' : 
+                        objectPosition: item.name === 'Zakira Bakhshi' ? '60% center' : 
                                        item.name === 'Sajad Amini' ? 'center 40%' :
                                        item.name === 'Aziza Mohammadi' ? '40% center' :
                                        item.name === 'Ethan Schroyer' ? 'center 20%' : 'center'

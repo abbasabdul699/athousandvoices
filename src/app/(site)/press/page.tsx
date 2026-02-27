@@ -5,6 +5,7 @@ import Image from 'next/image'
 
 interface Article {
   id: number
+  url: string
   title: string
   excerpt?: string
   author?: string
@@ -13,18 +14,29 @@ interface Article {
   featured?: boolean
 }
 
-const pressArticle: Article = {
-  id: 1,
-  title: "Yale junior receives Projects for Peace award",
-  author: "By: Yale News",
-  date: "MAY 21, 2025 · A THOUSAND VOICES",
-  image: "/images/home/press/Zakira.png",
-  featured: true
-}
+const pressArticles: Article[] = [
+  {
+    id: 1,
+    url: "https://news.yale.edu/2025/05/21/yale-junior-receives-projects-peace-award",
+    title: "Yale junior receives Projects for Peace award",
+    author: "By: Yale News",
+    date: "MAY 21, 2025 · A THOUSAND VOICES",
+    image: "/images/home/press/Zakira.png",
+    featured: true
+  },
+  {
+    id: 2,
+    url: "https://www.themiddleeastuncovered.com/p/the-transnational-storytelling-platform",
+    title: "The Transnational Storytelling Platform Empowering Afghan Youth",
+    author: "By: Middle East Uncovered",
+    date: "DEC 22, 2025 · A THOUSAND VOICES",
+    image: "/images/transnational.png"
+  }
+]
 
 export default function PressPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white dark:bg-gray-900 pt-24 md:pt-28">
       {/* Header Section */}
       <div className="border-b border-gray-200 dark:border-gray-700">
         <div className="container mx-auto px-4 py-16">
@@ -41,49 +53,53 @@ export default function PressPage() {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-12">
-        {/* Single Article Display */}
-        <motion.article
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
-        >
-          <a 
-            href="https://news.yale.edu/2025/05/21/yale-junior-receives-projects-peace-award" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="block"
-          >
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
-              <div className="relative h-96 overflow-hidden">
-                <Image
-                  src={pressArticle.image}
-                  alt={pressArticle.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-8">
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-purple_blue transition-colors duration-200">
-                  {pressArticle.title}
-                </h2>
-                {pressArticle.author && (
-                  <p className="text-lg text-gray-500 dark:text-gray-400 mb-3">
-                    {pressArticle.author}
-                  </p>
-                )}
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-                  {pressArticle.date}
-                </p>
-                {pressArticle.excerpt && (
-                  <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                    {pressArticle.excerpt}
-                  </p>
-                )}
-              </div>
-            </div>
-          </a>
-        </motion.article>
+        {/* Press Articles */}
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+          {pressArticles.map((article, index) => (
+            <motion.article
+              key={article.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <a
+                href={article.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="h-full bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
+                  <div className="relative h-64 overflow-hidden">
+                    <Image
+                      src={article.image}
+                      alt={article.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-purple_blue transition-colors duration-200">
+                      {article.title}
+                    </h2>
+                    {article.author && (
+                      <p className="text-base text-gray-500 dark:text-gray-400 mb-2">
+                        {article.author}
+                      </p>
+                    )}
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                      {article.date}
+                    </p>
+                    {article.excerpt && (
+                      <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {article.excerpt}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </a>
+            </motion.article>
+          ))}
+        </div>
 
         {/* Newsletter Signup */}
         <motion.div

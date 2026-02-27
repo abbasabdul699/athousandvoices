@@ -61,7 +61,7 @@ export default function PartnershipPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white dark:bg-gray-900 pt-24 md:pt-28">
       {/* Header Section */}
       <div className="border-b border-gray-200 dark:border-gray-700">
         <div className="container mx-auto px-4 py-16">

@@ -58,10 +58,10 @@ const Header = () => {
         <div className='container p-3'>
           <nav
             className={`flex items-center py-3 px-4 justify-between ${
-              sticky
-                ? ' rounded-full shadow-sm bg-white dark:bg-dark_black'
-                : null
-            } `}>
+              sticky || sidebarOpen
+                ? 'rounded-full shadow-sm bg-white dark:bg-dark_black'
+                : 'max-lg:rounded-full max-lg:shadow-sm max-lg:bg-white max-lg:dark:bg-dark_black'
+            }`}>
             <div className='flex items-center'>
               <Logo />
             </div>
@@ -144,44 +144,43 @@ const Header = () => {
           </nav>
         </div>
 
-        {/* ------------------------- Mobile sidebar starts ------------------------- */}
-        {sidebarOpen && (
+      </header>
+      {/* ------------------------- Mobile sidebar starts ------------------------- */}
+      {sidebarOpen && (
+        <div className='lg:hidden fixed inset-0 z-[10001]'>
           <div
-            className='fixed top-0 left-0 w-full h-full bg-black/50 z-40'
+            className='absolute inset-0 bg-black/50'
             onClick={() => setSidebarOpen(false)}
           />
-        )}
-        <div
-          className={`lg:hidden fixed top-0 right-0 h-full w-full bg-white dark:bg-dark_black shadow-lg transform transition-transform duration-300 max-w-xs ${
-            sidebarOpen ? 'translate-x-0' : 'translate-x-full'
-          } z-50`}>
-          <div className='flex items-center justify-between p-4'>
-            <h2 className='text-lg font-bold'>Menu</h2>
-            <button
-              onClick={() => setSidebarOpen(false)}
-              aria-label='Close mobile menu'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'>
-                <path
-                  fill='none'
-                  stroke='currentColor'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M6 18L18 6M6 6l12 12'
-                />
-              </svg>
-            </button>
-          </div>
-          <div className='p-4'>
-            <ul className='flex flex-col'>
-              {headerData.map((item, index) => (
-                <MobileHeader key={index} item={item} />
-              ))}
-              <div className='flex flex-col items-center gap-3 px-2 mt-2'>
+          <aside className='absolute top-0 right-0 h-full w-[85%] max-w-xs bg-white dark:bg-dark_black shadow-lg flex flex-col'>
+            <div className='flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700'>
+              <h2 className='text-lg font-bold'>Menu</h2>
+              <button
+                onClick={() => setSidebarOpen(false)}
+                aria-label='Close mobile menu'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='24'
+                  height='24'
+                  viewBox='0 0 24 24'>
+                  <path
+                    fill='none'
+                    stroke='currentColor'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M6 18L18 6M6 6l12 12'
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className='flex-1 overflow-y-auto p-4 bg-white dark:bg-dark_black'>
+              <ul className='flex flex-col gap-1'>
+                {headerData.map((item, index) => (
+                  <MobileHeader key={index} item={item} onClick={() => setSidebarOpen(false)} />
+                ))}
+              </ul>
+              <div className='flex flex-col items-center gap-3 px-2 mt-4'>
                 {user || session?.user ? (
                   <>
                     <button
@@ -231,10 +230,10 @@ const Header = () => {
                   </>
                 )}
               </div>
-            </ul>
-          </div>
+            </div>
+          </aside>
         </div>
-      </header>
+      )}
     </>
   )
 }
