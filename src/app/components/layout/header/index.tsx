@@ -19,15 +19,10 @@ const Header = () => {
   const [sticky, setSticky] = useState(false)
   const [showHeader, setShowHeader] = useState(true)
   const pathname = usePathname()
+  const isWinnersPage = pathname?.startsWith('/winners')
 
   const handleScroll = () => {
     setSticky(window.scrollY >= 80)
-
-    const isWinnersPage = pathname?.startsWith('/winners')
-    if (isWinnersPage) {
-      setShowHeader(window.scrollY >= window.innerHeight - 40)
-      return
-    }
     setShowHeader(true)
   }
 
@@ -58,7 +53,7 @@ const Header = () => {
         <div className='container p-3'>
           <nav
             className={`flex items-center py-3 px-4 justify-between ${
-              sticky || sidebarOpen
+              sticky || sidebarOpen || isWinnersPage
                 ? 'rounded-full shadow-sm bg-white dark:bg-dark_black'
                 : 'max-lg:rounded-full max-lg:shadow-sm max-lg:bg-white max-lg:dark:bg-dark_black'
             }`}>
