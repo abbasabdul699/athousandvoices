@@ -44,7 +44,10 @@ export default function SubmissionGlobe({ hotspots }: SubmissionGlobeProps) {
 
     const resize = () => {
       const rect = el.getBoundingClientRect()
-      setDimensions({ width: Math.max(rect.width, 400), height: Math.max(rect.height, 380) })
+      // Use real box size on mobile; large mins were inflating scale and clipping the sphere.
+      const w = Math.max(rect.width, 120)
+      const h = Math.max(rect.height, 120)
+      setDimensions({ width: w, height: h })
     }
 
     resize()
@@ -55,7 +58,7 @@ export default function SubmissionGlobe({ hotspots }: SubmissionGlobeProps) {
   }, [])
 
   const projectionScale = useMemo(
-    () => Math.min(dimensions.width, dimensions.height) * 0.33,
+    () => Math.min(dimensions.width, dimensions.height) * 0.36,
     [dimensions.height, dimensions.width]
   )
 
@@ -67,6 +70,7 @@ export default function SubmissionGlobe({ hotspots }: SubmissionGlobeProps) {
           projectionConfig={{
             rotate: [rotation, -14, 0],
             scale: projectionScale,
+            // @ts-expect-error clipAngle supported by d3 geoOrthographic; types lag behind
             clipAngle: 90,
           }}
           style={{ width: '100%', height: '100%' }}>
