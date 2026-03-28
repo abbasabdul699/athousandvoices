@@ -37,6 +37,8 @@ interface FeaturedWinner {
   summary: string
   image: string
   tag: string
+  /** Full story split into pages (one string per page). Use `\\n\\n` for paragraph breaks within a page. If omitted, the reader uses the summary plus a sample excerpt as two pages. */
+  pages?: string[]
 }
 
 const writingExcerpts = [
@@ -534,35 +536,42 @@ const runnerUps: RunnerUpSubmission[] = [
   },
 ]
 
+function storyPagesForWinner(winner: FeaturedWinner, winnerIndex: number): string[] {
+  if (winner.pages && winner.pages.length > 0) return winner.pages
+  return [winner.summary, writingExcerpts[winnerIndex % writingExcerpts.length]]
+}
+
 const featuredWinners: FeaturedWinner[] = [
   {
     rank: 'First Place',
-    title: 'When the Apricots Returned',
-    creator: 'A. Rahimi',
+    title: 'A is like Abbas',
+    creator: 'R. Aaghaaz',
     summary:
-      'A reflective narrative on memory and return, this piece stood out for its emotional precision, original voice, and layered storytelling.',
+      'An elderly man, isolated and forgotten by his family, clings to memories of his grandson Abbas through small treasured objects and imagined conversations. In his loneliness, he creates one final reunion—only for it to be revealed that Abbas has long been dead, and the visit was a reflection of his grief and longing.',
     image:
-      'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/wmremove-transformed.png',
+      'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/winners/firstplace(1).png',
     tag: '01',
+    // Replace with the full story: one array entry per page (paste text here when ready).
+    // pages: ['First page text…', 'Second page…'],
   },
   {
     rank: 'Second Place',
-    title: 'Threads of Kabul',
-    creator: 'M. Ahmadi',
+    title: 'Fearless eyes(چشمان بی ترس)',
+    creator: 'F. Shafiq',
     summary:
-      'Through vivid imagery and composition, this work bridges personal memory with collective history and offers a powerful visual statement.',
+      'A security officer responds to a protest and tries to control the situation using fear and authority. When a brave woman stands up and speaks out, he begins to realize that true strength comes from courage and having a voice, not from power or force.',
     image:
-      'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/judges/Lotfullah.jpg',
+      'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/winners/secondplace.png',
     tag: '02',
   },
   {
     rank: 'Third Place',
-    title: 'After the Checkpoint',
-    creator: 'N. Wafa',
+    title: 'Eyes That Listen',
+    creator: 'A. Yaqobi',
     summary:
-      'A concise and deeply resonant piece that balances restraint and intensity while capturing displacement, dignity, and hope.',
+      'A blind young man named Mohammad overcomes rejection and hardship by discovering his strength through sound, eventually becoming a respected journalist. His journey shows that hope and determination can turn even the greatest challenges into a source of purpose and inspiration.',
     image:
-      'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/judges/Adam.png',
+      'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/winners/thirdplace.png',
     tag: '03',
   },
 ]
@@ -639,6 +648,7 @@ function ScrollUnmaskSection({
 export default function WinnersPage() {
   const [activeId, setActiveId] = useState<string | null>(null)
   const [openWinnerBook, setOpenWinnerBook] = useState<Record<string, boolean>>({})
+  const [winnerBookPage, setWinnerBookPage] = useState<Record<string, number>>({})
   const [submittedHotspots, setSubmittedHotspots] =
     useState<SubmissionHotspot[]>(fallbackSubmittedHotspots)
 
@@ -648,10 +658,13 @@ export default function WinnersPage() {
   )
 
   const toggleWinnerBook = (rank: FeaturedWinner['rank']) => {
-    setOpenWinnerBook((prev) => ({
-      ...prev,
-      [rank]: !prev[rank],
-    }))
+    setOpenWinnerBook((prev) => {
+      const willOpen = !prev[rank]
+      if (willOpen) {
+        setWinnerBookPage((p) => ({ ...p, [rank]: 0 }))
+      }
+      return { ...prev, [rank]: willOpen }
+    })
   }
 
   useEffect(() => {
@@ -729,13 +742,26 @@ export default function WinnersPage() {
         </section>
       </ScrollUnmaskSection>
 
-      {featuredWinners.map((winner, winnerIndex) => (
+      {featuredWinners.map((winner, winnerIndex) => {
+        const storyPages = storyPagesForWinner(winner, winnerIndex)
+        const bookPageIndex = Math.min(
+          Math.max(0, winnerBookPage[winner.rank] ?? 0),
+          Math.max(0, storyPages.length - 1),
+        )
+        const pageText = storyPages[bookPageIndex] ?? ''
+        const pageParagraphs = pageText
+          .trim()
+          .split(/\n\n+/)
+          .map((p) => p.trim())
+          .filter(Boolean)
+
+        return (
         <ScrollUnmaskSection
           key={winner.rank}
           containerClassName='bg-[#efefef] dark:bg-gray-900'
           onUnmaskComplete={() => fireWinnerPlaceConfetti(winner.rank)}>
           <article className='relative bg-[#efefef] dark:bg-gray-900 min-h-screen overflow-hidden px-4 md:px-8 lg:px-10'>
-            <div className='h-full min-h-screen grid grid-cols-1 lg:grid-cols-12 gap-8 items-center px-4 md:px-12 py-14 md:py-20'>
+            <div className='h-full min-h-screen grid grid-cols-1 gap-8 items-center px-4 py-14 max-lg:pt-[4.5rem] md:px-12 md:py-20 lg:grid-cols-12'>
               <div className='lg:col-span-6 max-w-xl'>
                 <p className='text-xs md:text-sm uppercase tracking-[0.2em] text-black/65 dark:text-white/70'>
                   {winner.rank}
@@ -753,25 +779,115 @@ export default function WinnersPage() {
 
               <div className='lg:col-span-6'>
                 <div className='relative w-full max-w-[560px] ml-auto aspect-[3/4] md:aspect-[5/7] max-h-[780px] [perspective:2000px]'>
+                  <motion.div
+                    aria-hidden
+                    className={cn(
+                      'pointer-events-none absolute z-10 -translate-x-1 sm:translate-x-0',
+                      'right-full top-6 mr-2 sm:mr-4 md:top-8 md:mr-5',
+                      'hidden md:block',
+                      'transition-opacity duration-300',
+                      openWinnerBook[winner.rank] ? 'opacity-0' : 'opacity-100',
+                    )}
+                    animate={{ y: [0, -7, 0] }}
+                    transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}>
+                    <div className='flex items-center gap-0'>
+                      <p className='whitespace-nowrap text-right text-[10px] font-semibold uppercase leading-tight tracking-[0.14em] text-black/72 sm:text-[11px] sm:tracking-[0.16em] dark:text-white/78'>
+                        Click the book
+                      </p>
+                      <svg
+                        width='72'
+                        height='56'
+                        viewBox='6 0 74 58'
+                        fill='none'
+                        xmlns='http://www.w3.org/2000/svg'
+                        className='-ml-1 shrink-0 text-black/78 drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)] dark:text-white/88 dark:drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]'
+                        aria-hidden>
+                        <path
+                          d='M6 46 C 22 38 34 26 48 14 C 56 7 64 4 72 4'
+                          stroke='currentColor'
+                          strokeWidth='2.35'
+                          strokeLinecap='round'
+                          fill='none'
+                        />
+                        <path
+                          d='M64 1 L 74 4 L 69 11'
+                          stroke='currentColor'
+                          strokeWidth='2.35'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          fill='none'
+                        />
+                      </svg>
+                    </div>
+                  </motion.div>
                   <div
-                    className={`absolute inset-0 rounded-[12px] bg-[#f8f7f3] dark:bg-gray-800 px-5 md:px-8 py-5 md:py-8 overflow-hidden transition-opacity duration-300 ${
-                      openWinnerBook[winner.rank] ? 'opacity-100' : 'opacity-0'
-                    }`}>
-                    <p className='text-[11px] md:text-xs uppercase tracking-[0.22em] text-black/60 dark:text-white/65'>
-                      {winner.rank} Writing
-                    </p>
-                    <h3 className='mt-3 text-xl md:text-2xl font-semibold text-black dark:text-white'>
-                      {winner.title}
-                    </h3>
-                    <p className='mt-1 text-sm md:text-base text-black/75 dark:text-white/75'>
-                      by {winner.creator}
-                    </p>
-                    <p className='mt-5 text-sm md:text-base leading-relaxed text-black/80 dark:text-white/80'>
-                      {winner.summary}
-                    </p>
-                    <p className='mt-4 text-sm md:text-base leading-relaxed text-black/80 dark:text-white/80 italic'>
-                      {writingExcerpts[winnerIndex % writingExcerpts.length]}
-                    </p>
+                    className={cn(
+                      'absolute inset-0 flex min-h-0 flex-col rounded-[12px] bg-[#f8f7f3] dark:bg-gray-800 px-5 md:px-8 py-5 md:py-8 transition-opacity duration-300',
+                      openWinnerBook[winner.rank]
+                        ? 'z-[4] opacity-100'
+                        : 'z-0 opacity-0 pointer-events-none',
+                    )}>
+                    <div className='flex shrink-0 items-start justify-between gap-3'>
+                      <div>
+                        <p className='text-[11px] md:text-xs uppercase tracking-[0.22em] text-black/60 dark:text-white/65'>
+                          {winner.rank} Writing
+                        </p>
+                        <h3 className='mt-2 text-lg md:text-xl font-semibold text-black dark:text-white'>
+                          {winner.title}
+                        </h3>
+                        <p className='mt-0.5 text-xs md:text-sm text-black/70 dark:text-white/75'>
+                          by {winner.creator}
+                        </p>
+                      </div>
+                      <button
+                        type='button'
+                        onClick={() => toggleWinnerBook(winner.rank)}
+                        className='shrink-0 rounded-full border border-black/15 bg-white/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-black/75 transition hover:bg-white dark:border-white/20 dark:bg-gray-900/80 dark:text-white/85 dark:hover:bg-gray-900'>
+                        Close book
+                      </button>
+                    </div>
+                    <div
+                      className='mt-4 min-h-0 flex-1 overflow-y-auto overscroll-y-contain pr-1'
+                      aria-live='polite'>
+                      {pageParagraphs.map((para, i) => (
+                        <p
+                          key={`${bookPageIndex}-${i}`}
+                          className='text-sm md:text-base leading-relaxed text-black/82 dark:text-white/82 [&+&]:mt-4'>
+                          {para}
+                        </p>
+                      ))}
+                    </div>
+                    <div className='mt-4 flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-black/10 pt-4 dark:border-white/15'>
+                      <p className='text-[10px] font-medium uppercase tracking-[0.16em] text-black/55 dark:text-white/60'>
+                        Page {bookPageIndex + 1} of {storyPages.length}
+                      </p>
+                      <div className='flex gap-2'>
+                        <button
+                          type='button'
+                          disabled={bookPageIndex <= 0}
+                          onClick={() =>
+                            setWinnerBookPage((p) => ({
+                              ...p,
+                              [winner.rank]: Math.max(0, bookPageIndex - 1),
+                            }))
+                          }
+                          className='min-h-9 min-w-[4.5rem] rounded-lg border border-black/15 bg-white/90 px-3 text-xs font-semibold text-black/80 transition enabled:hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/20 dark:bg-gray-900/90 dark:text-white/85 enabled:dark:hover:bg-gray-900'>
+                            Previous
+                          </button>
+                        <button
+                          type='button'
+                          disabled={bookPageIndex >= storyPages.length - 1}
+                          onClick={() =>
+                            setWinnerBookPage((p) => ({
+                              ...p,
+                              [winner.rank]: Math.min(storyPages.length - 1, bookPageIndex + 1),
+                            }))
+                          }
+                          className='min-h-9 min-w-[4.5rem] rounded-lg border border-black/15 bg-white/90 px-3 text-xs font-semibold text-black/80 transition enabled:hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/20 dark:bg-gray-900/90 dark:text-white/85 enabled:dark:hover:bg-gray-900'>
+                            Next
+                          </button>
+                      </div>
+                    </div>
                   </div>
 
                   <motion.button
@@ -780,7 +896,10 @@ export default function WinnersPage() {
                     aria-label={`Open or close ${winner.rank} winner book`}
                     animate={{ rotateY: openWinnerBook[winner.rank] ? -165 : 0 }}
                     transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-                    className='absolute inset-0 origin-left [transform-style:preserve-3d] cursor-pointer'>
+                    className={cn(
+                      'absolute inset-0 origin-left [transform-style:preserve-3d] cursor-pointer',
+                      openWinnerBook[winner.rank] ? 'z-[2]' : 'z-[5]',
+                    )}>
                     <div className='absolute inset-0 [backface-visibility:hidden] rounded-[12px] bg-white dark:bg-gray-700 overflow-hidden shadow-[0_16px_28px_rgba(0,0,0,0.2)]'>
                       <Image
                         src={winner.image}
@@ -803,18 +922,28 @@ export default function WinnersPage() {
                         <p className='mt-2 text-lg md:text-[30px] leading-none font-semibold text-black/90 drop-shadow-[0_1px_1px_rgba(255,255,255,0.22)]'>
                           {winner.creator}
                         </p>
-                        <p className='mt-2 text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/85'>
-                          Tap to {openWinnerBook[winner.rank] ? 'close' : 'open'}
-                        </p>
                       </div>
+                      {!openWinnerBook[winner.rank] && (
+                        <div className='pointer-events-none absolute inset-x-4 bottom-4 z-[1] md:hidden'>
+                          <span className='block rounded-full border border-white/25 bg-black/50 px-3 py-2 text-center text-[10px] font-semibold uppercase leading-tight tracking-[0.16em] text-white shadow-[0_4px_14px_rgba(0,0,0,0.35)] backdrop-blur-[6px]'>
+                            Tap to open
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     <div className='absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-l-[12px] bg-[#ebe8df] dark:bg-gray-800 px-5 md:px-8 py-6 text-left'>
                       <p className='text-[11px] md:text-xs uppercase tracking-[0.2em] text-black/65 dark:text-white/70'>
-                        Inside Cover
+                        Title page
                       </p>
-                      <p className='mt-4 text-base md:text-lg leading-relaxed text-black/80 dark:text-white/80'>
-                        This selected piece reflects craft, honesty, and narrative depth. Continue reading on the right page.
+                      <p className='mt-5 text-xl md:text-2xl font-semibold leading-tight text-black dark:text-white'>
+                        {winner.title}
+                      </p>
+                      <p className='mt-2 text-sm md:text-base text-black/75 dark:text-white/78'>
+                        by {winner.creator}
+                      </p>
+                      <p className='mt-6 text-sm md:text-base leading-relaxed text-black/72 dark:text-white/75'>
+                        The story begins on the facing page. Use <span className='font-medium'>Next</span> to turn the page.
                       </p>
                     </div>
                   </motion.button>
@@ -823,12 +952,13 @@ export default function WinnersPage() {
             </div>
           </article>
         </ScrollUnmaskSection>
-      ))}
+        )
+      })}
 
       <ScrollUnmaskSection containerClassName='bg-[#efefef] dark:bg-gray-900'>
       <section className='relative flex h-full min-h-0 w-full flex-col overflow-hidden px-5 md:px-10 pt-24 md:pt-28 pb-10'>
-        {/* Preview canvas */}
-        <div className='absolute inset-0 pl-5 md:pl-[360px] lg:pl-[420px] pr-5 md:pr-10 pt-24 md:pt-28 pb-10 pointer-events-none'>
+        {/* Preview canvas (desktop hover only — mobile uses direct links in the list) */}
+        <div className='pointer-events-none absolute inset-0 hidden pl-5 pt-24 pb-10 pr-5 md:block md:pl-[360px] md:pr-10 md:pt-28 lg:pl-[420px]'>
           <AnimatePresence mode='wait'>
             {activeSubmission ? (
               <motion.div
@@ -883,7 +1013,7 @@ export default function WinnersPage() {
         </div>
 
         {/* Submission index list — scroll inside sticky viewport (parent is overflow-hidden h-svh) */}
-        <div className='relative z-10 flex min-h-0 w-full max-w-[320px] flex-1 flex-col md:max-w-[360px]'>
+        <div className='relative z-10 flex min-h-0 w-full max-w-none flex-1 flex-col md:max-w-[360px]'>
           <div className='mb-6 shrink-0'>
             <p className='text-[10px] md:text-xs uppercase tracking-[0.2em] text-black/50 dark:text-white/60'>
               Runner-Up Selection
@@ -895,55 +1025,67 @@ export default function WinnersPage() {
             className='min-h-0 flex-1 overflow-y-auto overscroll-y-contain border-t border-black/15 dark:border-white/20 [scrollbar-gutter:stable]'>
             {runnerUps.map((submission, index) => {
               const isActive = submission.id === activeId
-              return (
-                <button
-                  key={submission.id}
-                  type='button'
-                  onMouseEnter={() => setActiveId(submission.id)}
-                  onFocus={() => setActiveId(submission.id)}
-                  onClick={() => setActiveId(submission.id)}
-                  className='w-full text-left border-b border-black/10 dark:border-white/15 py-2.5 md:py-2 transition-opacity'>
-                  <div className='grid grid-cols-[1fr_auto_auto] gap-3 items-center'>
-                    <p
-                      className={`text-[11px] md:text-xs leading-tight uppercase tracking-wide ${
-                        isActive
+              const submissionHref = submission.fileUrl
+              const typeLabel =
+                submission.type === 'art'
+                  ? 'Visual'
+                  : submission.type === 'poem'
+                    ? 'Poem'
+                    : 'Story'
+              const indexLabel = String(index + 1).padStart(3, '0')
+
+              const renderRowGrid = (forDesktop: boolean) => (
+                <div className='grid grid-cols-[1fr_auto_auto] gap-3 items-center'>
+                  <p
+                    className={cn(
+                      'text-[11px] md:text-xs leading-tight uppercase tracking-wide',
+                      forDesktop
+                        ? isActive
                           ? 'text-black dark:text-white'
-                          : 'text-black/65 dark:text-white/70 hover:text-black dark:hover:text-white'
-                      }`}>
-                      {submission.title}
-                    </p>
-                    <span className='text-[10px] md:text-[11px] uppercase text-black/45 dark:text-white/45'>
-                      {submission.type === 'art'
-                        ? 'Visual'
-                        : submission.type === 'poem'
-                          ? 'Poem'
-                          : 'Story'}
-                    </span>
-                    <span className='text-[10px] md:text-[11px] text-black/45 dark:text-white/45 tabular-nums'>
-                      {String(index + 1).padStart(3, '0')}
-                    </span>
-                  </div>
-                </button>
+                          : 'text-black/65 dark:text-white/70 md:hover:text-black md:dark:hover:text-white'
+                        : 'text-black/85 dark:text-white/88',
+                    )}>
+                    {submission.title}
+                  </p>
+                  <span className='text-[10px] md:text-[11px] uppercase text-black/45 dark:text-white/45'>
+                    {typeLabel}
+                  </span>
+                  <span className='text-[10px] md:text-[11px] text-black/45 dark:text-white/45 tabular-nums'>
+                    {indexLabel}
+                  </span>
+                </div>
+              )
+
+              return (
+                <div
+                  key={submission.id}
+                  className='border-b border-black/10 dark:border-white/15'>
+                  {submissionHref ? (
+                    <a
+                      href={submissionHref}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='md:hidden block w-full py-2.5 text-left transition-opacity active:opacity-70'>
+                      {renderRowGrid(false)}
+                    </a>
+                  ) : (
+                    <div className='md:hidden py-2.5 opacity-60'>{renderRowGrid(false)}</div>
+                  )}
+                  <button
+                    type='button'
+                    onMouseEnter={() => setActiveId(submission.id)}
+                    onFocus={() => setActiveId(submission.id)}
+                    onClick={() => setActiveId(submission.id)}
+                    className='hidden w-full text-left py-2.5 md:block md:py-2 transition-opacity'>
+                    {renderRowGrid(true)}
+                  </button>
+                </div>
               )
             })}
           </div>
         </div>
       </section>
       </ScrollUnmaskSection>
-
-      {/* Mobile fallback details */}
-      <section className='md:hidden px-5 pb-14'>
-        <div className='rounded-lg border border-black/10 dark:border-white/15 p-4'>
-          <p className='text-xs uppercase tracking-[0.18em] text-black/60 dark:text-white/70 mb-2'>
-            Tap a title to preview
-          </p>
-          {activeSubmission && (
-            <p className='text-sm text-black/80 dark:text-white/80'>
-              {activeSubmission.title} by {activeSubmission.creator}
-            </p>
-          )}
-        </div>
-      </section>
 
       <SignatureReveal />
       </main>

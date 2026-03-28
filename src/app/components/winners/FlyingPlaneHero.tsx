@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useMemo, useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion'
 import Image from 'next/image'
 
 const VOICE_IMAGE =
@@ -139,6 +139,168 @@ const noteItems: HeroNote[] = [
   },
 ]
 
+/** Fewer, smaller tiles — spaced for narrow viewports (wide vertical + horizontal spread) */
+const mobileHeroNotes: HeroNote[] = [
+  {
+    id: 'n4',
+    label: 'STORY',
+    left: '58%',
+    top: '30%',
+    rot: 8,
+    delay: 0.18,
+    depth: 'far' as const,
+    imageSrc: SPEAKER_IMAGE,
+  },
+  {
+    id: 'n3',
+    label: 'VOICE',
+    left: '46%',
+    top: '36%',
+    rot: -6,
+    delay: 0.12,
+    depth: 'mid' as const,
+    imageSrc: VOICE_IMAGE,
+  },
+  {
+    id: 'n2',
+    label: 'ART',
+    left: '10%',
+    top: '42%',
+    rot: 10,
+    delay: 0.24,
+    depth: 'mid' as const,
+    imageSrc: BUILDING_IMAGE,
+  },
+  {
+    id: 'n6',
+    label: 'HOPE',
+    left: '60%',
+    top: '50%',
+    rot: 5,
+    delay: 0.32,
+    depth: 'mid' as const,
+    imageSrc: TEA_IMAGE,
+  },
+  {
+    id: 'n5',
+    label: 'MEMORY',
+    left: '38%',
+    top: '56%',
+    rot: -8,
+    delay: 0.28,
+    depth: 'near' as const,
+    imageSrc: CAMERA_IMAGE,
+  },
+  {
+    id: 'n8',
+    label: 'POEM',
+    left: '6%',
+    top: '70%',
+    rot: 4,
+    delay: 0.36,
+    depth: 'far' as const,
+    imageSrc: FARSI_IMAGE,
+  },
+  {
+    id: 'n10',
+    label: 'FUTURE',
+    left: '54%',
+    top: '84%',
+    rot: 8,
+    delay: 0.06,
+    depth: 'far' as const,
+    imageSrc: FUTURE_IMAGE,
+  },
+]
+
+function imageNoteClass(depth: HeroNote['depth'], layout: 'desktop' | 'mobile') {
+  const z = depth === 'near' ? 'z-20' : depth === 'mid' ? 'z-10' : 'z-[5]'
+  if (layout === 'mobile') {
+    return `absolute overflow-visible ${z} w-[min(28vw,118px)] h-[min(20vw,84px)]`
+  }
+  return `absolute overflow-visible ${z} w-[178px] h-[127px] sm:w-[188px] sm:h-[134px] md:w-[224px] md:h-[160px] lg:w-[236px] lg:h-[168px]`
+}
+
+function parallaxEndY(note: HeroNote, index: number, layout: 'desktop' | 'mobile'): number {
+  if (layout === 'mobile') {
+    if (note.depth === 'near') return index % 2 === 0 ? -28 : 22
+    if (note.depth === 'mid') return index % 2 === 0 ? -16 : 12
+    return index % 2 === 0 ? -10 : 8
+  }
+  if (note.depth === 'near') return index % 2 === 0 ? -56 : 44
+  if (note.depth === 'mid') return index % 2 === 0 ? -30 : 22
+  return index % 2 === 0 ? -16 : 14
+}
+
+function HeroNoteTile({
+  note,
+  index,
+  scrollYProgress,
+  layout,
+}: {
+  note: HeroNote
+  index: number
+  scrollYProgress: MotionValue<number>
+  layout: 'desktop' | 'mobile'
+}) {
+  const y = useTransform(scrollYProgress, [0, 1], [0, parallaxEndY(note, index, layout)])
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: note.delay, duration: 0.55 }}
+      style={{
+        left: note.left,
+        top: note.top,
+        y,
+        scale: note.depth === 'near' ? 1.04 : note.depth === 'mid' ? 1 : 0.9,
+        filter:
+          note.depth === 'near' ? 'blur(0px)' : note.depth === 'mid' ? 'blur(0.2px)' : 'blur(0.8px)',
+        opacity: note.depth === 'near' ? 1 : note.depth === 'mid' ? 0.88 : 0.72,
+      }}
+      className={
+        note.imageSrc
+          ? imageNoteClass(note.depth, layout)
+          : `absolute ${note.depth === 'near' ? 'z-20' : note.depth === 'mid' ? 'z-10' : 'z-[5]'} w-[74px] md:w-[88px] h-[48px] md:h-[56px] rounded-md border ${
+              note.id === 'n10' ? 'border-[#fabc68]/70' : 'border-black/12'
+            } bg-white shadow-[0_6px_14px_rgba(0,0,0,0.08)] dark:border-white/15 dark:bg-gray-800/80`
+      }>
+      <div
+        style={{ transform: `rotate(${note.rot}deg)` }}
+        className={
+          note.imageSrc
+            ? 'absolute inset-0 overflow-visible'
+            : 'absolute inset-0 flex items-center justify-center text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-black/62 dark:text-white/72'
+        }>
+        {note.imageSrc ? (
+          <Image
+            src={note.imageSrc}
+            alt=''
+            fill
+            className='object-contain object-center select-none pointer-events-none'
+            sizes={
+              layout === 'mobile'
+                ? '(max-width: 768px) 120px, 120px'
+                : '(max-width: 640px) 188px, (max-width: 1024px) 224px, 236px'
+            }
+          />
+        ) : (
+          note.label
+        )}
+      </div>
+      {note.id === 'n10' && (
+        <motion.div
+          aria-hidden='true'
+          animate={{ opacity: [0.15, 0.45, 0.15], scale: [1, 1.08, 1] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+          className='absolute inset-0 rounded-md border border-[#fabc68]/70'
+        />
+      )}
+    </motion.div>
+  )
+}
+
 export default function FlyingPlaneHero() {
   const sectionRef = useRef<HTMLElement | null>(null)
   const { scrollYProgress } = useScroll({
@@ -154,11 +316,12 @@ export default function FlyingPlaneHero() {
   const planePitch = useTransform(scrollYProgress, [0, 0.5, 1], [3, 0, -2])
 
   const notes = useMemo(() => noteItems, [])
+  const mobileNotes = useMemo(() => mobileHeroNotes, [])
 
   return (
     <section ref={sectionRef} className='relative h-[150svh] bg-[#efefef] dark:bg-gray-900'>
-      <div className='sticky top-0 h-svh w-full px-4 md:px-8 lg:px-10 py-6 md:py-8'>
-        <div className='relative h-full overflow-hidden rounded-2xl border border-black/10 dark:border-white/15 bg-[#f3f2ef] dark:bg-gray-900/60 shadow-[0_20px_50px_rgba(0,0,0,0.12),inset_0_0_100px_rgba(0,0,0,0.035)] dark:shadow-[0_24px_60px_rgba(0,0,0,0.55),inset_0_0_120px_rgba(0,0,0,0.45)]'>
+      <div className='sticky top-0 h-svh w-full px-3 py-4 md:px-8 md:py-8 lg:px-10'>
+        <div className='relative h-full overflow-hidden rounded-xl border border-black/10 dark:border-white/15 bg-[#f3f2ef] dark:bg-gray-900/60 shadow-[0_20px_50px_rgba(0,0,0,0.12),inset_0_0_100px_rgba(0,0,0,0.035)] dark:shadow-[0_24px_60px_rgba(0,0,0,0.55),inset_0_0_120px_rgba(0,0,0,0.45)] md:rounded-2xl'>
           <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_48%,rgba(0,0,0,0.08)_0,rgba(0,0,0,0)_58%)] dark:bg-[radial-gradient(circle_at_70%_48%,rgba(255,255,255,0.08)_0,rgba(255,255,255,0)_58%)]' />
           <div className='pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.35)_0%,rgba(255,255,255,0.0)_35%,rgba(0,0,0,0.03)_100%)] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,rgba(0,0,0,0)_35%,rgba(0,0,0,0.35)_100%)]' />
           {/* Warm mesh + corner washes so empty areas feel intentional, not flat grey */}
@@ -182,95 +345,60 @@ export default function FlyingPlaneHero() {
             }}
           />
           <div
-            className='pointer-events-none absolute inset-0 bg-[length:28px_28px] opacity-[0.55] dark:hidden'
+            className='pointer-events-none absolute inset-0 bg-[length:22px_22px] opacity-[0.55] dark:hidden md:bg-[length:28px_28px]'
             style={{
               backgroundImage:
                 'radial-gradient(circle at center, rgba(0,0,0,0.055) 1.2px, transparent 1.2px)',
             }}
           />
           <div
-            className='pointer-events-none absolute inset-0 hidden bg-[length:28px_28px] opacity-[0.4] dark:block'
+            className='pointer-events-none absolute inset-0 hidden bg-[length:22px_22px] opacity-[0.4] dark:block md:bg-[length:28px_28px]'
             style={{
               backgroundImage:
                 'radial-gradient(circle at center, rgba(255,255,255,0.08) 1px, transparent 1px)',
             }}
           />
 
-          <div className='absolute left-6 top-14 md:left-10 md:top-16 z-20 max-w-xl'>
+          <div className='absolute left-4 top-[4.25rem] z-20 max-w-[min(100%,20rem)] pr-2 md:left-10 md:top-16 md:max-w-xl md:pr-0'>
             <p className='text-[10px] md:text-xs uppercase tracking-[0.22em] text-black/55 dark:text-white/65'>
               Winners Collection
             </p>
-            <h1 className='mt-3 text-[clamp(30px,5vw,70px)] leading-[0.95] tracking-tight font-semibold text-black dark:text-white'>
+            <h1 className='mt-2 text-[clamp(1.625rem,6.5vw,2.125rem)] leading-[0.98] tracking-tight font-semibold text-black dark:text-white md:mt-3 md:text-[clamp(30px,5vw,70px)] md:leading-[0.95]'>
               Every entry
               <br />
               takes flight.
             </h1>
-            <p className='mt-4 max-w-md text-sm md:text-base text-black/70 dark:text-white/70'>
+            <p className='mt-3 max-w-md text-[13px] leading-snug text-black/70 dark:text-white/70 md:mt-4 md:text-sm lg:text-base'>
               Scroll to follow the journey from submitted notes to the winning stories.
             </p>
           </div>
 
-          {notes.map((note, index) => (
-            <motion.div
-              key={note.id}
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: note.delay, duration: 0.55 }}
-              style={{
-                left: note.left,
-                top: note.top,
-                y: useTransform(
-                  scrollYProgress,
-                  [0, 1],
-                  [
-                    0,
-                    note.depth === 'near' ? (index % 2 === 0 ? -56 : 44) : note.depth === 'mid' ? (index % 2 === 0 ? -30 : 22) : (index % 2 === 0 ? -16 : 14),
-                  ]
-                ),
-                scale: note.depth === 'near' ? 1.04 : note.depth === 'mid' ? 1 : 0.9,
-                filter: note.depth === 'near' ? 'blur(0px)' : note.depth === 'mid' ? 'blur(0.2px)' : 'blur(0.8px)',
-                opacity: note.depth === 'near' ? 1 : note.depth === 'mid' ? 0.88 : 0.72,
-              }}
-              className={
-                note.imageSrc
-                  ? `absolute overflow-visible ${note.depth === 'near' ? 'z-20' : note.depth === 'mid' ? 'z-10' : 'z-[5]'} w-[178px] h-[127px] sm:w-[188px] sm:h-[134px] md:w-[224px] md:h-[160px] lg:w-[236px] lg:h-[168px]`
-                  : `absolute ${note.depth === 'near' ? 'z-20' : note.depth === 'mid' ? 'z-10' : 'z-[5]'} w-[74px] md:w-[88px] h-[48px] md:h-[56px] rounded-md border ${
-                      note.id === 'n10' ? 'border-[#fabc68]/70' : 'border-black/12'
-                    } bg-white shadow-[0_6px_14px_rgba(0,0,0,0.08)] dark:border-white/15 dark:bg-gray-800/80`
-              }>
-              <div
-                style={{ transform: `rotate(${note.rot}deg)` }}
-                className={
-                  note.imageSrc
-                    ? 'absolute inset-0 overflow-visible'
-                    : 'absolute inset-0 flex items-center justify-center text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-black/62 dark:text-white/72'
-                }>
-                {note.imageSrc ? (
-                  <Image
-                    src={note.imageSrc}
-                    alt=''
-                    fill
-                    className='object-contain object-center select-none pointer-events-none'
-                    sizes='(max-width: 640px) 188px, (max-width: 1024px) 224px, 236px'
-                  />
-                ) : (
-                  note.label
-                )}
-              </div>
-              {note.id === 'n10' && (
-                <motion.div
-                  aria-hidden='true'
-                  animate={{ opacity: [0.15, 0.45, 0.15], scale: [1, 1.08, 1] }}
-                  transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                  className='absolute inset-0 rounded-md border border-[#fabc68]/70'
-                />
-              )}
-            </motion.div>
-          ))}
+          <div className='pointer-events-none absolute inset-0 max-md:hidden' aria-hidden>
+            {notes.map((note, index) => (
+              <HeroNoteTile
+                key={`desktop-${note.id}`}
+                note={note}
+                index={index}
+                scrollYProgress={scrollYProgress}
+                layout='desktop'
+              />
+            ))}
+          </div>
+          <div className='pointer-events-none absolute inset-0 md:hidden' aria-hidden>
+            {mobileNotes.map((note, index) => (
+              <HeroNoteTile
+                key={`mobile-${note.id}`}
+                note={note}
+                index={index}
+                scrollYProgress={scrollYProgress}
+                layout='mobile'
+              />
+            ))}
+          </div>
 
           <motion.div
             style={{ left: planeX, top: planeY, rotate: planeRotate, scale: planeScale, rotateX: planePitch }}
-            className='absolute z-30 w-[248px] sm:w-[260px] md:w-[340px] lg:w-[360px]'>
+            className='absolute z-30 w-[min(48vw,200px)] sm:w-[240px] md:w-[340px] lg:w-[360px]'>
             <div className='relative'>
               <div className='relative w-full aspect-square'>
                 <Image

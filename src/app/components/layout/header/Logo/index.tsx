@@ -4,7 +4,7 @@ import Link from 'next/link';
 interface HeaderProps { }
 const Logo: React.FC<HeaderProps> = () => {
     return (
-        <Link href="/">
+        <Link href="/" className='block leading-none'>
             <Image
                 src="/images/logo/logo.png"
                 alt="logo"
@@ -12,7 +12,7 @@ const Logo: React.FC<HeaderProps> = () => {
                 height={15}
                 quality={100}
                 priority={true}
-                className='dark:hidden'
+                className='dark:hidden h-auto w-10 lg:w-[50px]'
             />
             <Image
                 src="/images/logo/logo.png"
@@ -20,7 +20,7 @@ const Logo: React.FC<HeaderProps> = () => {
                 width={50}
                 height={15}
                 quality={100}
-                className='dark:block hidden'
+                className='dark:block hidden h-auto w-10 lg:w-[50px]'
             />
         </Link>
     );

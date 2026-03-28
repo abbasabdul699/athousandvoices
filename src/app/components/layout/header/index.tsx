@@ -50,9 +50,9 @@ const Header = () => {
         className={`fixed top-0 z-[9999] w-full transition-transform duration-300 ${
           showHeader ? 'translate-y-0' : '-translate-y-full pointer-events-none'
         }`}>
-        <div className='container p-3'>
+        <div className='container max-lg:px-4 max-lg:pt-[max(0.375rem,env(safe-area-inset-top))] max-lg:pb-1.5 lg:p-3'>
           <nav
-            className={`flex items-center py-3 px-4 justify-between ${
+            className={`flex items-center max-lg:py-1.5 max-lg:px-3 py-3 px-4 justify-between ${
               sticky || sidebarOpen || isWinnersPage
                 ? 'rounded-full shadow-sm bg-white dark:bg-dark_black'
                 : 'max-lg:rounded-full max-lg:shadow-sm max-lg:bg-white max-lg:dark:bg-dark_black'
