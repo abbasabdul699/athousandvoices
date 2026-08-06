@@ -427,7 +427,7 @@ export default function AboutPage() {
                       style={{
                         objectPosition: item.name === 'Zakira Bakhshi' ? '60% center' : 
                                        item.name === 'Sajad Amini' ? 'center 40%' :
-                                       item.name === 'Aziza Mohammadi' ? '40% center' :
+                                       item.name === 'Somaya Fazel' ? '40% center' :
                                        item.name === 'Ethan Schroyer' ? 'center 20%' : 'center'
                       }}
                     />
