@@ -109,14 +109,14 @@ const creativeMindList: creativeMind[] = [
   {
     image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Elaha.jpeg`,
     name: 'Elaha Alizada',
-    position: 'Finance Director',
+    position: 'Program Director',
     linkedinLink: 'https://www.linkedin.com/',
     email: 'elaha@athousandvoices.com',
   },
   {
     image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/team-images/Abdul.jpeg`,
     name: 'Abdul Abbas',
-    position: 'Full Stack and Designer',
+    position: 'Operations Director',
     linkedinLink: 'https://www.linkedin.com/in/abdul-abbas-b78921122/',
     email: 'abbas@athousandvoices.com',
   },
