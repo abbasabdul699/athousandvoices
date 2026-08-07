@@ -16,6 +16,7 @@ import SignatureReveal from '@/app/components/winners/SignatureReveal'
 import { primeConfettiAudio } from '@/lib/confetti-sound'
 import { fireWinnerPlaceConfetti } from '@/lib/winner-confetti'
 import { cn } from '@/lib/utils'
+import { winnerStories } from '@/content/winner-stories'
 
 type SubmissionType = 'story' | 'poem' | 'art'
 
@@ -39,6 +40,8 @@ interface FeaturedWinner {
   tag: string
   /** Full story split into pages (one string per page). Use `\\n\\n` for paragraph breaks within a page. If omitted, the reader uses the summary plus a sample excerpt as two pages. */
   pages?: string[]
+  direction?: 'rtl' | 'ltr'
+  lang?: string
 }
 
 const writingExcerpts = [
@@ -465,7 +468,7 @@ const runnerUps: RunnerUpSubmission[] = [
   {
     id: 'ru-047',
     title: 'The memories of coming Taliban and the difficulties of migration',
-    creator: 'Anisa Ahmadi',
+    creator: 'A. Ahmadi',
     type: 'story',
     category: 'Story',
     fileUrl: 'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/story-pdfs/1ee77e41-b0fe-4a0f-8f81-c5edf23d145c__new_.pdf',
@@ -538,7 +541,19 @@ const runnerUps: RunnerUpSubmission[] = [
 
 function storyPagesForWinner(winner: FeaturedWinner, winnerIndex: number): string[] {
   if (winner.pages && winner.pages.length > 0) return winner.pages
+  const imported = winnerStories[winner.rank]
+  if (imported?.pages?.length) return imported.pages
   return [winner.summary, writingExcerpts[winnerIndex % writingExcerpts.length]]
+}
+
+function storyDirectionForWinner(winner: FeaturedWinner): 'rtl' | 'ltr' {
+  if (winner.direction) return winner.direction
+  return winnerStories[winner.rank]?.direction ?? 'ltr'
+}
+
+function storyLangForWinner(winner: FeaturedWinner): string | undefined {
+  if (winner.lang) return winner.lang
+  return winnerStories[winner.rank]?.lang
 }
 
 const featuredWinners: FeaturedWinner[] = [
@@ -551,28 +566,32 @@ const featuredWinners: FeaturedWinner[] = [
     image:
       'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/winners/firstplace(1).png',
     tag: '01',
-    // Replace with the full story: one array entry per page (paste text here when ready).
-    // pages: ['First page text…', 'Second page…'],
+    direction: winnerStories['First Place']?.direction,
+    lang: winnerStories['First Place']?.lang,
   },
   {
     rank: 'Second Place',
-    title: 'Fearless eyes(چشمان بی ترس)',
-    creator: 'F. Shafiq',
+    title: 'The Memories of Coming Taliban and the Difficulties of Migration',
+    creator: 'A. Ahmadi',
     summary:
-      'A security officer responds to a protest and tries to control the situation using fear and authority. When a brave woman stands up and speaks out, he begins to realize that true strength comes from courage and having a voice, not from power or force.',
+      'The Memories of the Taliban’s Return and the Hardships of Migration is about a young Afghan student, recounting the day the Taliban returned to power and the devastating impact it had on her life. Forced to abandon her education, home, and dreams, she and her family embark on a perilous journey across borders in search of safety and the chance to continue learning. Through vivid memories of fear, loss, resilience, and hope, the story captures the human cost of conflict, the struggles faced by refugees, and the enduring determination of Afghan girls to pursue education despite overwhelming obstacles.  ',
     image:
       'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/winners/secondplace.png',
     tag: '02',
+    direction: winnerStories['Second Place']?.direction,
+    lang: winnerStories['Second Place']?.lang,
   },
   {
     rank: 'Third Place',
-    title: 'Eyes That Listen',
-    creator: 'A. Yaqobi',
+    title: 'Beneath the Mulberry Tree',
+    creator: 'M. Nader',
     summary:
-      'A blind young man named Mohammad overcomes rejection and hardship by discovering his strength through sound, eventually becoming a respected journalist. His journey shows that hope and determination can turn even the greatest challenges into a source of purpose and inspiration.',
+      'Beneath the Mulberry Tree is an inspiring story that explores the transformative power of education across three generations of an Afghan family. Guided by the father’s unwavering belief in her potential—and inspired by the sacrifices of her grandfather—Mursal leaves Afghanistan to pursue an education abroad, eventually finding her voice as an advocate for women’s rights and earning a place in academia. Through memories of home, family, and the symbolic mulberry tree, the story reflects on resilience, identity, and the enduring legacy of those who fought to ensure that future generations would have the freedom to learn, dream, and choose their own paths.',
     image:
       'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/winners/thirdplace.png',
     tag: '03',
+    direction: winnerStories['Third Place']?.direction,
+    lang: winnerStories['Third Place']?.lang,
   },
 ]
 
@@ -636,10 +655,12 @@ function ScrollUnmaskSection({
       <motion.div
         style={{ clipPath, opacity }}
         className={cn(
-          'sticky top-0 h-svh max-h-[100dvh]',
+          'pointer-events-none sticky top-0 h-svh max-h-[100dvh]',
           panelClassName || 'overflow-hidden'
         )}>
-        {children}
+        <div className='h-full [&_a]:pointer-events-auto [&_button]:pointer-events-auto [&_input]:pointer-events-auto [&_select]:pointer-events-auto [&_textarea]:pointer-events-auto [&_.overflow-y-auto]:pointer-events-auto'>
+          {children}
+        </div>
       </motion.div>
     </section>
   )
@@ -716,7 +737,7 @@ export default function WinnersPage() {
             </div>
           </div>
 
-          <div className='order-2 flex min-h-0 flex-1 flex-col pt-4 lg:order-1 lg:col-span-4 lg:flex lg:h-full lg:min-h-0 lg:flex-col lg:justify-center lg:pt-0'>
+          <div className='order-2 flex min-h-0 flex-1 flex-col overflow-hidden pt-4 lg:order-1 lg:col-span-4 lg:h-full lg:min-h-0 lg:pt-0'>
             <div className='shrink-0'>
               <p className='text-[10px] md:text-xs uppercase tracking-[0.22em] text-black/65 dark:text-white/65'>
                 Global Reach
@@ -729,7 +750,7 @@ export default function WinnersPage() {
               </p>
             </div>
 
-            <div className='mt-4 min-h-0 flex-1 space-y-2 overflow-y-auto overscroll-y-contain pr-1 lg:mt-7 lg:max-h-[45svh] lg:flex-none'>
+            <div className='mt-4 min-h-0 flex-1 space-y-2 overflow-y-auto overscroll-y-contain pr-1 lg:mt-7'>
               {submittedHotspots.map((spot) => (
                 <div
                   key={spot.label}
@@ -754,6 +775,8 @@ export default function WinnersPage() {
           .split(/\n\n+/)
           .map((p) => p.trim())
           .filter(Boolean)
+        const storyDirection = storyDirectionForWinner(winner)
+        const storyLang = storyLangForWinner(winner)
 
         return (
         <ScrollUnmaskSection
@@ -847,12 +870,20 @@ export default function WinnersPage() {
                       </button>
                     </div>
                     <div
-                      className='mt-4 min-h-0 flex-1 overflow-y-auto overscroll-y-contain pr-1'
+                      dir={storyDirection}
+                      lang={storyLang}
+                      className={cn(
+                        'mt-4 min-h-0 flex-1 overflow-y-auto overscroll-y-contain pr-1',
+                        storyDirection === 'rtl' && 'pl-1 pr-0 font-[Vazirmatn,system-ui,sans-serif]',
+                      )}
                       aria-live='polite'>
                       {pageParagraphs.map((para, i) => (
                         <p
                           key={`${bookPageIndex}-${i}`}
-                          className='text-sm md:text-base leading-relaxed text-black/82 dark:text-white/82 [&+&]:mt-4'>
+                          className={cn(
+                            'text-sm md:text-base leading-relaxed text-black/82 dark:text-white/82 [&+&]:mt-4',
+                            storyDirection === 'rtl' && 'text-right',
+                          )}>
                           {para}
                         </p>
                       ))}

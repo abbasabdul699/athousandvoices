@@ -37,8 +37,12 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         
-        {/* Preconnect for performance */}
-        <link rel="preconnect" href="https://vncsjyedvqrhgeedwusw.supabase.co" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
         <link rel="dns-prefetch" href="https://vncsjyedvqrhgeedwusw.supabase.co" />
       </head>
       <body>

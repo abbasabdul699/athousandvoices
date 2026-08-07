@@ -2,6 +2,7 @@ export interface HeaderItem {
   label: string
   href: string
   isButton?: boolean
+  variant?: 'glow'
 }
 
 export type avatar = {

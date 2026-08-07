@@ -3,14 +3,17 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { Mail } from 'lucide-react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import HeaderLink from './Navigation/HeaderLink'
 import { headerData } from './Navigation/Menudata'
 import Logo from './Logo'
 import MobileHeader from './Navigation/MobileHeader'
-import ThemeToggler from './ThemeToggle'
-import LanguageToggle from './LanguageToggle'
+import FloatingLogoButton from './FloatingLogoButton'
+
+const contactIconLinkClassName =
+  'flex items-center justify-center w-12 h-12 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-all duration-200'
 
 const Header = () => {
   const { data: session } = useSession()
@@ -18,16 +21,36 @@ const Header = () => {
   const [user, setUser] = useState<{ user: any } | null>(null)
   const [sticky, setSticky] = useState(false)
   const [showHeader, setShowHeader] = useState(true)
+  const [showFloatingLogo, setShowFloatingLogo] = useState(false)
   const pathname = usePathname()
   const isWinnersPage = pathname?.startsWith('/winners')
 
-  const handleScroll = () => {
-    setSticky(window.scrollY >= 80)
-    setShowHeader(true)
+  const getHeroScrollEnd = () => {
+    const hero = document.getElementById('winners-hero')
+    if (!hero) return window.innerHeight * 1.5
+    return hero.offsetTop + hero.offsetHeight
   }
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      setSticky(currentScrollY >= 80)
+
+      if (isWinnersPage) {
+        const pastHero = currentScrollY >= getHeroScrollEnd() - 48
+        const headerVisible = !pastHero || sidebarOpen
+        setShowHeader(headerVisible)
+        setShowFloatingLogo(pastHero && !sidebarOpen)
+      } else {
+        setShowHeader(true)
+        setShowFloatingLogo(false)
+      }
+    }
+
+    const handleResize = () => handleScroll()
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleResize)
     handleScroll()
     const storedUser = localStorage.getItem('user')
     if (storedUser) {
@@ -35,8 +58,32 @@ const Header = () => {
     }
     return () => {
       window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleResize)
     }
+  }, [pathname, isWinnersPage, sidebarOpen])
+
+  useEffect(() => {
+    setShowHeader(true)
+    setShowFloatingLogo(false)
   }, [pathname])
+
+  useEffect(() => {
+    if (sidebarOpen) {
+      setShowHeader(true)
+      setShowFloatingLogo(false)
+      return
+    }
+
+    if (!isWinnersPage) return
+
+    const pastHero = window.scrollY >= getHeroScrollEnd() - 48
+    setShowHeader(!pastHero)
+    setShowFloatingLogo(pastHero)
+  }, [sidebarOpen, isWinnersPage])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   const handleSignOut = () => {
     localStorage.removeItem('user')
@@ -47,7 +94,7 @@ const Header = () => {
   return (
     <>
       <header
-        className={`fixed top-0 z-[9999] w-full transition-transform duration-300 ${
+        className={`fixed top-0 z-[9999] w-full pointer-events-auto transition-transform duration-300 ${
           showHeader ? 'translate-y-0' : '-translate-y-full pointer-events-none'
         }`}>
         <div className='container max-lg:px-4 max-lg:pt-[max(0.375rem,env(safe-area-inset-top))] max-lg:pb-1.5 lg:p-3'>
@@ -57,7 +104,7 @@ const Header = () => {
                 ? 'rounded-full shadow-sm bg-white dark:bg-dark_black'
                 : 'max-lg:rounded-full max-lg:shadow-sm max-lg:bg-white max-lg:dark:bg-dark_black'
             }`}>
-            <div className='flex items-center'>
+            <div className='relative z-10 flex items-center'>
               <Logo />
             </div>
             <div className='hidden lg:flex bg-dark_black/5 dark:bg-white/5 rounded-3xl py-3 px-1'>
@@ -70,7 +117,13 @@ const Header = () => {
             <div className='flex items-center gap-1 xl:gap-4'>
               {/* ---------------------SignUp SignIn Button-----------------  */}
               {user?.user || session?.user ? (
-                <div className='hidden lg:flex gap-4'>
+                <div className='hidden lg:flex items-center gap-4'>
+                  <Link
+                    href='/contact'
+                    aria-label='Contact'
+                    className={contactIconLinkClassName}>
+                    <Mail className='h-6 w-6' strokeWidth={1.75} />
+                  </Link>
                   <button
                     onClick={() => handleSignOut()}
                     className='flex group font-normal items-center gap-1 transition-all duration-200 ease-in-out text-white px-4 py-2 bg-dark_black dark:bg-white/15 rounded-full hover:text-dark_black hover:bg-white dark:hover:bg-white/5 dark:hover:text-white border border-dark_black'>
@@ -94,6 +147,12 @@ const Header = () => {
               ) : (
                 <div className='flex items-center gap-2'>
                   <Link
+                    href='/contact'
+                    aria-label='Contact'
+                    className={`hidden lg:flex ${contactIconLinkClassName}`}>
+                    <Mail className='h-6 w-6' strokeWidth={1.75} />
+                  </Link>
+                  <Link
                     href="https://www.linkedin.com/company/athousand-voices/"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -111,11 +170,6 @@ const Header = () => {
                   </Link>
                 </div>
               )}
-
-              {/* ---------------------Light/Dark Mode button-------------------- */}
-              <ThemeToggler />
-
-              {/* Language Toggle - Removed submit-story page check */}
 
               <div className='hidden max-lg:flex'>
                 <button onClick={() => setSidebarOpen(!sidebarOpen)}>
@@ -140,6 +194,11 @@ const Header = () => {
         </div>
 
       </header>
+
+      {isWinnersPage && (
+        <FloatingLogoButton visible={showFloatingLogo} onClick={scrollToTop} />
+      )}
+
       {/* ------------------------- Mobile sidebar starts ------------------------- */}
       {sidebarOpen && (
         <div className='lg:hidden fixed inset-0 z-[10001]'>
@@ -178,6 +237,13 @@ const Header = () => {
               <div className='flex flex-col items-center gap-3 px-2 mt-4'>
                 {user || session?.user ? (
                   <>
+                    <Link
+                      href='/contact'
+                      onClick={() => setSidebarOpen(false)}
+                      className='w-full flex items-center justify-center border border-dark_black dark:border-white px-4 py-2 rounded-md hover:bg-dark_black dark:hover:bg-white hover:text-white dark:hover:text-dark_black'>
+                      <Mail className='h-5 w-5' strokeWidth={1.75} />
+                      <span className='ml-2'>Contact</span>
+                    </Link>
                     <button
                       onClick={() => signOut()}
                       className='flex w-full group font-normal items-center gap-2 transition-all duration-200 ease-in-out text-white dark:text-dark_black px-4 py-2 bg-dark_black rounded-md hover:text-dark_black hover:bg-white border border-dark_black'>
@@ -204,6 +270,13 @@ const Header = () => {
                   </>
                 ) : (
                   <>
+                    <Link
+                      href='/contact'
+                      onClick={() => setSidebarOpen(false)}
+                      className='w-full flex items-center justify-center border border-dark_black dark:border-white px-4 py-2 rounded-md hover:bg-dark_black dark:hover:bg-white hover:text-white dark:hover:text-dark_black'>
+                      <Mail className='h-5 w-5' strokeWidth={1.75} />
+                      <span className='ml-2'>Contact</span>
+                    </Link>
                     <Link
                       href="https://www.linkedin.com/company/athousand-voices/"
                       target="_blank"

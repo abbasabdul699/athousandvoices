@@ -197,6 +197,91 @@ layer(base);
     animation: float-delayed 4s ease-in-out infinite;
     animation-delay: 1s;
   }
+
+  @keyframes rotateGlow {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .floating-logo-glow {
+    --logo-size: 3.5rem;
+    --ring-width: 2px;
+    --apple-ai-gradient: conic-gradient(#00f2fe, #4facfe, #b19fff, #ff9a9e, #00f2fe);
+    position: relative;
+    width: calc(var(--logo-size) + 48px);
+    height: calc(var(--logo-size) + 48px);
+    isolation: isolate;
+  }
+
+  @media (min-width: 1024px) {
+    .floating-logo-glow {
+      --logo-size: 3.75rem;
+    }
+  }
+
+  .floating-logo-glow__apple-ring {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    width: calc(var(--logo-size) + var(--ring-width) * 2);
+    height: calc(var(--logo-size) + var(--ring-width) * 2);
+    margin-top: calc((var(--logo-size) + var(--ring-width) * 2) / -2);
+    margin-left: calc((var(--logo-size) + var(--ring-width) * 2) / -2);
+    border-radius: 50%;
+    padding: var(--ring-width);
+    background: var(--apple-ai-gradient);
+    animation: rotateGlow 1.8s linear infinite;
+    pointer-events: none;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .floating-logo-glow__apple-ring::before {
+    content: '';
+    position: absolute;
+    inset: -22px;
+    border-radius: 50%;
+    background: var(--apple-ai-gradient);
+    filter: blur(16px);
+    opacity: 0.6;
+    z-index: -1;
+    animation: rotateGlow 1.8s linear infinite;
+  }
+
+  .floating-logo-glow__button {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: var(--logo-size);
+    height: var(--logo-size);
+    margin-top: calc(var(--logo-size) / -2);
+    margin-left: calc(var(--logo-size) / -2);
+    box-shadow:
+      0 10px 28px rgba(0, 0, 0, 0.14),
+      0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .floating-logo-glow__button:hover {
+    box-shadow:
+      0 14px 32px rgba(0, 0, 0, 0.16),
+      0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .floating-logo-glow__apple-ring,
+    .floating-logo-glow__apple-ring::before {
+      animation: none;
+    }
+  }
 }
 
 @layer components {
