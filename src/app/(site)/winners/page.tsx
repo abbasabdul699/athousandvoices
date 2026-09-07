@@ -47,13 +47,6 @@ const writingExcerpts = [
 
 const runnerUps: RunnerUpSubmission[] = [
   {
-    id: 'ru-001',
-    title: 'ده روایت از یک شهر',
-    creator: 'Z. H.',
-    fileUrl: '',
-    excerpt: 'A fragmented portrait of Kabul told through ten voices—teachers, mothers, daughters, and brides who carry the city\'s courage in ordinary days.',
-  },
-  {
     id: 'ru-002',
     title: 'The days of white-collared girls',
     creator: 'Sakina Ehsani',
