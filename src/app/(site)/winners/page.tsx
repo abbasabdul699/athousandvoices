@@ -49,7 +49,7 @@ const runnerUps: RunnerUpSubmission[] = [
   {
     id: 'ru-001',
     title: 'ده روایت از یک شهر',
-    creator: 'Zainab Husainzai',
+    creator: 'Z. H.',
     fileUrl: 'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/story-pdfs/9fe52209-46e5-4ebc-b547-b34f9087dd85__.pdf',
     excerpt: 'A fragmented portrait of Kabul told through ten voices—teachers, mothers, daughters, and brides who carry the city\'s courage in ordinary days.',
   },
