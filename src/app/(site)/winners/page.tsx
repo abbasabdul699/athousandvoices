@@ -50,7 +50,7 @@ const runnerUps: RunnerUpSubmission[] = [
     id: 'ru-001',
     title: 'ده روایت از یک شهر',
     creator: 'Z. H.',
-    fileUrl: 'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/story-pdfs/9fe52209-46e5-4ebc-b547-b34f9087dd85__.pdf',
+    fileUrl: '',
     excerpt: 'A fragmented portrait of Kabul told through ten voices—teachers, mothers, daughters, and brides who carry the city\'s courage in ordinary days.',
   },
   {
@@ -199,13 +199,6 @@ const runnerUps: RunnerUpSubmission[] = [
     creator: 'Amina Yaqobi',
     fileUrl: 'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/story-pdfs/de2aad98-abe0-4beb-ad73-1414cc1dcdf9____.pdf',
     excerpt: 'An inspiring journey from rejection and loss to empowerment—a story of resilience, family, and finding one\'s voice.',
-  },
-  {
-    id: 'ru-023',
-    title: 'Hidden blood',
-    creator: 'Zainab Rahimi',
-    fileUrl: 'https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/story-pdfs/5ef7d996-e47d-46f6-a594-b4fcc557aabb__.pdf',
-    excerpt: 'A powerful story about courage and dignity—a young woman refuses to let shame silence the truth of her experience.',
   },
   {
     id: 'ru-024',
