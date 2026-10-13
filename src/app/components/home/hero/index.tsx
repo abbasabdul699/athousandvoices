@@ -1,174 +1,239 @@
 'use client'
 import Image from 'next/image'
-import Link from 'next/link'
-import React, { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
-import StarRating from '../../shared/star-rating'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion'
+const slides = [
+  { src: '/images/afghan5.jpg', alt: 'Shah-Do Shamshira Mosque in Kabul' },
+  { src: '/images/afghan1.jpg', alt: 'Street life in front of a sunlit yellow wall' },
+  { src: '/images/afghan3.jpg', alt: 'Children celebrating with balloons' },
+  { src: '/images/afghan4.jpg', alt: 'Kabul at golden hour' },
+  { src: '/images/afghan2.jpg', alt: 'The cliffs of Bamiyan' },
+]
 
-// Typewriter component
-const TypewriterText = ({ text, className }: { text: string; className?: string }) => {
-  const [displayText, setDisplayText] = useState('')
-  const [currentIndex, setCurrentIndex] = useState(0)
+const introFrames = [
+  { bg: 'bg-sage', slide: 2 },
+  { bg: 'bg-sky', slide: 3 },
+  { bg: 'bg-sand', slide: 1 },
+  { bg: 'bg-cream', slide: 0 },
+]
 
-  useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText(prev => prev + text[currentIndex])
-        setCurrentIndex(prev => prev + 1)
-      }, 200) // Slower speed: 200ms
+const floatingPhotos = [
+  { src: '/images/afghan3.jpg', alt: 'Children celebrating with balloons', className: 'left-[7%] top-[3%] w-[12vw]', speed: 1 },
+  { src: '/images/home/ambassador/hat.jpg', alt: 'A man in front of a wall of pakol hats', className: 'right-[7%] top-[28%] w-[9vw]', speed: 1.4 },
+  { src: '/images/home/about/grandpareading.jpg', alt: 'A bookseller reading in his shop', className: 'left-[19%] top-[90%] w-[11vw]', speed: 1.8 },
+  { src: '/images/home/about/gateway.jpg', alt: 'Kabul seen through a stone archway', className: 'right-[22%] top-[105%] w-[10vw]', speed: 2.2 },
+]
 
-      return () => clearTimeout(timeout)
-    }
-  }, [currentIndex, text])
+const INTRO_FRAME_MS = 550
+const SLIDE_MS = 6000
+const INTRO_SEEN_KEY = 'atv-intro-seen'
 
-  return (
-    <span className={className}>
-      {displayText}
-      <span className="animate-pulse">|</span>
-    </span>
-  )
-}
+const ease = [0.76, 0, 0.24, 1] as const
 
 function HeroSection() {
-  const ref = useRef(null)
-  const [avatarList, setAvatarList] = useState<any>(null);
-  const [brandList, setBrandList] = useState<any>(null);
+  const [introState, setIntroState] = useState<'pending' | 'playing' | 'expanding' | 'done'>('pending')
+  const [frame, setFrame] = useState(0)
+  const [activeSlide, setActiveSlide] = useState(0)
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch('/api/page-data')
-        if (!res.ok) throw new Error('Failed to fetch')
-        const data = await res.json()        
-        setAvatarList(data)
-        setBrandList(data?.brandList || [])
-      } catch (error) {
-        console.error('Error fetching services:', error)
-      }
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion || sessionStorage.getItem(INTRO_SEEN_KEY)) {
+      setIntroState('done')
+      return
     }
-
-    fetchData()
+    setIntroState('playing')
   }, [])
 
-  const bottomAnimation = {
-    initial: { y: '20%', opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-    transition: { duration: 1, delay: 0.8 },
-  }
+  useEffect(() => {
+    if (introState !== 'playing') return
+    if (frame >= introFrames.length - 1) {
+      const t = setTimeout(() => setIntroState('expanding'), INTRO_FRAME_MS)
+      return () => clearTimeout(t)
+    }
+    const t = setTimeout(() => setFrame((f) => f + 1), INTRO_FRAME_MS)
+    return () => clearTimeout(t)
+  }, [introState, frame])
+
+  useEffect(() => {
+    const locked = introState === 'playing' || introState === 'expanding'
+    document.documentElement.style.overflow = locked ? 'hidden' : ''
+    return () => {
+      document.documentElement.style.overflow = ''
+    }
+  }, [introState])
+
+  useEffect(() => {
+    if (introState !== 'done') return
+    const t = setInterval(() => setActiveSlide((s) => (s + 1) % slides.length), SLIDE_MS)
+    return () => clearInterval(t)
+  }, [introState])
+
+  const sectionRef = useRef<HTMLElement>(null)
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 768px)')
+    const update = () => setIsDesktop(query.matches)
+    update()
+    query.addEventListener('change', update)
+    return () => query.removeEventListener('change', update)
+  }, [])
+
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] })
+  const insetTop = useTransform(scrollYProgress, [0, 0.5], [0, 36.5])
+  const insetSide = useTransform(scrollYProgress, [0, 0.5], [0, 31])
+  const insetBottom = useTransform(scrollYProgress, [0, 0.5], [0, 37])
+  const clipPath = useMotionTemplate`inset(${insetTop}% ${insetSide}% ${insetBottom}% ${insetSide}%)`
+  const cardY = useTransform(scrollYProgress, [0.55, 1], ['0vh', '-75vh'])
+  const textOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
+  const photoY = [
+    useTransform(scrollYProgress, [0, 1], ['10vh', `-${30 * floatingPhotos[0].speed}vh`]),
+    useTransform(scrollYProgress, [0, 1], ['10vh', `-${30 * floatingPhotos[1].speed}vh`]),
+    useTransform(scrollYProgress, [0, 1], ['10vh', `-${30 * floatingPhotos[2].speed}vh`]),
+    useTransform(scrollYProgress, [0, 1], ['10vh', `-${30 * floatingPhotos[3].speed}vh`]),
+  ]
+  const lowerPhotoOpacity = useTransform(scrollYProgress, [0.5, 0.6], [1, 0])
+
+  const heroReady = introState === 'done'
+  const current = introFrames[frame]
 
   return (
-    <>
-      <section>
-        <div className='relative w-full pt-44 2xl:pb-20 pb-10 before:absolute before:w-full before:h-full before:bg-linear-to-r before:from-blue_gradient before:via-white before:to-yellow_gradient before:rounded-full before:top-24 before:blur-3xl before:-z-10 dark:before:from-dark_blue_gradient dark:before:via-black dark:before:to-dark_yellow_gradient dark:before:rounded-full dark:before:blur-3xl dark:before:-z-10'>
-          <div className='container relative z-10'>
-            <div ref={ref} className='flex flex-col gap-8'>
-              {/* ---------------- heading text --------------- */}
+    <section ref={sectionRef} className='relative w-full bg-cream dark:bg-dark_black md:h-[340vh]'>
+      <div className='relative h-[100svh] min-h-[560px] w-full overflow-hidden md:sticky md:top-0'>
+        {/* ---------------- backdrop revealed on scroll (tablet & desktop) --------------- */}
+        <div aria-hidden className='absolute inset-0 hidden md:flex items-center justify-center'>
+          <p className='instrument-font whitespace-nowrap text-center tracking-[-0.02em] leading-[0.95] text-[24vw] text-dark_black dark:text-white'>
+            Every voice
+          </p>
+          {floatingPhotos.map((photo, i) => (
+            <motion.div
+              key={photo.src}
+              style={{ y: photoY[i], opacity: i >= 2 ? lowerPhotoOpacity : 1 }}
+              className={`absolute aspect-[155/214] overflow-hidden ${photo.className}`}>
+              <Image src={photo.src} alt='' fill sizes='12vw' className='object-cover' />
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          className='absolute inset-0 z-10 overflow-hidden bg-dark_black'
+          style={{ clipPath: isDesktop ? clipPath : 'none', y: isDesktop ? cardY : 0 }}>
+          {/* ---------------- background slideshow --------------- */}
+          <div className='absolute inset-0'>
+            {slides.map((slide, i) => (
               <motion.div
-                {...bottomAnimation}
-                className='relative flex flex-col text-center items-center gap-4'>
-                <h1 className='font-medium w-full'>
-                  <TypewriterText 
-                    text="A Thousand Voices" 
-                    className="instrument-font italic font-normal dark:text-white/70"
-                  />
-                </h1>
-                <p className='max-w-38 text-dark_black/60 dark:text-white/60'>
-                  Afghanistan's Short Story Competition
-                </p>
+                key={slide.src}
+                className='absolute inset-0'
+                initial={false}
+                animate={{
+                  opacity: i === activeSlide ? 1 : 0,
+                  scale: i === activeSlide ? 1.08 : 1,
+                }}
+                transition={{
+                  opacity: { duration: 1.4, ease: 'easeInOut' },
+                  scale: { duration: SLIDE_MS / 1000 + 1.4, ease: 'linear' },
+                }}>
+                <Image
+                  src={slide.src}
+                  alt={slide.alt}
+                  fill
+                  priority={i === 0}
+                  sizes='100vw'
+                  className='object-cover'
+                />
               </motion.div>
+            ))}
+            <div className='absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/60' />
+          </div>
 
+          {/* ---------------- headline --------------- */}
+          <motion.div
+            style={{ opacity: isDesktop ? textOpacity : 1 }}
+            className='relative z-10 flex h-full flex-col justify-end px-5 lg:px-8 pb-6 lg:pb-8'>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={heroReady ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.9, delay: 0.3, ease }}
+              className='mb-2 lg:mb-4 text-base lg:text-xl text-white/85'>
+              Afghanistan&apos;s Short Story Competition
+            </motion.p>
+
+            <h1 className='overflow-hidden pb-[0.08em] text-cream dark:text-cream instrument-font font-normal tracking-[-0.02em] leading-[0.9] text-[clamp(3.75rem,13.5vw,15rem)]'>
+              <motion.span
+                className='block'
+                initial={{ y: '105%' }}
+                animate={heroReady ? { y: 0 } : {}}
+                transition={{ duration: 1.1, delay: 0.1, ease }}>
+                A Thousand Voices
+              </motion.span>
+            </h1>
+
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={heroReady ? { scaleX: 1 } : {}}
+              transition={{ duration: 1.2, delay: 0.4, ease }}
+              className='mt-4 lg:mt-6 h-px w-full origin-left bg-white/35'
+            />
+
+            <div>
               <motion.div
-                {...bottomAnimation}
-                className='flex flex-col items-center justify-center gap-4'>
-                <div className='flex flex-col items-center justify-center gap-8 w-full sm:flex-row'>
-                  {/* ----------- Get started Link -------------- */}
-                  <Link
-                    href='/winners'
-                    className='group bg-gradient-to-r from-gray-200 via-red-200 to-green-200 text-gray-900 font-medium flex flex-row justify-between items-center py-2 px-5 rounded-full max-w-64 w-full md:py-3 border border-gray-900 transition-all duration-200 ease-in-out hover:from-gray-300 hover:via-red-300 hover:to-green-300'>
-                    <span className='flex text-start transform transition-transform duration-200 ease-in-out group-hover:translate-x-20'>
-                      Meet the Finalists
-                    </span>
-                    <svg
-                      width='40'
-                      height='40'
-                      viewBox='0 0 40 40'
-                      fill='none'
-                      xmlns='http://www.w3.org/2000/svg'
-                      className='transform transition-transform duration-200 ease-in-out group-hover:-translate-x-44 group-hover:rotate-45'>
-                      <rect
-                        width='40'
-                        height='40'
-                        rx='20'
-                        className='fill-gray-900 transition-colors duration-200 ease-in-out group-hover:fill-gray-800'
-                      />
-                      <path
-                        d='M15.832 15.3334H24.1654V23.6667'
-                        className='stroke-white transition-colors duration-200 ease-in-out group-hover:stroke-white'
-                        strokeWidth='1.66667'
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                      />
-                      <path
-                        d='M15.832 23.6667L24.1654 15.3334'
-                        className='stroke-white transition-colors duration-500 ease-in-out group-hover:stroke-white'
-                        strokeWidth='1.66667'
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                      />
-                    </svg>
-                  </Link>
-
-                  {/* Brand Image Circle */}
-                  {brandList && brandList.length > 0 && (
-                    <div className='flex items-center gap-3'>
-                      <div 
-                        className='w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200 hover:scale-110 hover:border-gray-400 transition-all duration-200 cursor-pointer'
-                        onClick={() => window.open('https://www.middlebury.edu/projects-for-peace', '_blank')}
-                      >
-                        <Image
-                          src={brandList[0].image}
-                          alt={brandList[0].title}
-                          width={64}
-                          height={64}
-                          className='w-full h-full object-contain'
-                        />
-                      </div>
-                    </div>
-                  )}
-                  {/* {/* --------------- avatar division -------------- */}
-                  {/* <div className='flex items-center gap-7'>
-                    <ul className='avatar flex flex-row items-center'>
-                      {avatarList?.avatarList?.map((items:any, index:any) => (
-                        <li key={index} className='-mr-2 z-1 avatar-hover:ml-2'>
-                          <Image
-                            src={items.image}
-                            alt='Image'
-                            width={44}
-                            height={44}
-                            quality={100}
-                            className='rounded-full border-2 border-white'
-                            unoptimized={true}
-                          />
-                        </li>
-                      ))}
-                    </ul> */}
-                    {/* -------------- Star rating division --------------- */}
-                    {/* <div className='gap-1 flex flex-col'>
-                      <div>
-                        <StarRating count={4} color='#F59E0B' />
-                       </div>
-                      {/* <p className='text-sm font-normal text-dark_black/60 dark:text-white/60'>
-                        Trusted by 1000+ clients
-                      </p> 
-                    </div>*/}
-                  </div>
-                
+                initial={{ opacity: 0 }}
+                animate={heroReady ? { opacity: 1 } : {}}
+                transition={{ duration: 0.8, delay: 0.7 }}
+                className='mt-4 flex h-10 items-center justify-center text-white'>
+                <div className='hidden sm:flex items-center gap-2'>
+                  {slides.map((_, i) => (
+                    <button
+                      key={i}
+                      aria-label={`Show slide ${i + 1}`}
+                      onClick={() => setActiveSlide(i)}
+                      className={`h-[3px] rounded-full transition-all duration-500 ${
+                        i === activeSlide ? 'w-8 bg-white' : 'w-4 bg-white/40 hover:bg-white/70'
+                      }`}
+                    />
+                  ))}
+                </div>
               </motion.div>
             </div>
-          </div>
-        </div>
-      </section>
-    </>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* ---------------- intro overlay --------------- */}
+      <AnimatePresence>
+        {(introState === 'playing' || introState === 'expanding') && (
+          <motion.div
+            key='intro'
+            className={`fixed inset-0 z-[10002] flex items-center justify-center transition-colors duration-300 ${current.bg}`}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}>
+            <motion.div
+              className='relative overflow-hidden'
+              initial={{ width: '34vw', height: '30vh', opacity: 0 }}
+              animate={
+                introState === 'expanding'
+                  ? { width: '100vw', height: '100vh', opacity: 1 }
+                  : { width: 'max(34vw, 260px)', height: 'max(30vh, 200px)', opacity: 1 }
+              }
+              transition={{ duration: introState === 'expanding' ? 1.1 : 0.4, ease }}
+              onAnimationComplete={() => {
+                if (introState !== 'expanding') return
+                sessionStorage.setItem(INTRO_SEEN_KEY, '1')
+                setIntroState('done')
+              }}>
+              <Image
+                src={slides[current.slide].src}
+                alt=''
+                fill
+                sizes='100vw'
+                priority
+                className='object-cover'
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
   )
 }
 

@@ -14,12 +14,12 @@ function Solutions() {
   }
 
   return (
-    <section>
+    <section className='bg-cream dark:bg-dark_black'>
       <div className='2xl:py-20 py-11'>
         <div className='container'>
           <div
             ref={ref}
-            className='py-16 md:py-28 px-6 border border-dark_black/10 rounded-3xl bg-[linear-gradient(90deg,#CDEFFB_0%,#FFFFFF_33.23%,#FFFFFF_65.77%,#FDEECB_100%)] backdrop-blur-[200px] dark:opacity-80'>
+            className='py-16 md:py-28 px-6 border border-dark_black/10 rounded-3xl bg-[linear-gradient(90deg,#CDEFFB_0%,#F9F8F2_33.23%,#F9F8F2_65.77%,#FDEECB_100%)] backdrop-blur-[200px] dark:opacity-80'>
             <motion.div
               {...bottomAnimation}
               className='flex flex-col gap-6 items-center md:max-w-3xl mx-auto'>

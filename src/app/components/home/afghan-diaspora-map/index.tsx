@@ -392,7 +392,7 @@ export default function AfghanDiasporaExplorer() {
   const hideTooltip = () => setTooltip(null);
 
   return (
-    <section className="py-12 md:py-16 bg-white">
+    <section className="py-12 md:py-16 bg-cream">
       <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-center mb-8 md:mb-10">
@@ -404,7 +404,7 @@ export default function AfghanDiasporaExplorer() {
 
         {/* Controls */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
-          <div className="flex bg-white dark:bg-gray-800 rounded-lg p-1 shadow-sm" role="tablist" aria-label="View mode">
+          <div className="flex bg-cream dark:bg-gray-800 rounded-lg p-1 shadow-sm" role="tablist" aria-label="View mode">
             {[
               { key: "map", label: "Map", icon: MapPin },
               { key: "table", label: "Table", icon: Users },
@@ -430,7 +430,7 @@ export default function AfghanDiasporaExplorer() {
 
         {/* Content */}
         {view === "map" && (
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4 }} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4 }} className="bg-cream dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
             <div ref={mapWrapperRef} className="relative w-full h-[460px] md:h-[520px] xl:h-[600px]" suppressHydrationWarning>
               {isMounted ? (
                 <>
@@ -528,13 +528,13 @@ export default function AfghanDiasporaExplorer() {
 
                 {/* Zoom controls */}
                   <div className="absolute top-4 right-4 flex flex-col gap-2">
-                    <button onClick={zoomIn} className="w-8 h-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    <button onClick={zoomIn} className="w-8 h-8 bg-cream dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                       <Plus size={16} />
                   </button>
-                    <button onClick={zoomOut} className="w-8 h-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    <button onClick={zoomOut} className="w-8 h-8 bg-cream dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                       <Minus size={16} />
                   </button>
-                    <button onClick={resetView} className="w-8 h-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    <button onClick={resetView} className="w-8 h-8 bg-cream dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                       <RotateCcw size={16} />
                   </button>
                 </div>
@@ -549,7 +549,7 @@ export default function AfghanDiasporaExplorer() {
         )}
 
         {view === "table" && (
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="bg-white dark:bg-gray-800 rounded-xl shadow border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="bg-cream dark:bg-gray-800 rounded-xl shadow border border-gray-200 dark:border-gray-700 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead className="bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
@@ -593,7 +593,7 @@ export default function AfghanDiasporaExplorer() {
         )}
 
         {view === "bar" && (
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="bg-white dark:bg-gray-800 rounded-xl shadow border border-gray-200 dark:border-gray-700 p-6">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="bg-cream dark:bg-gray-800 rounded-xl shadow border border-gray-200 dark:border-gray-700 p-6">
             <div className="space-y-3">
               {[...afghanDiasporaData]
                 .sort((a, b) => b.population[2024] - a.population[2024])
@@ -627,7 +627,7 @@ export default function AfghanDiasporaExplorer() {
             { v: nf.format(totalPopulation), l: `Total Afghan Diaspora (${2024})` },
             { v: nf.format(afghanDiasporaData.length), l: "Countries with Afghan Communities" },
           ].map((card) => (
-            <div key={card.l} className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow border border-gray-200 dark:border-gray-700 text-center">
+            <div key={card.l} className="bg-cream dark:bg-gray-800 rounded-xl p-5 shadow border border-gray-200 dark:border-gray-700 text-center">
               <div className="text-2xl md:text-3xl font-bold mb-1" style={{ color: "#195fd7" }}>{card.v}+</div>
               <div className="text-gray-600 dark:text-gray-400 text-sm">{card.l}</div>
             </div>

@@ -1,26 +1,325 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { ReactNode, useEffect, useState } from 'react'
 import Image from 'next/image'
-import Lottie from 'lottie-react'
-import SingleCreativeMind from '../../components/home/creative-mind/SingleCreativeMind'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import ParallaxImage from '../../components/shared/ParallaxImage'
 
+const ease = [0.22, 1, 0.36, 1] as const
+
+const h2Class =
+  'text-[clamp(2.5rem,5.85vw,4.25rem)] font-normal leading-[1.06] tracking-[-0.01em] text-[#1a1a1a] dark:text-[#1a1a1a]'
+const leadClass =
+  'text-[clamp(1.2rem,2vw,1.47rem)] font-semibold leading-[1.25] tracking-[-0.01em] text-[#1a1a1a] dark:text-[#1a1a1a]'
+const bodyClass =
+  'mt-8 first:mt-0 text-[clamp(1.05rem,1.7vw,1.24rem)] leading-[1.6] tracking-[0.01em] text-[#1c1c1c]/80 dark:text-[#1c1c1c]/80'
+const panelClass = 'relative rounded-t-[2rem] lg:rounded-t-[2.5rem] px-5 lg:px-8'
+
+const outcomes = [
+  {
+    title: 'Cash prizes and recognition',
+    description: 'The top three storytellers receive cash prizes and recognition for their work.',
+  },
+  {
+    title: 'A published anthology',
+    description: 'The top 80–100 stories appear on our website and in a professionally published book.',
+  },
+  {
+    title: 'A global conference',
+    description: 'A gathering of Afghan youth, authors, and partners who believe in the power of words.',
+  },
+]
+
+const cardColors = ['#b0cde4', '#de8a74', '#ffdc7e', '#bd9fc3', '#d9dfbf', '#f4c7a1']
+
+const objectPositions: Record<string, string> = {
+  'Zakira Bakhshi': '60% center',
+  'Sajad Amini': 'center 40%',
+  'Somaya Fazel': '40% center',
+  'Ethan Schroyer': 'center 20%',
+}
+
+function RevealHeading({ text, className, as = 'h2' }: { text: string; className: string; as?: 'h1' | 'h2' }) {
+  const Tag = as === 'h1' ? motion.h1 : motion.h2
+  return (
+    <Tag
+      initial='hidden'
+      whileInView='visible'
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ staggerChildren: 0.04 }}
+      className={className}>
+      {text.split(' ').map((word, i) => (
+        <span key={i} className='inline-block overflow-hidden pb-[0.1em] -mb-[0.1em] align-top'>
+          <motion.span
+            className='inline-block'
+            variants={{ hidden: { y: '110%' }, visible: { y: 0, transition: { duration: 0.9, ease } } }}>
+            {word}&nbsp;
+          </motion.span>
+        </span>
+      ))}
+    </Tag>
+  )
+}
+
+function Rule({ className = '' }: { className?: string }) {
+  return (
+    <motion.hr
+      initial={{ scaleX: 0 }}
+      whileInView={{ scaleX: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 1.2, ease }}
+      className={`origin-left border-0 h-px bg-[#1a1a1a]/25 ${className}`}
+    />
+  )
+}
+
+function FadeUp({ children, className = '' }: { children: ReactNode; className?: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.9, ease }}
+      className={className}>
+      {children}
+    </motion.div>
+  )
+}
+
+function Paragraphs({ items }: { items: string[] }) {
+  return (
+    <>
+      {items.map((text) => (
+        <p key={text} className={bodyClass}>
+          {text}
+        </p>
+      ))}
+    </>
+  )
+}
+
+function FocusList({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className='mt-14'>
+      <p className={`${leadClass} !text-[clamp(1.05rem,1.6vw,1.2rem)]`}>{title}</p>
+      <ul className='mt-5 border-t border-[#1a1a1a]/20'>
+        {items.map((item) => (
+          <li
+            key={item}
+            className='border-b border-[#1a1a1a]/20 py-3 text-[clamp(1.05rem,1.7vw,1.24rem)] leading-[1.5] text-[#1c1c1c]/80 last:border-b-0'>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function CallOuts({ items, heading }: { items: { title: string; description: string }[]; heading?: string }) {
+  return (
+    <div className='md:mx-[8.33%]'>
+      {heading && (
+        <>
+          <RevealHeading text={heading} className={h2Class} />
+          <Rule className='mt-10 lg:mt-12 mb-10 lg:mb-12' />
+        </>
+      )}
+      <motion.div
+        initial='hidden'
+        whileInView='visible'
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ staggerChildren: 0.12 }}
+        className='grid grid-cols-1 md:grid-cols-3'>
+        {items.map((item, index) => (
+          <motion.div
+            key={item.title}
+            variants={{
+              hidden: { opacity: 0, y: 24 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
+            }}
+            className={`py-6 md:py-0 md:pr-8 lg:pr-12 ${
+              index > 0 ? 'border-t md:border-t-0 md:border-l border-[#1a1a1a]/25 md:pl-8 lg:pl-12' : ''
+            }`}>
+            <h3 className='text-[clamp(1.1rem,1.6vw,1.24rem)] font-semibold leading-[1.2] tracking-[-0.01em] text-[#1a1a1a] dark:text-[#1a1a1a]'>
+              {item.title}
+            </h3>
+            <p className='mt-2.5 text-[clamp(1rem,1.6vw,1.24rem)] leading-[1.6] tracking-[0.01em] text-[#1c1c1c]/80 dark:text-[#1c1c1c]/80'>
+              {item.description}
+            </p>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  )
+}
+
+function ContentMediaHigh({
+  heading,
+  lead,
+  paragraphs,
+  listTitle,
+  list,
+  image,
+  stat,
+}: {
+  heading: string
+  lead: string
+  paragraphs: string[]
+  listTitle: string
+  list: string[]
+  image: { src: string; alt: string }
+  stat?: { label: string; value: string }
+}) {
+  return (
+    <>
+      <RevealHeading text={heading} className={`${h2Class} max-w-[22ch]`} />
+      <Rule className='mt-10 lg:mt-12' />
+      <div className='mt-12 lg:mt-16 grid grid-cols-1 md:grid-cols-12 gap-x-8'>
+        <div className='md:col-span-5 flex flex-col justify-between gap-12'>
+          <FadeUp>
+            <h3 className={leadClass}>{lead}</h3>
+          </FadeUp>
+          <ParallaxImage
+            src={image.src}
+            alt={image.alt}
+            sizes='(max-width: 768px) 100vw, 40vw'
+            className='hidden md:block aspect-[433/480] w-full'
+          />
+        </div>
+        <FadeUp className='md:col-start-7 md:col-span-5 mt-8 md:mt-0'>
+          <Paragraphs items={paragraphs} />
+          <FocusList title={listTitle} items={list} />
+          {stat && (
+            <div className='mt-14 border-t border-[#1a1a1a]/20 pt-8'>
+              <p className='text-[clamp(0.95rem,1.3vw,1rem)] text-[#1c1c1c]/80'>{stat.label}</p>
+              <p className='mt-6 text-[clamp(4.5rem,8.5vw,6.25rem)] font-normal leading-none tracking-[-0.02em] text-[#1a1a1a]'>
+                {stat.value}
+              </p>
+            </div>
+          )}
+          <ParallaxImage
+            src={image.src}
+            alt={image.alt}
+            sizes='100vw'
+            className='md:hidden mt-12 aspect-[433/480] w-full'
+          />
+        </FadeUp>
+      </div>
+    </>
+  )
+}
+
+function TeamCard({ member, color }: { member: any; color: string }) {
+  const [open, setOpen] = useState(false)
+  const origin = 'at calc(100% - 2.75rem) calc(100% - 2.75rem)'
+
+  return (
+    <div className='relative aspect-[348/443] overflow-hidden rounded-2xl bg-[#1a1a1a]'>
+      <Image
+        src={member.image}
+        alt={member.name}
+        fill
+        sizes='(max-width: 768px) 80vw, 33vw'
+        className='object-cover'
+        style={{ objectPosition: objectPositions[member.name] ?? 'center' }}
+      />
+      <div className='absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/45 to-transparent' />
+      <h3 className='absolute left-6 top-6 right-16 text-[clamp(1.15rem,1.8vw,1.47rem)] font-semibold leading-[1.25] text-white dark:text-white'>
+        {member.name}
+      </h3>
+
+      <motion.div
+        initial={false}
+        animate={{ clipPath: open ? `circle(150% ${origin})` : `circle(0% ${origin})` }}
+        transition={{ duration: 0.7, ease }}
+        aria-hidden={!open}
+        className={`absolute inset-0 flex flex-col p-6 text-[#1a1a1a] ${open ? '' : 'pointer-events-none'}`}
+        style={{ backgroundColor: color }}>
+        <h3 className='text-[clamp(1.15rem,1.8vw,1.47rem)] font-semibold leading-[1.25] text-[#1a1a1a] dark:text-[#1a1a1a]'>
+          {member.name}
+        </h3>
+        <p className='mt-4 text-[clamp(1.05rem,1.6vw,1.2rem)] leading-[1.5] text-[#1c1c1c]/80 dark:text-[#1c1c1c]/80'>
+          {member.position}
+        </p>
+        <a
+          href={`mailto:${member.email}`}
+          tabIndex={open ? 0 : -1}
+          className='mt-2 text-[clamp(0.95rem,1.3vw,1.05rem)] text-[#1c1c1c]/80 underline underline-offset-4 break-all'>
+          {member.email}
+        </a>
+        {member.linkedinLink && (
+          <a
+            href={member.linkedinLink}
+            target='_blank'
+            rel='noopener noreferrer'
+            tabIndex={open ? 0 : -1}
+            className='mt-auto mr-16 w-fit rounded-full border border-[#1a1a1a]/40 px-4 py-2 text-sm font-medium transition-colors hover:bg-[#1a1a1a] hover:text-white'>
+            LinkedIn
+          </a>
+        )}
+      </motion.div>
+
+      <button
+        type='button'
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-label={`${member.name} - ${open ? 'close' : 'click to expand'}`}
+        className={`absolute bottom-5 right-5 flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-300 ${
+          open ? 'bg-[#1a1a1a] text-white' : 'bg-white text-[#1a1a1a]'
+        }`}>
+        <motion.svg
+          animate={{ rotate: open ? 45 : 0 }}
+          transition={{ duration: 0.4, ease }}
+          width='16'
+          height='16'
+          viewBox='0 0 16 16'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='1.5'
+          strokeLinecap='round'>
+          <path d='M8 2v12M2 8h12' />
+        </motion.svg>
+      </button>
+    </div>
+  )
+}
+
+function TeamGrid({ members }: { members: any[] | null }) {
+  return (
+    <section className='bg-cream px-5 lg:px-8 pt-16 lg:pt-16 pb-24 lg:pb-[8rem]'>
+      <RevealHeading
+        text='Our Team'
+        className='text-center text-[clamp(3.25rem,8.5vw,6.25rem)] font-normal leading-[1.06] tracking-[-0.02em] text-[#1a1a1a] dark:text-[#1a1a1a]'
+      />
+      <div className='mt-14 lg:mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
+        {members && members.length > 0 ? (
+          members.map((member, i) => (
+            <motion.div
+              key={member.name}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.8, delay: (i % 3) * 0.1, ease }}>
+              <TeamCard member={member} color={cardColors[i % cardColors.length]} />
+            </motion.div>
+          ))
+        ) : (
+          <p className='col-span-full mx-auto py-16 text-[#1c1c1c]/60'>Loading our team...</p>
+        )}
+      </div>
+    </section>
+  )
+}
 
 export default function AboutPage() {
-  const [creativeMindList, setCreativeMindList] = useState<any>(null)
-  const { scrollY } = useScroll()
-  
-  // Transform scroll progress to scale, opacity, and border radius values
-  const imageScale = useTransform(scrollY, [0, 300], [1, 0.8])
-  const imageOpacity = useTransform(scrollY, [0, 300], [1, 0.6])
-  const imageBorderRadius = useTransform(scrollY, [0, 300], [0, 24])
+  const [creativeMindList, setCreativeMindList] = useState<any[] | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch('/api/page-data')
         if (!res.ok) throw new Error('Failed to fetch')
-        const data = await res.json()        
+        const data = await res.json()
         setCreativeMindList(data.creativeMindList)
       } catch (error) {
         console.error('Error fetching creative minds:', error)
@@ -29,466 +328,198 @@ export default function AboutPage() {
     fetchData()
   }, [])
 
-  const bottomAnimation = (index: number) => ({
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6, delay: index * 0.1 },
-  })
-
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Hero Section */}
-      <div className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden" style={{ paddingTop: '120px', zIndex: 0 }}>
-        {/* Background Image */}
-        <motion.div 
-          className="absolute inset-0 z-0 overflow-hidden" 
-          style={{ 
-            top: '120px',
-            scale: imageScale,
-            opacity: imageOpacity,
-            borderRadius: imageBorderRadius
-          }}
-        >
-          <Image
-            src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/about/wmremove-transformed.png"
-            alt="A Thousand Voices Hero Background"
-            fill
-            className="object-cover"
-            style={{ borderRadius: `${imageBorderRadius}px` }}
-            priority
-          />
-          {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-black/60" style={{ borderRadius: `${imageBorderRadius}px` }}></div>
-        </motion.div>
-
-        {/* Hero Content */}
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto"
-          >
-
-
-            {/* Main Heading */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-5xl md:text-7xl font-bold text-white mb-6"
-            >
-              Learn More About
-              <br />
-              <span className="instrument-font italic font-normal text-yellow-300">What We Do</span>
-            </motion.h1>
-
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed"
-            >
-              We take pride in helping Afghan storytellers from all walks of life 
-              achieve the recognition and platform they deserve.
-            </motion.p>
-
-
-
-            {/* Scroll Indicator */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.2 }}
-              className="mt-16 flex justify-center"
-            >
-              <div className="w-16 h-16 flex items-center justify-center">
-                <div className="arrow" style={{
-                  position: 'relative',
-                  cursor: 'pointer'
-                }}>
-                  <span style={{
-                    display: 'block',
-                    width: '1.5vw',
-                    height: '1.5vw',
-                    borderBottom: '5px solid #fbbf24',
-                    borderRight: '5px solid #fbbf24',
-                    transform: 'rotate(45deg)',
-                    margin: '-10px',
-                    animation: 'animate 2s infinite'
-                  }}></span>
-                  <span style={{
-                    display: 'block',
-                    width: '1.5vw',
-                    height: '1.5vw',
-                    borderBottom: '5px solid #fef3c7',
-                    borderRight: '5px solid #fef3c7',
-                    transform: 'rotate(45deg)',
-                    margin: '-10px',
-                    animation: 'animate 2s infinite',
-                    animationDelay: '-0.2s'
-                  }}></span>
-                  <span style={{
-                    display: 'block',
-                    width: '1.5vw',
-                    height: '1.5vw',
-                    borderBottom: '5px solid #fef3c7',
-                    borderRight: '5px solid #fef3c7',
-                    transform: 'rotate(45deg)',
-                    margin: '-10px',
-                    animation: 'animate 2s infinite',
-                    animationDelay: '-0.4s'
-                  }}></span>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+    <main className='bg-cream text-[#1a1a1a]'>
+      {/* ---------------- Mission statement ---------------- */}
+      <section className='bg-cream px-5 lg:px-8 pt-[8.5rem] lg:pt-40 pb-20 lg:pb-28'>
+        <FadeUp>
+          <p className={leadClass}>Mission Statement</p>
+        </FadeUp>
+        <div className='mt-10 lg:mt-14 grid grid-cols-1 md:grid-cols-12 gap-x-8'>
+          <FadeUp className='order-2 md:order-1 md:col-span-6 mt-12 md:mt-4'>
+            <Image
+              src='/images/about/afghan-refugee-map.png'
+              alt='World map of registered Afghan refugee populations by country as of 2020 (source: UNHCR)'
+              width={1024}
+              height={621}
+              sizes='(max-width: 768px) 100vw, 50vw'
+              className='h-auto w-full mix-blend-multiply'
+            />
+          </FadeUp>
+          <div className='order-1 md:order-2 md:col-start-8 md:col-span-5'>
+            <RevealHeading as='h1' text='Our Mission' className={h2Class} />
+            <FadeUp className='mt-8'>
+              <p className={bodyClass}>
+                A Thousand Voices gives young Afghans, inside Afghanistan and across the diaspora, a platform to write
+                and share their own stories, challenging stereotypes and showing the diversity, creativity, and hope
+                that still exist within and beyond Afghan borders.
+              </p>
+            </FadeUp>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-16">
-        {/* Mission Section - The Problem */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative mb-20"
-        >
-          {/* Content */}
-          <div className="space-y-6 max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-              The Problem
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg mb-8">
-              Since the fall of Kabul in August 2021, the global spotlight has largely shifted away from Afghanistan—but the crisis persists. Under the Taliban's draconian rule, Afghan youth—especially girls and women—have been silenced, erased from classrooms, media, and public life. And across the diaspora, Afghan voices are often misrepresented or lost entirely, reduced to simplistic tropes of victimhood or violence. Our stories have long been told for us, not by us.
+      {/* ---------------- The problem ---------------- */}
+      <section className={`${panelClass} bg-[#de8a74] pt-20 lg:pt-24 pb-24 lg:pb-[8rem]`}>
+        <ContentMediaHigh
+          heading='Our stories, told by us'
+          lead='Why A Thousand Voices exists'
+          paragraphs={[
+            'Since the fall of Kabul in August 2021, the global spotlight has largely shifted away from Afghanistan, but the crisis persists.',
+            "Under the Taliban's rule, Afghan youth, especially girls and women, have been silenced and erased from classrooms, media, and public life.",
+            'Across the diaspora, Afghan voices are often misrepresented or lost entirely, reduced to simple tropes of victimhood or violence. Our stories have long been told for us, not by us.',
+          ]}
+          listTitle='What we set out to do:'
+          list={[
+            'Amplify Afghan voices globally',
+            'Foster cultural exchange through literature',
+            'Build bridges between communities',
+          ]}
+          image={{ src: '/images/about/children-reading.webp', alt: 'Afghan schoolboys reading a Dari picture book together' }}
+        />
+      </section>
+
+      {/* ---------------- How it began ---------------- */}
+      <section className='bg-cream px-5 lg:px-8 pt-20 lg:pt-28 pb-24 lg:pb-[8rem]'>
+        <ContentMediaHigh
+          heading='How A Thousand Voices began'
+          lead='Born from a belief that storytelling is resistance'
+          paragraphs={[
+            'A Thousand Voices began with a simple idea: reclaiming our narratives is essential to challenging the way the world sees Afghanistan.',
+            'Started as a Project for Peace and Thomas C. Barry Fellowship initiative, the project set out to collect and showcase fiction and nonfiction from Afghan youth around the world.',
+            'What has not changed is the purpose: a platform where young Afghans write their own stories, and where their creativity and hope are seen and celebrated.',
+          ]}
+          listTitle='What shapes our work:'
+          list={[
+            'Authentic storytelling and cultural preservation',
+            'An inclusive platform for diverse voices',
+            'Quality literature and meaningful connections',
+          ]}
+          image={{ src: '/images/home/about/gateway.jpg', alt: 'An old stone archway overlooking Kabul' }}
+          stat={{ label: 'Amplifying Afghan voices since', value: '2025' }}
+        />
+      </section>
+
+      {/* ---------------- Values ---------------- */}
+      <section className={`${panelClass} bg-[#ffdc7e] pt-20 lg:pt-24 pb-24 lg:pb-[8rem]`}>
+        <ContentMediaHigh
+          heading='Guided by Afghan voices'
+          lead='What this looks like in practice'
+          paragraphs={[
+            "Everything we do starts with the writer. We create space for young Afghans to tell the stories they choose, in their own words, without fitting someone else's idea of Afghanistan.",
+            'Through storytelling workshops, creative mentorship, and partnerships with NGOs and universities around the world, we help writers grow in confidence and reach new readers.',
+          ]}
+          listTitle='In practice:'
+          list={[
+            'Workshops that help young writers find and shape their stories',
+            'Mentorship that supports writers from first draft to finished piece',
+            'Partnerships that carry Afghan stories across borders',
+          ]}
+          image={{ src: '/images/about/poem-writing.png', alt: 'A woman writing a poem titled "Zan" (Woman) in Persian' }}
+        />
+      </section>
+
+      {/* ---------------- Our team intro ---------------- */}
+      <section className='bg-cream px-5 lg:px-8 pt-16 lg:pt-20 pb-12'>
+        <FadeUp>
+          <p className={leadClass}>Our team</p>
+        </FadeUp>
+        <div className='mt-10 lg:mt-14 grid grid-cols-1 md:grid-cols-12 gap-x-8'>
+          <ParallaxImage
+            src='/images/about/band-e-amir.jpg'
+            alt='A lone figure overlooking the lakes of Band-e Amir, Afghanistan'
+            sizes='(max-width: 768px) 100vw, 30vw'
+            imageClassName='object-[15%_center]'
+            className='order-2 md:order-1 md:col-span-5 mt-12 md:mt-4 aspect-[433/480] w-full'
+          />
+          <div className='order-1 md:order-2 md:col-start-7 md:col-span-5'>
+            <RevealHeading text='The people working alongside our storytellers' className={h2Class} />
+            <FadeUp className='mt-8'>
+              <Paragraphs
+                items={[
+                  'Our diverse team brings together expertise in literature, technology, and Afghan culture to create meaningful opportunities for writers.',
+                  'From reading submissions to building partnerships, every member of the team works to make sure young Afghan writers are heard.',
+                ]}
+              />
+            </FadeUp>
+          </div>
+        </div>
+      </section>
+
+      <TeamGrid members={creativeMindList} />
+
+      {/* ---------------- Looking ahead ---------------- */}
+      <section className={`${panelClass} bg-[#bd9fc3] pt-20 lg:pt-24 pb-24 lg:pb-[8rem]`}>
+        <RevealHeading text='Looking ahead' className={h2Class} />
+        <Rule className='mt-10 lg:mt-12' />
+        <div className='mt-12 lg:mt-16 grid grid-cols-1 md:grid-cols-12 gap-x-8'>
+          <figure className='order-2 md:order-1 md:col-span-5 mt-12'>
+            <ParallaxImage
+              src='/images/about/children-in-field.jpg'
+              alt='Afghan children holding hands as they walk beside a wheat field in a mountain valley'
+              sizes='(max-width: 768px) 100vw, 40vw'
+              imageClassName='object-[35%_center]'
+              className='aspect-[433/480] w-full'
+            />
+            <figcaption className='mt-3 text-[13px] text-[#1a1a1a]/70'>Photo by Daniel Malikyar</figcaption>
+          </figure>
+          <div className='order-1 md:order-2 md:col-start-7 md:col-span-6'>
+            <FadeUp className='max-w-[26rem]'>
+              <h3 className={leadClass}>Building toward the anthology and beyond</h3>
+              <div className='mt-7'>
+                <Paragraphs
+                  items={[
+                    'The top 80–100 stories will be published on our website and featured in a professionally published anthology, launching in 2026.',
+                    'The project will culminate in a global storytelling conference spotlighting Afghan youth, authors, and partners who believe in the power of words to heal, connect, and transform.',
+                  ]}
+                />
+              </div>
+            </FadeUp>
+            <ParallaxImage
+              src='/images/about/calligraphy-wheel.jpg'
+              alt='Illuminated manuscript page with a circular diagram of Arabic calligraphy on a blue background'
+              sizes='(max-width: 768px) 50vw, 20vw'
+              className='hidden md:block mt-24 ml-auto aspect-[195/205] w-[17vw] max-w-[260px]'
+            />
+          </div>
+        </div>
+        <div className='mt-20 lg:mt-24'>
+          <CallOuts items={outcomes} />
+        </div>
+      </section>
+
+      {/* ---------------- CTA ---------------- */}
+      <section className='bg-cream px-5 lg:px-8 pt-20 lg:pt-28 pb-24 lg:pb-36'>
+        <FadeUp className='md:mx-[8.33%] grid grid-cols-1 md:grid-cols-2 gap-8 rounded-2xl bg-[#b0cde4] p-6 lg:p-7'>
+          <div className='flex flex-col'>
+            <h2 className={h2Class}>Get involved</h2>
+            <p className='mt-6 text-[clamp(1.05rem,1.7vw,1.24rem)] leading-[1.6] text-[#1c1c1c]/80 dark:text-[#1c1c1c]/80'>
+              If you would like to collaborate, partner, or help bring this vision to life in any capacity, please
+              reach out. To all the young Afghans across the world: we can&apos;t wait to read your stories.
             </p>
-            <div className="space-y-6">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className="text-gray-700 dark:text-gray-300">Amplifying Afghan voices globally</span>
-              </div>
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className="text-gray-700 dark:text-gray-300">Fostering cultural exchange through literature</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className="text-gray-700 dark:text-gray-300">Building bridges between communities</span>
-              </div>
-            </div>
+            <Link
+              href='/contact'
+              className='group mt-10 md:mt-auto flex w-fit items-center gap-2 rounded-full bg-[#1a1a1a] py-3 pl-6 pr-4 text-white transition-colors hover:bg-[#1a1a1a]/85'>
+              Get in touch
+              <svg
+                className='transition-transform duration-300 group-hover:translate-x-0.5'
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'>
+                <path d='m9 18 6-6-6-6' />
+              </svg>
+            </Link>
           </div>
-        </motion.div>
-
-        {/* Values Section - The Vision */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-20"
-        >
-          {/* Content */}
-          <div className="space-y-8 max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-              The Vision
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg mb-8">
-              A Thousand Voices was born from a belief that storytelling is resistance— and that reclaiming our narratives is essential to challenge the global perceptions about Afghanistan. This project is a Project for Peace and Thomas C. Barry Fellowship initiative, aiming to collect and showcase fiction and nonfiction pieces from Afghan youth around the world.
-              <br />
-              <br />
-              Through storytelling workshops, creative mentorship, and strategic partnerships with NGOs and universities across the world A Thousand Voices offers a platform for young Afghans to write, breaking stereotypes and highlighting the diversity, creativity, and hope that still exists within and beyond Afghan borders.
-            </p>
-            <div className="space-y-8">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className="text-gray-700 dark:text-gray-300">Authentic storytelling and cultural preservation</span>
-              </div>
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className="text-gray-700 dark:text-gray-300">Inclusive platform for diverse voices</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className="text-gray-700 dark:text-gray-300">Quality literature and meaningful connections</span>
-              </div>
-            </div>
+          <div className='relative aspect-[408/419] w-full overflow-hidden'>
+            <Image src='/images/afghan2.jpg' alt='Life in Afghanistan' fill sizes='(max-width: 768px) 100vw, 40vw' className='object-cover' />
           </div>
-        </motion.div>
-
-        {/* New Section - The Outcome */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mb-20"
-        >
-          {/* Content */}
-          <div className="space-y-8 max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-              The Outcome
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg mb-8">
-              The top 3 winners will receive great cash prizes. The top 80-100 stories will be published on our website and featured in a professionally published anthology, launching on August 15, 2026—marking five years since the fall of Kabul. The project will culminate in a global storytelling conference spotlighting Afghan youth, authors, and partners who believe in the power of words to heal, connect, and transform.
-            </p>
-            <div className="space-y-8">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className="text-gray-700 dark:text-gray-300">Cash prizes and recognition for top storytellers</span>
-              </div>
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className="text-gray-700 dark:text-gray-300">Professional anthology publication and global reach</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className="text-gray-700 dark:text-gray-300">Global storytelling conference and community building</span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Goals and Impact Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mb-20"
-        >
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Our Goals and Impact
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto text-lg">
-              Our story is a testament to the power of storytelling and cultural exchange. Together, we have navigated challenges, 
-              celebrated milestones, and crafted a narrative of growth and achievement in amplifying Afghan voices.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
-              <div className="h-24 bg-gradient-to-br from-blue-50 to-yellow-50 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center mx-auto">
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="p-8">
-                <div className="mb-5">
-                  <h4 className="text-xl font-bold text-gray-900 dark:text-white">Empowering Voices</h4>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed mb-6">
-                  We create safe, nurturing spaces where young Afghans can share their stories, find confidence in their voice, and begin to shape their futures with pride and purpose.
-                </p>
-                <div className="flex gap-2">
-                  <button className="px-4 py-1.5 border border-transparent bg-gradient-to-r from-black to-red-600 text-white text-sm font-medium rounded-lg hover:from-gray-800 hover:to-red-700 transition-all duration-200">
-                    Breaking Barriers
-                  </button>
-                  <button className="px-4 py-1.5 border border-transparent bg-gradient-to-r from-red-600 to-green-600 text-white text-sm font-medium rounded-lg hover:from-red-700 hover:to-green-700 transition-all duration-200">
-                    Revealing Vibrant Realities
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
-              <div className="h-24 bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center mx-auto">
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="p-8">
-                <div className="mb-5">
-                  <h4 className="text-xl font-bold text-gray-900 dark:text-white">Rewriting the Narrative</h4>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed mb-6">
-                  Through storytelling, we challenge prevailing stereotypes and show the world the depth, creativity, and strength of Afghan people—not as victims, but as vibrant changemakers.
-                </p>
-                <div className="flex gap-2">
-                  <button className="px-4 py-1.5 border border-transparent bg-gradient-to-r from-green-600 to-black text-white text-sm font-medium rounded-lg hover:from-green-700 hover:to-gray-800 transition-all duration-200">
-                    Igniting Hope
-                  </button>
-                  <button className="px-4 py-1.5 border border-transparent bg-gradient-to-r from-black to-green-600 text-white text-sm font-medium rounded-lg hover:from-gray-800 hover:to-green-700 transition-all duration-200">
-                    Cultivating Changemakers
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
-              <div className="h-24 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center mx-auto">
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="p-8">
-                <div className="mb-5">
-                  <h4 className="text-xl font-bold text-gray-900 dark:text-white">Spreading the Word</h4>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed mb-6">
-                  We build community through media, partnerships, and shared storytelling—making sure these voices are heard, celebrated, and supported across borders.
-                </p>
-                <div className="flex gap-2">
-                  <button className="px-4 py-1.5 border border-transparent bg-gradient-to-r from-red-600 to-black text-white text-sm font-medium rounded-lg hover:from-red-700 hover:to-gray-800 transition-all duration-200">
-                    Fostering Solidarity
-                  </button>
-                  <button className="px-4 py-1.5 border border-transparent bg-gradient-to-r from-green-600 to-red-600 text-white text-sm font-medium rounded-lg hover:from-green-700 hover:to-red-700 transition-all duration-200">
-                    Growing Together
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Creative Minds Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mb-20"
-        >
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-              Meet the creative minds behind our success
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto text-lg">
-              Our diverse team brings together expertise in literature, technology, and Afghan culture to create meaningful opportunities for writers.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {creativeMindList && creativeMindList.length > 0 ? (
-              creativeMindList.map((item: any, index: number) => (
-                <motion.div 
-                  initial={bottomAnimation(index).initial}
-                  animate={bottomAnimation(index).animate}
-                  transition={bottomAnimation(index).transition}
-                  key={`creative-mind-${index}`}
-                  className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg hover:scale-102 transition-all duration-300"
-                >
-                  <div className="aspect-square overflow-hidden">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      width={300}
-                      height={300}
-                      className="w-full h-full object-cover"
-                      style={{
-                        objectPosition: item.name === 'Zakira Bakhshi' ? '60% center' : 
-                                       item.name === 'Sajad Amini' ? 'center 40%' :
-                                       item.name === 'Somaya Fazel' ? '40% center' :
-                                       item.name === 'Ethan Schroyer' ? 'center 20%' : 'center'
-                      }}
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                      {item.name}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400 text-xs mb-2">
-                      {item.position}
-                    </p>
-                    <p className="text-gray-500 dark:text-gray-500 text-xs mb-3">
-                      {item.email}
-                    </p>
-                    <div className="flex justify-center">
-                      <a
-                        href={item.linkedinLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 transition-colors duration-200"
-                      >
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </motion.div>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-8">
-                <p className="text-gray-500 dark:text-gray-400">Loading creative minds...</p>
-              </div>
-            )}
-          </div>
-        </motion.div>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center bg-gray-50 dark:bg-gray-800 rounded-2xl p-12"
-        >
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Get Involved
-          </h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-            If you would like to collaborate, partner, or help bring this vision to life in any capacity, please reach out. 
-            And to all the young Afghans across the world: we can't wait to read your stories. 
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/contact"
-              className="px-8 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
-            >
-              Get in Touch
-            </a>
-          </div>
-        </motion.div>
-      </div>
-    </div>
+        </FadeUp>
+      </section>
+    </main>
   )
-} 
+}

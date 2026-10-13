@@ -1,7 +1,8 @@
 'use client';
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import Image from 'next/image';
 import AfghanDiasporaMap from '../afghan-diaspora-map';
 
@@ -21,79 +22,33 @@ const quote: Quote = {
 };
 
 function QuoteShowcase() {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: frameRef, offset: ['start end', 'end start'] });
+  const imageY = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
+
   return (
-    <section className="relative isolate overflow-hidden w-full">
-      {/* Background image */}
-      <div className="absolute inset-0 -z-10">
-        <Image
-          src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/Screenshot%202025-08-19%20at%206.18.23%20PM.png"
-          alt="Workshop participants forming a circle"
-          fill
-          priority
-          className="object-cover"
-        />
-        {/* Soft dark-to-transparent vignette so the card reads well */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-black/20 to-transparent" />
-      </div>
-
-      {/* Layout container */}
-      <div className="w-full px-6 py-24 md:py-36">
-        <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-10 max-w-7xl mx-auto">
-          {/* Quote Card - Now on the left side */}
-          <motion.figure
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            whileHover={{ rotateX: 2, rotateY: -2 }}
-            className="relative lg:col-span-6 max-w-xl lg:justify-self-start"
-          >
-            {/* decorative shadow plate behind card (like the colored drop in the example) */}
-            <div className="absolute -bottom-4 -left-4 right-6 h-4 rounded-lg bg-[#1961d6]/70 blur-[1px]" aria-hidden />
-
-            <blockquote className="relative rounded-2xl bg-white/95 backdrop-blur p-8 md:p-10 shadow-xl ring-1 ring-black/5">
-              {/* Big opening quote mark */}
-              <span
-                aria-hidden
-                className="pointer-events-none select-none absolute -top-6 left-8 text-6xl md:text-7xl font-serif text-slate-300"
-              >
-                "
-              </span>
-
-              <p className="text-slate-800 text-lg md:text-xl leading-relaxed">
-                "{quote.text}"
-              </p>
-
-              {/* Author line with photo */}
-              <figcaption className="mt-6 flex items-center gap-4">
-                <div className="flex items-center gap-3">
-                  <Image
-                    src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/khalid.png"
-                    alt="Khaled Hosseini"
-                    width={48}
-                    height={48}
-                    className="rounded-full w-12 h-12 object-cover"
-                  />
-                  <div className="text-sm md:text-base text-slate-600">
-                    — <span className="font-medium text-slate-800">{quote.author}</span>
-                    {quote.role ? `, ${quote.role}` : ''}
-                    {quote.org ? `, ${quote.org}` : ''}
-                  </div>
-                </div>
-              </figcaption>
-
-              {/* Corner "bookmark" accent */}
-              <div
-                aria-hidden
-                className="absolute -top-3 right-6 h-7 w-7"
-              >
-                <div className="absolute inset-0 rounded-md bg-[#1961d6]" />
-                <div className="absolute right-0 bottom-0 h-0 w-0 border-t-[14px] border-l-[14px] border-t-white border-l-transparent" />
-              </div>
-            </blockquote>
-          </motion.figure>
+    <section className="w-full bg-cream dark:bg-dark_black px-5 lg:px-8 py-24 md:py-36">
+      <figure className="mx-auto w-full lg:w-[69.5%]">
+        <div ref={frameRef} className="relative aspect-video overflow-clip">
+          <motion.div className="absolute inset-0" style={{ y: imageY, scale: imageScale }}>
+            <Image
+              src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/Screenshot%202025-08-19%20at%206.18.23%20PM.png"
+              alt="A woman walking through the snow in the mountains of Afghanistan"
+              fill
+              sizes="(min-width: 1024px) 70vw, 100vw"
+              className="object-cover"
+            />
+          </motion.div>
         </div>
-      </div>
+
+        <figcaption className="mt-6 flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between md:gap-10">
+          <blockquote className="max-w-[40rem] text-[15px] leading-relaxed text-dark_black/75 dark:text-white/75">
+            &ldquo;{quote.text}&rdquo;
+          </blockquote>
+          <span className="shrink-0 text-[15px] text-dark_black dark:text-white">— {quote.author}</span>
+        </figcaption>
+      </figure>
     </section>
   );
 }
@@ -102,7 +57,7 @@ export default function CustomerStories() {
   const { t } = useLanguage();
 
   return (
-    <section className='py-16 md:py-24'>
+    <section className='bg-cream dark:bg-dark_black pb-16 md:pb-24'>
       {/* Quote Section - Malala.org Style with Background Image */}
       <QuoteShowcase />
 

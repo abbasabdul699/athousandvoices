@@ -205,14 +205,24 @@ const startupPlanList: startupPlan[] = [
 
 const faqList: faq[] = [
   {
-    faq_que: 'Who can submit stories to your platform?',
+    faq_que: 'Is the competition still open for submissions?',
     faq_ans:
-      'We welcome submissions from Afghan youth around the world, including those living in Afghanistan and in the diaspora. Writers do not need professional experience — just a story to tell.',
+      'No. Submissions for the competition closed on December 15, 2025, and the selection process is now complete. Thank you to every young Afghan writer who trusted us with their story.',
   },
   {
-    faq_que: 'Is there a deadline to submit?',
+    faq_que: 'Where can I see the finalists and winners?',
     faq_ans:
-      'Submissions are currently accepted on a rolling basis. Specific deadlines may apply to themed issues or contests, which will be announced on our website and social media.',
+      'Visit our Finalists page to meet the finalists and winners whose voices rose to the top, and to read the winning stories.',
+  },
+  {
+    faq_que: 'Will the stories be published?',
+    faq_ans:
+      'Yes. Selected stories will be featured on our website and in the A Thousand Voices anthology. Follow us on Instagram, LinkedIn, and Substack for launch news and events.',
+  },
+  {
+    faq_que: 'Will there be another competition?',
+    faq_ans:
+      'Any future editions of the competition will be announced on our website and social media. Follow us on Instagram, LinkedIn, and Substack so you don’t miss the next call for stories.',
   },
   {
     faq_que: 'How do you support contributors beyond publication?',

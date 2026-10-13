@@ -1,182 +1,227 @@
 'use client'
-import React from 'react'
+import Link from 'next/link'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Clock, Mail, BookOpen, Globe} from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 interface TimelineItem {
   id: number
-  step: string
+  date: string
   title: string
-  description: string
-  icon: React.ReactNode
-  bg_color: string
-  txt_color: string
+  color: string
+  end: number
 }
 
+const timelineData: TimelineItem[] = [
+  { id: 1, date: 'Sep 2025', title: 'Story submissions open to Afghan youth', color: '#d4b5f6', end: 17 },
+  { id: 2, date: 'Dec 15, 2025', title: 'Regular submissions closed', color: '#ffff6b', end: 34 },
+  { id: 3, date: 'Jan 2026', title: 'Pre-selection of writers', color: '#402531', end: 51 },
+  { id: 4, date: 'Feb–Mar 2026', title: 'Second round of selection and interviews', color: '#7acaff', end: 68 },
+  { id: 5, date: 'Dec 2026', title: 'Publishing and book launch', color: '#f96926', end: 85 },
+]
+
+const EXTRA_TAB_TITLE = 'Mentorship and other programs'
+
+const ease = [0.47, 0.12, 0.5, 0.9] as const
+
+const BAR_HEIGHT = 72
+const TIP_WIDTH = Math.round((BAR_HEIGHT * 73) / 85)
+const HOVER_ROOM = 14
+const HOVER_LIFT = -8
+const hoverTransition = { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const }
+
+const tabCenter = (i: number) => {
+  const end = timelineData[i].end
+  if (i === 0) return `calc(${end / 2}% - ${TIP_WIDTH / 4}px)`
+  const prevEnd = timelineData[i - 1].end
+  return `calc(${(prevEnd + end) / 2}% - ${TIP_WIDTH / 2}px)`
+}
+
+const tipMask = {
+  maskImage: 'url(/images/home/timeline/chevron-tip.svg)',
+  WebkitMaskImage: 'url(/images/home/timeline/chevron-tip.svg)',
+  maskSize: '100% 100%',
+  WebkitMaskSize: '100% 100%',
+  maskRepeat: 'no-repeat',
+  WebkitMaskRepeat: 'no-repeat',
+}
+
+function Chevron({ color }: { color: string }) {
+  return (
+    <>
+      <span
+        className='absolute inset-y-0 left-0 rounded-l-[0.75rem]'
+        style={{ right: TIP_WIDTH - 6, backgroundColor: color }}
+      />
+      <span
+        className='absolute inset-y-0 right-0'
+        style={{
+          width: TIP_WIDTH,
+          backgroundColor: color,
+          clipPath: 'polygon(0 0, 70% 0, 104% 50%, 70% 100%, 0 100%)',
+          ...tipMask,
+        }}
+      />
+    </>
+  )
+}
+
+const textVariants = (i: number) => ({
+  hidden: { opacity: 0, y: 48 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease, delay: 0.25 + i * 0.15 } },
+})
+
 function Timeline() {
-  const timelineData: TimelineItem[] = [
-    {
-      id: 1,
-      step: 'Begins September 2025',
-      title: 'Story Submissions',
-      description: 'Afghan youth will submit short stories—fiction or non-fiction—centered on themes of identity, resilience, and home.',
-      icon: <Globe className="w-6 h-6" />,
-      bg_color: 'bg-green-500/20',
-      txt_color: 'text-green-600',
-    },
-    {
-      id: 2,
-      step: 'December 15th 2025',
-      title: 'Regular Submission Closed',
-      description: 'This is the last day to submit your story. We will not accept any more submissions after this date. We will start reviewing the submissions and selecting the applicable pieces for the next round of interviews.',
-      icon: <Clock className="w-6 h-6" />,
-      bg_color: 'bg-purple-500/20',
-      txt_color: 'text-purple-600',
-    },
-    {
-      id: 3,
-      step: 'Last week of January 2026',
-      title: 'Pre-selection of Writers',
-      description: 'We will be selecting the writers who will be selected for the next round of selection. This includes narrowing on duplicate applicants, stories that do not meet the criteria, non-compliant AI submissions, and other criteria that have been outlined in the submission guidelines.',
-      icon: <Mail className="w-6 h-6" />,
-      bg_color: 'bg-pink-500/20',
-      txt_color: 'text-pink-600',
-    },
-    {
-      id: 4,
-      step: 'Feb to March 2026',
-      title: 'Second Round of Selection',
-      description: 'Remaining writers will be interviewed for their pieces. This includes verifying the authenticity of the stories and the writers or artists. This includes understanding the writer\'s background, their story, and their writing style.',
-      icon: <Mail className="w-6 h-6" />,
-      bg_color: 'bg-pink-500/20',
-      txt_color: 'text-pink-600',
-    },
-    {
-      id: 5,
-      step: 'December 2026',
-      title: 'Publishing and Book Launch',
-      description: 'We celebrate the power of Afghan youth voices with a public launch event, readings, and recognition—on the fifth anniversary of Kabul\'s fall.',
-      icon: <BookOpen className="w-6 h-6" />,
-      bg_color: 'bg-blue-500/20',
-      txt_color: 'text-blue-600',
-    },
-  ]
+  const [hovered, setHovered] = useState<number | null>(null)
 
   return (
-    <section id='timeline' className='py-20 bg-white dark:bg-gray-900'>
-      <div className='container mx-auto px-4'>
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className='text-center max-w-4xl mx-auto mb-16'>
-          <h2 className='text-4xl md:text-5xl font-bold mb-6'>
-            Our{' '}
-            <span className='instrument-font italic font-normal dark:text-white/70'>
-              Journey
-            </span>
-          </h2>
-          <p className='text-gray-600 dark:text-gray-400 text-lg'>
-            Discover the milestones that shaped A Thousand Voices into the platform it is today.
-          </p>
-        </motion.div>
+    <section id='timeline' className='relative bg-[#ffdc7e] dark:bg-dark_black'>
+      <div className='rounded-t-[2rem] lg:rounded-t-[2.5rem] bg-sage pt-20 md:pt-36 pb-20 lg:pb-28 text-[#2c111d]'>
+        <div className='px-5 lg:px-12'>
+          {/* ---------------- heading --------------- */}
+          <motion.header
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.8, ease }}
+            className='mb-12 md:mb-20'>
+            <span className='instrument-font block text-[20px] leading-[1.3]'>Timeline</span>
+            <h2 className='text-[clamp(2rem,3.4vw,2.45rem)] font-semibold leading-[1.2] tracking-normal text-[#2c111d] dark:text-[#2c111d]'>
+              Our journey, from first draft to book
+            </h2>
+          </motion.header>
 
-        {/* Vertical Timeline */}
-        <div className='max-w-4xl mx-auto'>
-          <div className='relative'>
-            {/* Timeline Line */}
-            <div className='absolute left-8 top-0 bottom-0 w-0.5 bg-gray-300 dark:bg-gray-600'></div>
-            
-            {/* Timeline Items */}
-            {timelineData.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, x: -50, y: 20 }}
-                whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className='relative flex items-start mb-12 last:mb-0'>
-                
-                {/* Timeline Dot */}
-                <div className='absolute left-6 w-4 h-4 bg-purple_blue rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10'></div>
-                
-                {/* Content Card */}
-                <motion.div 
-                  className='ml-16 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 flex-1 cursor-pointer'
-                  whileHover={{ 
-                    y: -8, 
-                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                    transition: { duration: 0.3 }
+          {/* ---------------- desktop: chevron bar --------------- */}
+          <motion.div
+            initial='hidden'
+            whileInView='visible'
+            viewport={{ once: true, amount: 0.4 }}
+            className='relative hidden md:block h-[24.125rem] mb-9'>
+            <div
+              className='absolute inset-x-0 overflow-hidden'
+              style={{
+                top: `calc(50% - ${BAR_HEIGHT / 2 + HOVER_ROOM}px)`,
+                height: BAR_HEIGHT + HOVER_ROOM * 2,
+              }}
+              onMouseLeave={() => setHovered(null)}>
+              <div className='absolute inset-x-0' style={{ top: HOVER_ROOM, bottom: HOVER_ROOM }}>
+                <Chevron color='#f9f8f2' />
+                <motion.span
+                  variants={textVariants(timelineData.length)}
+                  className='absolute inset-y-0 flex items-center pl-4 text-[13px] font-semibold leading-[1.3] text-[#402531]'
+                  style={{ left: `${timelineData[timelineData.length - 1].end}%`, right: TIP_WIDTH * 0.6 }}>
+                  {EXTRA_TAB_TITLE}
+                </motion.span>
+              </div>
+              {timelineData.map((item, i) => (
+                <motion.div
+                  key={item.id}
+                  variants={{
+                    hidden: { x: '-100%' },
+                    visible: { x: 0, transition: { duration: 0.9, ease, delay: i * 0.15 } },
                   }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className='flex items-center justify-between mb-4'>
-                    <span className='text-sm font-bold text-purple_blue'>
-                      {item.step}
-                    </span>
-                    <div className={`w-12 h-12 ${item.bg_color} rounded-full flex items-center justify-center ${item.txt_color}`}>
-                      {item.icon}
-                    </div>
-                  </div>
-                  
-                  <h3 className='text-xl font-bold text-gray-900 dark:text-white mb-3'>
-                    {item.title}
+                  className='absolute left-0'
+                  style={{
+                    top: HOVER_ROOM,
+                    bottom: HOVER_ROOM,
+                    width: `${item.end}%`,
+                    zIndex: timelineData.length - i,
+                  }}>
+                  <motion.div
+                    animate={{ y: hovered === i ? HOVER_LIFT : 0 }}
+                    transition={hoverTransition}
+                    onMouseEnter={() => setHovered(i)}
+                    className='absolute inset-0 cursor-default'>
+                    <Chevron color={item.color} />
+                  </motion.div>
+                </motion.div>
+              ))}
+            </div>
+
+            {timelineData.map((item, i) => {
+              const above = i % 2 === 0
+              return (
+                <motion.div
+                  key={item.id}
+                  variants={textVariants(i)}
+                  className={`absolute ${above ? 'top-0' : 'bottom-0'}`}
+                  style={{ left: tabCenter(i), height: `calc(50% - ${BAR_HEIGHT / 2}px + 1.5rem)` }}>
+                  <motion.div
+                    animate={{ y: hovered === i ? HOVER_LIFT : 0 }}
+                    transition={hoverTransition}
+                    onMouseEnter={() => setHovered(i)}
+                    onMouseLeave={() => setHovered(null)}
+                    className={`relative flex h-full w-max max-w-[11.5rem] flex-col pl-3 ${
+                      above ? '' : 'justify-end'
+                    }`}>
+                    <span aria-hidden className='absolute inset-y-0 left-0 w-px bg-[#543945]/70' />
+                    <h3 className='instrument-font text-[26px] font-normal leading-[1.3] tracking-[-0.01em] text-[#402531] dark:text-[#402531]'>
+                      {item.date}
+                    </h3>
+                    <p className='text-[13px] font-medium leading-[1.45] text-[#543945] dark:text-[#543945]'>
+                      {item.title}
+                    </p>
+                  </motion.div>
+                </motion.div>
+              )
+            })}
+          </motion.div>
+
+          {/* ---------------- mobile: stacked chevrons --------------- */}
+          <motion.ol
+            initial='hidden'
+            whileInView='visible'
+            viewport={{ once: true, amount: 0.2 }}
+            className='md:hidden mb-12'>
+            {timelineData.map((item, i) => (
+              <li key={item.id} className='relative flex gap-5' style={{ zIndex: timelineData.length - i }}>
+                <motion.span
+                  aria-hidden
+                  variants={{
+                    hidden: { scaleY: 0 },
+                    visible: { scaleY: 1, transition: { duration: 0.6, ease, delay: i * 0.12 } },
+                  }}
+                  className={`w-14 shrink-0 origin-top ${i === 0 ? 'rounded-t-[0.75rem]' : '-mt-4'}`}
+                  style={{
+                    backgroundColor: item.color,
+                    clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 16px), 50% 100%, 0 calc(100% - 16px))',
+                  }}
+                />
+                <motion.div variants={textVariants(i)} className='py-6'>
+                  <h3 className='instrument-font text-[26px] font-normal leading-[1.3] text-[#402531] dark:text-[#402531]'>
+                    {item.date}
                   </h3>
-                  <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>
-                    {item.description}
+                  <p className='text-[14px] font-medium leading-[1.45] text-[#543945] dark:text-[#543945]'>
+                    {item.title}
                   </p>
                 </motion.div>
-              </motion.div>
+              </li>
             ))}
-          </div>
-        </div>
+            <li className='relative flex gap-5'>
+              <motion.span
+                aria-hidden
+                variants={{
+                  hidden: { scaleY: 0 },
+                  visible: { scaleY: 1, transition: { duration: 0.6, ease, delay: timelineData.length * 0.12 } },
+                }}
+                className='-mt-4 w-14 shrink-0 origin-top rounded-b-[0.75rem] bg-cream'
+              />
+              <motion.div variants={textVariants(timelineData.length)} className='py-6'>
+                <p className='text-[14px] font-semibold leading-[1.45] text-[#402531]'>{EXTRA_TAB_TITLE}</p>
+              </motion.div>
+            </li>
+          </motion.ol>
 
-        {/* Final CTA Section - KEEPING THIS INTACT */}
-        <div className='mt-20'>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className='flex flex-col gap-4 xl:flex xl:flex-row bg-dark_black items-center justify-between dark:bg-white/5 py-8 px-7 sm:px-12 rounded-3xl w-full'>
-            <h4 className='text-white text-center xl:text-left'>
-              Join us on this journey.
-              <br /> Share your story with the world!
-            </h4>
-            <div className='flex flex-col sm:flex-row gap-3 items-center'>
-              
-              <a
-                href='/about'
-                className='group border border-white dark:border-white/50 text-white font-medium bg-dark_black gap-2 rounded-full flex items-center justify-between lg:gap-4 py-2 pl-5 pr-2 hover:opacity-95 hover:bg-transparent hover:text-white transition-all duration-200 ease-in-out'>
-                <span className='group-hover:translate-x-9 transform transition-transform duration-200 ease-in-out'>
-                  Learn More
-                </span>
-                <svg
-                  width='32'
-                  height='32'
-                  viewBox='0 0 32 32'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
-                  className='group-hover:-translate-x-[125px] transition-all duration-200 ease-in-out '>
-                  <rect width='32' height='32' rx='16' fill='white' />
-                  <path
-                    d='M11.832 11.3334H20.1654M20.1654 11.3334V19.6668M20.1654 11.3334L11.832 19.6668'
-                    stroke='#1B1D1E'
-                    strokeWidth='1.42857'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                </svg>
-              </a>
-            </div>
-          </motion.div>
+          <Link
+            href='/about'
+            className='group inline-flex h-11 items-center gap-1.5 rounded-[0.4rem] border border-[#543945] px-[1.125rem] text-[13px] font-semibold text-[#402531] transition-[border-radius] duration-200 ease-in-out hover:rounded-full'>
+            Learn more about us
+            <ArrowRight className='h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5' strokeWidth={1.5} />
+          </Link>
         </div>
       </div>
     </section>
   )
 }
 
-export default Timeline 
+export default Timeline

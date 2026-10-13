@@ -2,6 +2,8 @@
 layer(base);
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap')
 layer(base);
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap')
+layer(base);
 
 @import 'tailwindcss';
 
@@ -24,6 +26,10 @@ layer(base);
   --color-pale-yellow: #f6e683;
   --color-dark_yellow_gradient: #443f32;
   --color-dark_blue_gradient: #303d42;
+  --color-cream: #f9f8f2;
+  --color-sage: #d9dcba;
+  --color-sky: #b8cfe6;
+  --color-sand: #f7d987;
 
   --breakpoint-Xsm: 425px;
   --breakpoint-sm: 576px;
@@ -151,6 +157,11 @@ layer(base);
 @layer utilities {
   .instrument-font {
     font-family: 'Instrument Serif', serif;
+  }
+
+  .nav-font {
+    font-family: 'Instrument Sans', 'Inter Tight', sans-serif;
+    font-weight: 450;
   }
 
   .hero-mask {
