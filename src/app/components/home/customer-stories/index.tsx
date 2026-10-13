@@ -21,34 +21,67 @@ const quote: Quote = {
   org: '',
 };
 
+const quoteHighlights = [
+  'language was the key',
+  'You became an observer rather than a participant in the story.',
+];
+
+function renderHighlightedQuote(text: string) {
+  const pattern = new RegExp(`(${quoteHighlights.map((h) => h.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`);
+  return text.split(pattern).map((part, i) =>
+    quoteHighlights.includes(part) ? (
+      <span key={i} className="text-red-500">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
+
 function QuoteShowcase() {
-  const frameRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: frameRef, offset: ['start end', 'end start'] });
-  const imageY = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] });
+  const openProgress = useTransform(scrollYProgress, [0, 0.6], [0, 1], { clamp: true });
+  const imageScale = useTransform(openProgress, [0, 1], [1.25, 1]);
+  const quoteOpacity = useTransform(scrollYProgress, [0.62, 0.78], [0, 1]);
+  const quoteY = useTransform(scrollYProgress, [0.62, 0.78], [24, 0]);
 
   return (
-    <section className="w-full bg-cream dark:bg-dark_black px-5 lg:px-8 py-24 md:py-36">
-      <figure className="mx-auto w-full lg:w-[69.5%]">
-        <div ref={frameRef} className="relative aspect-video overflow-clip">
-          <motion.div className="absolute inset-0" style={{ y: imageY, scale: imageScale }}>
+    <section ref={sectionRef} className="relative h-[300vh] w-full bg-cream dark:bg-dark_black">
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <motion.figure
+          className="absolute inset-0 m-0"
+          style={{
+            ['--p' as string]: openProgress,
+            ['--s' as string]: 'min(35rem, 80vw)',
+            clipPath:
+              'inset(max(0px, calc((1 - var(--p)) * (50vh - var(--s) / 2))) max(0px, calc((1 - var(--p)) * (50vw - var(--s) / 2))) round calc((1 - var(--p)) * var(--s) / 2))',
+          }}
+        >
+          <motion.div className="absolute inset-0" style={{ scale: imageScale }}>
             <Image
               src="https://vncsjyedvqrhgeedwusw.supabase.co/storage/v1/object/public/homepage/Screenshot%202025-08-19%20at%206.18.23%20PM.png"
               alt="A woman walking through the snow in the mountains of Afghanistan"
               fill
-              sizes="(min-width: 1024px) 70vw, 100vw"
+              sizes="100vw"
               className="object-cover"
             />
           </motion.div>
-        </div>
 
-        <figcaption className="mt-6 flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between md:gap-10">
-          <blockquote className="max-w-[40rem] text-[15px] leading-relaxed text-dark_black/75 dark:text-white/75">
-            &ldquo;{quote.text}&rdquo;
-          </blockquote>
-          <span className="shrink-0 text-[15px] text-dark_black dark:text-white">— {quote.author}</span>
-        </figcaption>
-      </figure>
+          <motion.figcaption
+            className="absolute inset-0 flex items-end bg-gradient-to-t from-black/50 via-black/20 to-transparent px-6 pb-12 md:bg-gradient-to-r md:from-black/40 md:via-black/15 md:px-12 md:pb-14 lg:px-16"
+            style={{ opacity: quoteOpacity }}
+          >
+            <motion.div className="flex w-full flex-col gap-6 md:w-[44vw]" style={{ y: quoteY }}>
+              <blockquote className="instrument-font text-[min(8vw,5vh)] leading-[0.95] tracking-tight text-pale-yellow md:text-[min(4.8vw,6vh)]">
+                &ldquo;{renderHighlightedQuote(quote.text)}&rdquo;
+              </blockquote>
+              <span className="instrument-font self-end text-xl tracking-tight text-pale-yellow/85 md:text-2xl">— {quote.author}</span>
+            </motion.div>
+          </motion.figcaption>
+        </motion.figure>
+      </div>
     </section>
   );
 }
