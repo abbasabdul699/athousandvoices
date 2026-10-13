@@ -167,7 +167,7 @@ function ContentMediaHigh({
   paragraphs: string[]
   listTitle: string
   list: string[]
-  image: { src: string; alt: string }
+  image: { src: string; alt: string; className?: string; fillColumn?: boolean }
   stat?: { label: string; value: string }
 }) {
   return (
@@ -183,7 +183,8 @@ function ContentMediaHigh({
             src={image.src}
             alt={image.alt}
             sizes='(max-width: 768px) 100vw, 40vw'
-            className='hidden md:block aspect-[433/480] w-full'
+            imageClassName={image.className}
+            className={`hidden md:block w-full ${image.fillColumn ? 'flex-1 min-h-[30rem]' : 'aspect-[433/480]'}`}
           />
         </div>
         <FadeUp className='md:col-start-7 md:col-span-5 mt-8 md:mt-0'>
@@ -201,6 +202,7 @@ function ContentMediaHigh({
             src={image.src}
             alt={image.alt}
             sizes='100vw'
+            imageClassName={image.className}
             className='md:hidden mt-12 aspect-[433/480] w-full'
           />
         </FadeUp>
@@ -336,14 +338,14 @@ export default function AboutPage() {
           <p className={leadClass}>Mission Statement</p>
         </FadeUp>
         <div className='mt-10 lg:mt-14 grid grid-cols-1 md:grid-cols-12 gap-x-8'>
-          <FadeUp className='order-2 md:order-1 md:col-span-6 mt-12 md:mt-4'>
+          <FadeUp className='order-2 md:order-1 md:col-span-6 mt-12 md:mt-4 mix-blend-multiply'>
             <Image
               src='/images/about/afghan-refugee-map.png'
               alt='World map of registered Afghan refugee populations by country as of 2020 (source: UNHCR)'
               width={1024}
               height={621}
               sizes='(max-width: 768px) 100vw, 50vw'
-              className='h-auto w-full mix-blend-multiply'
+              className='h-auto w-full'
             />
           </FadeUp>
           <div className='order-1 md:order-2 md:col-start-8 md:col-span-5'>
@@ -395,7 +397,12 @@ export default function AboutPage() {
             'An inclusive platform for diverse voices',
             'Quality literature and meaningful connections',
           ]}
-          image={{ src: '/images/home/about/gateway.jpg', alt: 'An old stone archway overlooking Kabul' }}
+          image={{
+            src: '/images/about/yale-news.png',
+            alt: 'Yale News article: Yale junior receives Projects for Peace award, featuring Zakira Bakhshi',
+            className: 'object-top',
+            fillColumn: true,
+          }}
           stat={{ label: 'Amplifying Afghan voices since', value: '2025' }}
         />
       </section>

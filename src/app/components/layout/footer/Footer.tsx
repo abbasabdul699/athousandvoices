@@ -21,12 +21,12 @@ const Footer = () => {
     }, [])
 
   return (
-    <footer className='xl:pt-20 pb-6 bg-gradient-to-br from-red-50 via-green-50 to-blue-50 dark:from-red-900/20 dark:via-green-900/20 dark:to-blue-900/20'>
+    <footer className='nav-font xl:pt-20 pb-6 bg-gradient-to-br from-red-50 via-green-50 to-blue-50 dark:from-red-900/20 dark:via-green-900/20 dark:to-blue-900/20'>
       <div className='container'>
         <div className='flex flex-col xl:flex-row py-16 gap-10 justify-between border-b border-dark_black/10 dark:border-white/10'>
           <div className='flex flex-col gap-6 max-w-md'>
             {/* Larger Footer Logo */}
-            <Link href="/">
+            <Link href="/" className='flex items-center gap-3 leading-none'>
               <Image
                 src="/images/logo/logo.png"
                 alt="logo"
@@ -34,7 +34,7 @@ const Footer = () => {
                 height={24}
                 quality={100}
                 priority={true}
-                className='dark:hidden'
+                className='h-14 w-auto dark:hidden'
               />
               <Image
                 src="/images/logo/logo.png"
@@ -42,12 +42,15 @@ const Footer = () => {
                 width={80}
                 height={24}
                 quality={100}
-                className='dark:block hidden'
+                className='h-14 w-auto dark:block hidden'
               />
+              <span className='instrument-font text-[32px] tracking-tight text-dark_black dark:text-white'>
+                A Thousand Voices
+              </span>
             </Link>
             
             {/* Bold Tagline */}
-            <p className='opacity-80 font-bold text-lg text-dark_black dark:text-white'>{footerData?.brand?.tagline}</p>
+            <p className='opacity-80 font-semibold text-lg text-dark_black dark:text-white'>{footerData?.brand?.tagline}</p>
             
             {footerData?.brand?.website && (
               <p className='text-dark_black/70 hover:text-black dark:text-white/70 dark:hover:text-white'>

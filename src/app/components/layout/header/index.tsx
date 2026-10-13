@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { ChevronRight, Mail } from 'lucide-react'
+import { Mail } from 'lucide-react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import HeaderLink from './Navigation/HeaderLink'
@@ -247,13 +247,6 @@ const Header = () => {
                   </>
                 ) : (
                   <>
-                    <Link
-                      href='/winners'
-                      onClick={() => setSidebarOpen(false)}
-                      className='w-full flex items-center justify-center gap-1 text-white dark:text-dark_black px-4 py-2.5 bg-dark_black dark:bg-white rounded-full hover:opacity-90'>
-                      Finalists
-                      <ChevronRight className='h-4 w-4' />
-                    </Link>
                     <Link
                       href='/contact'
                       onClick={() => setSidebarOpen(false)}
